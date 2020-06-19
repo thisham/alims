@@ -1,5 +1,5 @@
 <div class="container mt-4">
-	<h3>Daftar Program Studi</h3>
+	<h3>Data Program Studi</h3>
 	<hr>
 	<?php Flasher::flash(); ?>
 	<?php $no = 1; ?>
@@ -30,7 +30,12 @@
 									<td><?php echo $no++; ?></td>
 									<td><?php echo $prodi['kode']; ?></td>
 									<td><?php echo $prodi['prodi']; ?></td>
-									<td><a href="<?php echo BASIS_URL . '/data/prodi/edit/' . $prodi['kode']; ?>" class="badge badge-warning">Edit</a> <a href="<?php echo BASIS_URL . '/data/prodi/hapus/' . $prodi['kode']; ?>" class="badge badge-danger">Hapus</a></td>
+									<td>
+										<div class="btn-group">
+											<a href="<?php echo BASIS_URL . '/data/prodi/edit/' . $prodi['kode']; ?>" class="btn btn-warning btn-sm">Edit</a> 
+											<a href="<?php echo BASIS_URL . '/data/prodi/hapus/' . $prodi['kode']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+										</div>
+									</td>
 								</tr>
 							<?php endforeach ?>
 						</table>

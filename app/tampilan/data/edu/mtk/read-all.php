@@ -1,5 +1,5 @@
 <div class="container mt-4">
-	<h3>Daftar Mata Kuliah</h3>
+	<h3>Data Mata Kuliah</h3>
 	<hr>
 	<?php Flasher::flash(); ?>
 	<?php $no = 1; ?>

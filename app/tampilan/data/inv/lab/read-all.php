@@ -1,5 +1,5 @@
 <div class="container mt-4">
-	<h3>Daftar Laboratorium</h3>
+	<h3>Data Laboratorium</h3>
 	<hr>
 	<?php Flasher::flash(); ?>
 	<?php $no = 1; ?>

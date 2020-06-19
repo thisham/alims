@@ -1,5 +1,5 @@
 <div class="container mt-4">
-	<h3>Daftar Mahasiswa</h3>
+	<h3>Data Mahasiswa</h3>
 	<hr>
 	<?php Flasher::flash(); ?>
 	<?php $no = 1; ?>
@@ -42,17 +42,30 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php foreach ($data['lists'] as $mhs): ?>
+								<?php if ($data['lists'] == NULL): ?>
 									<tr>
-										<td><?php echo $no++; ?></td>
-										<td><?php echo $mhs['nim']; ?></td>
-										<td class="text-left"><?php echo $mhs['nama']; ?></td>
-										<!-- <td><?php echo $mhs['prodi']; ?></td>
-										<td><?php echo $mhs['angkatan']; ?></td>
-										<td><?php echo $mhs['kelas']; ?></td> -->
-										<td><a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>" class="badge badge-primary">Detail</a> <a href="<?php echo BASIS_URL . '/data/mhs/edit/' . $mhs['nim']; ?>" class="badge badge-warning">Edit</a> <a href="<?php echo BASIS_URL . '/data/mhs/hapus/' . $mhs['nim']; ?>" class="badge badge-danger">Hapus</a></td>
+										<td colspan="4">Tidak ada data.</td>
 									</tr>
-								<?php endforeach ?>
+								<?php else: ?>
+									<?php foreach ($data['lists'] as $mhs): ?>
+										<tr>
+											<td><?php echo $no++; ?></td>
+											<td><?php echo $mhs['nim']; ?></td>
+											<td class="text-left"><?php echo $mhs['nama']; ?></td>
+											<!-- <td><?php echo $mhs['prodi']; ?></td>
+											<td><?php echo $mhs['angkatan']; ?></td>
+											<td><?php echo $mhs['kelas']; ?></td> -->
+											<td>
+												<div class="btn-group">
+													<a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>" class="btn btn-primary btn-sm">Detail</a>
+													<a href="<?php echo BASIS_URL . '/data/mhs/edit/' . $mhs['nim']; ?>" class="btn btn-warning btn-sm">Edit</a>
+													<a href="<?php echo BASIS_URL . '/data/mhs/hapus/' . $mhs['nim']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+												</div>
+											</td>
+										</tr>
+									<?php endforeach ?>
+								<?php endif ?>
+									
 							</tbody>
 						</table>
 					</center>

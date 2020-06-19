@@ -1,5 +1,5 @@
 <div class="container mt-4">
-	<h3>Daftar Dosen</h3>
+	<h3>Data Dosen</h3>
 	<hr>
 	<?php Flasher::flash(); ?>
 	<?php $no = 1; ?>
@@ -44,18 +44,31 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php foreach ($data['lists'] as $dsn): ?>
+								<?php if ($data['lists'] == NULL): ?>
 									<tr>
-										<td><?php echo $no++; ?></td>
-										<td><?php echo $dsn['dsn_id']; ?></td>
-										<td class="text-left"><?php echo $dsn['dsn_nama']; ?></td>
-										<td class="text-left"><?php echo $dsn['dsn_gelar']; ?></td>
-										<!-- <td><?php echo $mhs['prodi']; ?></td>
-										<td><?php echo $mhs['angkatan']; ?></td>
-										<td><?php echo $mhs['kelas']; ?></td> -->
-										<td><a href="<?php echo BASIS_URL . '/data/dsn/detail/' . $dsn['dsn_id']; ?>" class="badge badge-primary">Detail</a> <a href="<?php echo BASIS_URL . '/data/dsn/edit/' . $dsn['dsn_id']; ?>" class="badge badge-warning">Edit</a> <a href="<?php echo BASIS_URL . '/data/dsn/hapus/' . $dsn['dsn_id']; ?>" class="badge badge-danger">Hapus</a></td>
+										<td colspan="5">Tidak ada data.</td>
 									</tr>
-								<?php endforeach ?>
+								<?php else: ?>
+									<?php foreach ($data['lists'] as $dsn): ?>
+										<tr>
+											<td><?php echo $no++; ?></td>
+											<td><?php echo $dsn['dsn_id']; ?></td>
+											<td class="text-left"><?php echo $dsn['dsn_nama']; ?></td>
+											<td class="text-left"><?php echo $dsn['dsn_gelar']; ?></td>
+											<!-- <td><?php echo $mhs['prodi']; ?></td>
+											<td><?php echo $mhs['angkatan']; ?></td>
+											<td><?php echo $mhs['kelas']; ?></td> -->
+											<td>
+												<div class="btn-group">
+													<a href="<?php echo BASIS_URL . '/data/dsn/detail/' . $dsn['dsn_id']; ?>" class="btn btn-sm btn-primary">Detail</a> 
+													<a href="<?php echo BASIS_URL . '/data/dsn/edit/' . $dsn['dsn_id']; ?>" class="btn btn-sm btn-warning">Edit</a> 
+													<a href="<?php echo BASIS_URL . '/data/dsn/hapus/' . $dsn['dsn_id']; ?>" class="btn btn-sm btn-danger">Hapus</a></td>
+												</div>
+
+										</tr>
+									<?php endforeach ?>
+								<?php endif ?>
+									
 							</tbody>
 						</table>
 					</center>
