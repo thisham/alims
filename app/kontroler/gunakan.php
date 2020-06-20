@@ -35,12 +35,34 @@ class gunakan extends Kontroler
 	function lab($menu = '', $id = '')
 	{
 		switch ($menu) {
-			case 'value':
-				# code...
+			case 'cekmhs':
+				echo json_encode($this->model('m_warga')->mhs_detail($_POST['gnlab_mhs']));
+				break;
+
+			case 'tambahin':
+				if ( $this->model('m_gunakan')->gnlab_tambah($_POST) > 0 ) {
+					Flasher::setFlash('Data penggunaan', 'telah dicatat', '', 'success');
+					header('location:' . BASIS_URL . '/gunakan/lab');
+					exit;
+				} else {
+					Flasher::setFlash('Data penggunaan', 'tidak dicatat', '', 'danger');
+					header('location:' . BASIS_URL . '/gunakan/lab');
+					exit;
+				}
 				break;
 			
 			default:
-				# code...
+				$data = array(
+					'judul'	=> 'Penggunaan - ALIMS',
+					'pages'	=> 'Penggunaan',
+					'mtkul'	=> $this->model('m_akademik')->mtk_list(),
+					'dosen'	=> $this->model('m_warga')->dsn_list(),
+					'labs'	=> $this->model('m_inventaris')->lab_list()
+				);
+				$this->tampilkan('templat/header', $data);
+				$this->tampilkan('templat/navbar_dash', $data);
+				$this->tampilkan('gunakan/lab/index', $data);
+				$this->tampilkan('templat/footer', $data);
 				break;
 		}
 	}
