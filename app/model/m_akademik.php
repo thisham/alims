@@ -222,7 +222,7 @@ class m_akademik extends Kontroler
 
 		function mtk_detail($data)
 		{
-			$kueri = "SELECT * FROM $this->mtkul WHERE mtk_id = :mtk_id";
+			$kueri = "SELECT * FROM $this->mtkul JOIN $this->dosen ON `$this->mtkul`.`mtk_dosen` = `$this->dosen`.`dsn_id` WHERE mtk_id = :mtk_id";
 			$this->db->kueri($kueri);
 			$this->db->ikat('mtk_id', $data);
 			$this->db->eksekusi();
