@@ -35,8 +35,8 @@ class gunakan extends Kontroler
 	function lab($menu = '', $id = '')
 	{
 		switch ($menu) {
-			case 'cekmhs':
-				echo json_encode($this->model('m_warga')->mhs_detail($_POST['gnlab_mhs']));
+			case 'variable':
+				# code...
 				break;
 
 			case 'tambahin':
@@ -51,12 +51,30 @@ class gunakan extends Kontroler
 				}
 				break;
 			
+			case 'cekmhs':
+				echo json_encode($this->model('m_warga')->mhs_detail($_POST['gnlab_mhs']));
+				break;
+
+			case 'cekdsnmtk':
+				echo json_encode($this->model('m_akademik')->mtk_detail($_POST['gnlab_mtk']));
+				break;
+
+			case 'bylab':
+				echo json_encode($this->model('m_gunakan')->gnlab_byLab($_POST['gnlab_lab']));
+				break;
+
+			case 'bymhs':
+				echo json_encode($this->model('m_gunakan')->gnlab_byMhs($_POST['gnlab_mhs']));
+				break;
+
 			default:
 				$data = array(
 					'judul'	=> 'Penggunaan - ALIMS',
 					'pages'	=> 'Penggunaan',
-					'mtkul'	=> $this->model('m_akademik')->mtk_list(),
+					'newID'	=> $this->model('m_gunakan')->gnlab_idbaru(),
+					'mtkul'	=> $this->model('m_akademik')->mtk_list('aktif', 'list'),
 					'dosen'	=> $this->model('m_warga')->dsn_list(),
+					'gnlab'	=> $this->model('m_gunakan')->gnlab_list(),
 					'labs'	=> $this->model('m_inventaris')->lab_list()
 				);
 				$this->tampilkan('templat/header', $data);
