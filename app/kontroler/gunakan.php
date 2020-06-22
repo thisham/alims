@@ -35,10 +35,6 @@ class gunakan extends Kontroler
 	function lab($menu = '', $id = '')
 	{
 		switch ($menu) {
-			case 'variable':
-				# code...
-				break;
-
 			case 'tambahin':
 				if ( $this->model('m_gunakan')->gnlab_tambah($_POST, $this->datasesi('user')) > 0 ) {
 					Flasher::setFlash('Data penggunaan', 'telah dicatat', '', 'success');
@@ -65,6 +61,18 @@ class gunakan extends Kontroler
 
 			case 'bymhs':
 				echo json_encode($this->model('m_gunakan')->gnlab_byMhs($_POST['gnlab_mhs']));
+				break;
+
+			case 'detail':
+				$data = array(
+					'judul'	=> 'Penggunaan - ALIMS',
+					'pages'	=> 'Penggunaan',
+					'infos'	=> $this->model('m_gunakan')->gnlab_detail($id)
+				);
+				$this->tampilkan('templat/header', $data);
+				$this->tampilkan('templat/navbar_dash', $data);
+				$this->tampilkan('gunakan/lab/detail', $data);
+				$this->tampilkan('templat/footer', $data);
 				break;
 
 			default:
