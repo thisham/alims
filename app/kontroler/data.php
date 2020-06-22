@@ -515,6 +515,44 @@ class data extends Kontroler
 					}
 					break;
 
+				case 'update':
+					switch ($aksi) {
+						case 'buka':
+							if ( $this->model('m_akademik')->mtk_buka($id) > 0 ) {
+								header('location:' . BASIS_URL . '/data/mtk/detail/' . $id);
+							} else {
+								header('location:' . BASIS_URL . '/data/mtk/detail/' . $id);
+							}
+							break;
+
+						case 'bukaulang':
+							if ( $this->model('m_akademik')->mtk_bukaulang($id) > 0 ) {
+								header('location:' . BASIS_URL . '/data/mtk/detail/' . $id);
+							} else {
+								header('location:' . BASIS_URL . '/data/mtk/detail/' . $id);
+							}
+							break;
+
+						case 'tutup':
+							if ( $this->model('m_akademik')->mtk_tutup($id) > 0 ) {
+								header('location:' . BASIS_URL . '/data/mtk/detail/' . $id);
+							} else {
+								header('location:' . BASIS_URL . '/data/mtk/detail/' . $id);
+							}
+							break;
+						
+						default:
+							$data = array(
+								'judul' => 'Kesalahan 404 - ALIMS'
+							);
+							$this->tampilkan('templat/header', $data);
+							$this->tampilkan('templat/navbar_dash', $data);
+							$this->tampilkan('error/er404', $data);
+							$this->tampilkan('templat/footer', $data);
+							break;
+					}
+					break;
+
 				case 'edit':
 					$data = array(
 						'judul' => 'Edit Data Mata Kuliah - ALIMS',
