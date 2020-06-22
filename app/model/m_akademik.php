@@ -62,7 +62,7 @@ class m_akademik extends Kontroler
 			return $hasil;
 		}
 
-		function prodi_hapus()
+		function prodi_hapus($data)
 		{
 			$kueri = "DELETE FROM $this->prodi WHERE kode = :kode";
 			$this->db->kueri($kueri);
