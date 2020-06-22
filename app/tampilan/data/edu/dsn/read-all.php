@@ -47,7 +47,7 @@
 								<tbody>
 									<?php if ($data['lists'] == NULL): ?>
 										<tr>
-											<td colspan="5">Tidak ada data.</td>
+											<td colspan="5" class="text-center">Tidak ada data.</td>
 										</tr>
 									<?php else: ?>
 										<?php foreach ($data['lists'] as $dsn): ?>
