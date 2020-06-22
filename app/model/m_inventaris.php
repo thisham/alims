@@ -69,7 +69,7 @@ class m_inventaris extends Kontroler
 
 		function lab_edit($data)
 		{
-			$kueri = "UPDATE $this->lab SET lab_id = :lab_id, lab_nama = :lab_nama, lab_lokasi = :lab_lokasi, lab_laboran = :lab_laboran";
+			$kueri = "UPDATE $this->lab SET lab_nama = :lab_nama, lab_lokasi = :lab_lokasi, lab_laboran = :lab_laboran WHERE lab_id = :lab_id";
 			$this->db->kueri($kueri);
 			$this->db->ikat('lab_id', $data['lab_id']);
 			$this->db->ikat('lab_nama', $data['lab_nama']);
