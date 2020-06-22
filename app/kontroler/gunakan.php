@@ -40,7 +40,7 @@ class gunakan extends Kontroler
 				break;
 
 			case 'tambahin':
-				if ( $this->model('m_gunakan')->gnlab_tambah($_POST) > 0 ) {
+				if ( $this->model('m_gunakan')->gnlab_tambah($_POST, $this->datasesi('user')) > 0 ) {
 					Flasher::setFlash('Data penggunaan', 'telah dicatat', '', 'success');
 					header('location:' . BASIS_URL . '/gunakan/lab');
 					exit;
