@@ -17,7 +17,7 @@
 		<div class="card-body">
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="daftar" role="tabpanel">
-					<div class="input-group">
+					<!-- <div class="input-group">
 						<select name="gnlab_lab" id="gnlab_lab" class="form-control">
 							<option value="">-- Pilih Laboratorium --</option>
 							<?php foreach ($data['labs'] as $lab): ?>
@@ -25,16 +25,17 @@
 							<?php endforeach ?>
 						</select>
 						<a class="btn btn-outline-primary" id="btn-gnlab_filterin" name="gnlab_carikan">Kirim</a>
-					</div>
+					</div> -->
 					<div id="data-gnlab" class="table-responsive">
 						<table class="table table-striped">
 							<thead>
 								<tr class="text-center">
 									<th>No.</th>
 									<th>Kode</th>
+									<th>Tanggal</th>
 									<th>Laboratorium</th>
-									<th>Mulai</th>
-									<th>Selesai</th>
+									<th>Rencana Praktikum</th>
+									<th>Status</th>
 									<th>Aksi</th>
 								</tr>
 							</thead>
@@ -47,11 +48,25 @@
 									<?php foreach ($data['gnlab'] as $gnlab): ?>
 										<tr>
 											<td><?php echo $no++; ?></td>
-											<td><?php echo $gnlab['gnlab_id']; ?></td>
+											<td><a href="<?php echo BASIS_URL . '/gunakan/lab/detail/' . $gnlab['gnlab_id']; ?>"><?php echo $gnlab['gnlab_id']; ?></a></td>
+											<td><?php echo $gnlab['gnlab_sign'] ?></td>
 											<td><?php echo $gnlab['lab_nama']; ?></td>
-											<td><?php echo $gnlab['gnlab_awal']; ?></td>
-											<td><?php echo $gnlab['gnlab_akhir']; ?></td>
-											<td></td>
+											<td><?php echo $gnlab['gnlab_plan']; ?></td>
+											<td>
+												<?php if ($gnlab['gnlab_awal'] == 0 AND $gnlab['gnlab_akhir'] == 0) { ?>
+													<div class="badge badge-warning">Direncanakan</div>
+												<?php } else if ($gnlab['gnlab_awal'] != 0 AND $gnlab['gnlab_akhir'] == 0) { ?>
+													<div class="badge badge-success">Berjalan</div>
+												<?php } else { ?>
+													<div class="badge badge-secondary">Selesai</div>
+												<?php } ?>
+											</td>
+											<td>
+												<div class="btn-group">
+													<a href="<?php echo BASIS_URL . '/gunakan/lab/edit/' . $gnlab['gnlab_id']; ?>" class="btn btn-warning btn-sm">E</a>
+													<a href="<?php echo BASIS_URL . '/gunakan/lab/hapus/' . $gnlab['gnlab_id']; ?>" class="btn btn-danger btn-sm">X</a>
+												</div>
+											</td>
 										</tr>
 									<?php endforeach ?>
 								<?php endif ?>
