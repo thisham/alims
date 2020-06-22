@@ -170,9 +170,21 @@ class m_akademik extends Kontroler
 			return $hasil;
 		}
 
+		function mtk_bukaulang($data)
+		{
+			$kueri = "UPDATE $this->mtkul SET mtk_tutup = :mtk_tutup WHERE mtk_id = :mtk_id";
+			$this->db->kueri($kueri);
+			$this->db->ikat('mtk_id', $data);
+			$this->db->ikat('mtk_tutup', 0);
+			$this->db->eksekusi();
+			$hasil = $this->db->hit_baris();
+			$this->db->tutup();
+			return $hasil;
+		}
+
 		function mtk_tutup($data)
 		{
-			$kueri = "UPDATE $this->mtkul SET mtk_buka = :mtk_tutup WHERE mtk_id = :mtk_id";
+			$kueri = "UPDATE $this->mtkul SET mtk_tutup = :mtk_tutup WHERE mtk_id = :mtk_id";
 			$this->db->kueri($kueri);
 			$this->db->ikat('mtk_id', $data);
 			$this->db->ikat('mtk_tutup', date('Y-m-d H:i:s'));
