@@ -18,8 +18,8 @@
 						<td><?php echo $data['infos']['nim']; ?> - <?php echo $data['infos']['nama']; ?></td>
 					</tr>
 					<tr>
-						<th>Data Praktikan</th>
-						<td><?php echo $data['infos']['angkatan']; ?> - <?php echo $data['infos']['kelas']; ?></td>
+						<th>Angkatan / Kelas</th>
+						<td><?php echo $data['infos']['angkatan']; ?> / <?php echo $data['infos']['kelas']; ?></td>
 					</tr>
 					<tr>
 						<th>Mata Kuliah</th>
@@ -49,9 +49,9 @@
 						<th>Praktikum</th>
 						<td>
 							<?php if ($data['infos']['gnlab_awal'] == 0 AND $data['infos']['gnlab_akhir'] == 0) { ?>
-								<a href="<?php echo BASIS_URL . '/data/mtk/update/' . $data['infos']['mtk_id'] . '/buka'; ?>" class="btn btn-success">Mulai</a>
+								<a href="<?php echo BASIS_URL . '/gunakan/lab/update/' . $data['infos']['gnlab_id'] . '/mulai'; ?>" class="btn btn-success">Mulai</a>
 							<?php } elseif ($data['infos']['gnlab_awal'] != 0 AND $data['infos']['gnlab_akhir'] != 0) { ?>
-								<div class="badge badge-success"><i>Dibuka pada <?php echo $data['infos']['gnlab_awal']; ?></i></div> ~ <a href="<?php echo BASIS_URL . '/data/mtk/update/' . $data['infos']['mtk_id'] . '/buka'; ?>" class="btn btn-success">Tutup</a>
+								<div class="badge badge-success"><i>Dibuka pada <?php echo $data['infos']['gnlab_awal']; ?></i></div> ~ <a href="<?php echo BASIS_URL . '/gunakan/lab/update/' . $data['infos']['mtk_id'] . '/selesai'; ?>" class="btn btn-success">Tutup</a>
 								<br>
 							<?php } else { ?>
 								<div class="badge badge-success"><i><?php echo $data['infos']['gnlab_awal']; ?></i> ~ <i><?php echo $data['infos']['gnlab_akhir']; ?></i></div>
