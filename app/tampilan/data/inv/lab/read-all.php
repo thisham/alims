@@ -18,30 +18,39 @@
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="daftar" role="tabpanel">
 					<center>
-						<table class="table table-responsive table-striped table-hover mt-2">
-							<thead>
-								<tr>
-									<th>No.</th>
-									<th>Kode Lab</th>
-									<th>Nama Lab</th>
-									<th>Lokasi</th>
-									<th>Penanggung Jawab</th>
-									<th>Aksi</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php foreach ($data['lists'] as $lab): ?>
+						<div class="table-responsive">
+							<table class="table table-striped table-hover mt-2">
+								<thead>
 									<tr>
-										<td><?php echo $no++; ?></td>
-										<td><?php echo $lab['lab_id']; ?></td>
-										<td class="text-left"><?php echo $lab['lab_nama']; ?></td>
-										<td class="text-left"><?php echo $lab['lab_lokasi']; ?></td>
-										<td class="text-left"><?php echo $lab['nama']; ?></td>
-										<td><a href="<?php echo BASIS_URL . '/data/lab/edit/' . $lab['lab_id']; ?>" class="badge badge-warning">Edit</a> <a href="<?php echo BASIS_URL . '/data/lab/hapus/' . $lab['lab_id']; ?>" class="badge badge-danger">Hapus</a></td>
+										<th>No.</th>
+										<th>Kode Lab</th>
+										<th>Nama Lab</th>
+										<th>Lokasi</th>
+										<th>Penanggung Jawab</th>
+										<th>Aksi</th>
 									</tr>
-								<?php endforeach ?>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<?php foreach ($data['lists'] as $lab): ?>
+										<tr>
+											<td><?php echo $no++; ?></td>
+											<td><?php echo $lab['lab_id']; ?></td>
+											<td class="text-left"><?php echo $lab['lab_nama']; ?></td>
+											<td class="text-left"><?php echo $lab['lab_lokasi']; ?></td>
+											<td class="text-left"><?php echo $lab['nama']; ?></td>
+											<td>
+												<div class="btn-group">
+													<a href="<?php echo BASIS_URL . '/data/lab/edit/' . $lab['lab_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+													<a href="<?php echo BASIS_URL . '/data/lab/hapus/' . $lab['lab_id']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+												</div>
+													
+											</td>
+										</tr>
+									<?php endforeach ?>
+								</tbody>
+							</table>
+						</div>
+							
 					</center>
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
