@@ -25,50 +25,53 @@
 							<a href="<?php echo BASIS_URL; ?>/data/mtk/pra" class="btn btn-outline-secondary <?php if ($data['datas'] == 'pra') echo 'active'; ?>">Belum Dibuka</a>
 							<a href="<?php echo BASIS_URL; ?>/data/mtk/invalid" class="btn btn-outline-secondary <?php if ($data['datas'] == 'invalid') echo 'active'; ?>">Invalid</a>
 						</div>
-						<table class="table table-responsive table-striped table-hover mt-2">
-							<thead>
-								<tr>
-									<th>No.</th>
-									<th>ID Matkul</th>
-									<th>Nama Matkul</th>
-									<th>Akronim</th>
-									<th>Pengampu</th>
-									<th>Periode</th>
-									<th>Status</th>
-									<th>Aksi</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php foreach ($data['lists'] as $mtk): ?>
+						<div class="table-responsive">
+							<table class="table table-striped table-hover mt-2">
+								<thead>
 									<tr>
-										<td><?php echo $no++; ?></td>
-										<td><?php echo $mtk['mtk_id']; ?></td>
-										<td class="text-left"><?php echo $mtk['mtk_nama']; ?></td>
-										<td class="text-left"><?php echo $mtk['mtk_akronim']; ?></td>
-										<td class="text-left"><?php echo $mtk['dsn_nama']; ?></td>
-										<td><?php echo $mtk['mtk_periode']; ?></td>
-										<td>
-											<?php if ($mtk['mtk_buka'] == 0 && $mtk['mtk_tutup'] == 0) { ?>
-												<div class="badge badge-warning">Belum Aktif</div>
-											<?php } else if ($mtk['mtk_buka'] != 0 && $mtk['mtk_tutup'] == 0) { ?>
-												<div class="badge badge-success">Aktif</div>
-											<?php } else if ($mtk['mtk_buka'] != 0 && $mtk['mtk_tutup'] != 0) { ?>
-												<div class="badge badge-danger">Telah Berakhir</div>
-											<?php } else { ?>
-												<div class="badge badge-secondary">Invalid</div>
-											<?php } ?>
-										</td>
-										<td>
-											<div class="btn-group">
-												<a href="<?php echo BASIS_URL . '/data/mtk/detail/' . $mtk['mtk_id']; ?>" class="btn btn-primary btn-sm">Detail</a>
-												<a href="<?php echo BASIS_URL . '/data/mtk/edit/' . $mtk['mtk_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-												<a href="<?php echo BASIS_URL . '/data/mtk/hapus/' . $mtk['mtk_id']; ?>" class="btn btn-danger btn-sm">Hapus</a>
-											</div>
-										</td>
+										<th>No.</th>
+										<th>ID Matkul</th>
+										<th>Nama Matkul</th>
+										<th>Akronim</th>
+										<th>Pengampu</th>
+										<th>Periode</th>
+										<th>Status</th>
+										<th>Aksi</th>
 									</tr>
-								<?php endforeach ?>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<?php foreach ($data['lists'] as $mtk): ?>
+										<tr>
+											<td><?php echo $no++; ?></td>
+											<td><?php echo $mtk['mtk_id']; ?></td>
+											<td class="text-left"><?php echo $mtk['mtk_nama']; ?></td>
+											<td class="text-left"><?php echo $mtk['mtk_akronim']; ?></td>
+											<td class="text-left"><?php echo $mtk['dsn_nama']; ?></td>
+											<td><?php echo $mtk['mtk_periode']; ?></td>
+											<td>
+												<?php if ($mtk['mtk_buka'] == 0 && $mtk['mtk_tutup'] == 0) { ?>
+													<div class="badge badge-warning">Belum Aktif</div>
+												<?php } else if ($mtk['mtk_buka'] != 0 && $mtk['mtk_tutup'] == 0) { ?>
+													<div class="badge badge-success">Aktif</div>
+												<?php } else if ($mtk['mtk_buka'] != 0 && $mtk['mtk_tutup'] != 0) { ?>
+													<div class="badge badge-danger">Telah Berakhir</div>
+												<?php } else { ?>
+													<div class="badge badge-secondary">Invalid</div>
+												<?php } ?>
+											</td>
+											<td>
+												<div class="btn-group">
+													<a href="<?php echo BASIS_URL . '/data/mtk/detail/' . $mtk['mtk_id']; ?>" class="btn btn-primary btn-sm">Detail</a>
+													<a href="<?php echo BASIS_URL . '/data/mtk/edit/' . $mtk['mtk_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+													<a href="<?php echo BASIS_URL . '/data/mtk/hapus/' . $mtk['mtk_id']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+												</div>
+											</td>
+										</tr>
+									<?php endforeach ?>
+								</tbody>
+							</table>
+						</div>
+							
 					</center>
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
