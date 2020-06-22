@@ -30,47 +30,50 @@
 							</div>
 						</form>
 							
-						<table class="table table-responsive table-striped table-hover mt-2">
-							<thead>
-								<tr>
-									<th>No.</th>
-									<th>ID Dosen</th>
-									<th>Nama</th>
-									<th>Gelar</th>
-									<!-- <th>Prodi</th>
-									<th>Angkatan</th>
-									<th>Kelas</th> -->
-									<th>Aksi</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php if ($data['lists'] == NULL): ?>
+						<div class="table-responsive">
+							<table class="table table-striped table-hover mt-2">
+								<thead>
 									<tr>
-										<td colspan="5">Tidak ada data.</td>
+										<th>No.</th>
+										<th>ID Dosen</th>
+										<th>Nama</th>
+										<th>Gelar</th>
+										<!-- <th>Prodi</th>
+										<th>Angkatan</th>
+										<th>Kelas</th> -->
+										<th>Aksi</th>
 									</tr>
-								<?php else: ?>
-									<?php foreach ($data['lists'] as $dsn): ?>
+								</thead>
+								<tbody>
+									<?php if ($data['lists'] == NULL): ?>
 										<tr>
-											<td><?php echo $no++; ?></td>
-											<td><?php echo $dsn['dsn_id']; ?></td>
-											<td class="text-left"><?php echo $dsn['dsn_nama']; ?></td>
-											<td class="text-left"><?php echo $dsn['dsn_gelar']; ?></td>
-											<!-- <td><?php echo $mhs['prodi']; ?></td>
-											<td><?php echo $mhs['angkatan']; ?></td>
-											<td><?php echo $mhs['kelas']; ?></td> -->
-											<td>
-												<div class="btn-group">
-													<a href="<?php echo BASIS_URL . '/data/dsn/detail/' . $dsn['dsn_id']; ?>" class="btn btn-sm btn-primary">Detail</a> 
-													<a href="<?php echo BASIS_URL . '/data/dsn/edit/' . $dsn['dsn_id']; ?>" class="btn btn-sm btn-warning">Edit</a> 
-													<a href="<?php echo BASIS_URL . '/data/dsn/hapus/' . $dsn['dsn_id']; ?>" class="btn btn-sm btn-danger">Hapus</a></td>
-												</div>
-
+											<td colspan="5">Tidak ada data.</td>
 										</tr>
-									<?php endforeach ?>
-								<?php endif ?>
-									
-							</tbody>
-						</table>
+									<?php else: ?>
+										<?php foreach ($data['lists'] as $dsn): ?>
+											<tr>
+												<td><?php echo $no++; ?></td>
+												<td><?php echo $dsn['dsn_id']; ?></td>
+												<td class="text-left"><?php echo $dsn['dsn_nama']; ?></td>
+												<td class="text-left"><?php echo $dsn['dsn_gelar']; ?></td>
+												<!-- <td><?php echo $mhs['prodi']; ?></td>
+												<td><?php echo $mhs['angkatan']; ?></td>
+												<td><?php echo $mhs['kelas']; ?></td> -->
+												<td>
+													<div class="btn-group">
+														<a href="<?php echo BASIS_URL . '/data/dsn/detail/' . $dsn['dsn_id']; ?>" class="btn btn-sm btn-primary">Detail</a> 
+														<a href="<?php echo BASIS_URL . '/data/dsn/edit/' . $dsn['dsn_id']; ?>" class="btn btn-sm btn-warning">Edit</a> 
+														<a href="<?php echo BASIS_URL . '/data/dsn/hapus/' . $dsn['dsn_id']; ?>" class="btn btn-sm btn-danger">Hapus</a></td>
+													</div>
+
+											</tr>
+										<?php endforeach ?>
+									<?php endif ?>
+										
+								</tbody>
+							</table>
+						</div>
+							
 					</center>
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
