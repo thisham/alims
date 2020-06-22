@@ -18,27 +18,30 @@
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="daftar" role="tabpanel">
 					<center>
-						<table class="table table-responsive table-striped table-hover mt-2">
-							<tr>
-								<th>No.</th>
-								<th>Kode Prodi</th>
-								<th>Nama Prodi</th>
-								<th>Aksi</th>
-							</tr>
-							<?php foreach ($data['lists'] as $prodi): ?>
+						<div class="table-responsive">
+							<table class="table table-striped table-hover mt-2">
 								<tr>
-									<td><?php echo $no++; ?></td>
-									<td><?php echo $prodi['kode']; ?></td>
-									<td><?php echo $prodi['prodi']; ?></td>
-									<td>
-										<div class="btn-group">
-											<a href="<?php echo BASIS_URL . '/data/prodi/edit/' . $prodi['kode']; ?>" class="btn btn-warning btn-sm">Edit</a> 
-											<a href="<?php echo BASIS_URL . '/data/prodi/hapus/' . $prodi['kode']; ?>" class="btn btn-danger btn-sm">Hapus</a>
-										</div>
-									</td>
+									<th class="text-center">No.</th>
+									<th class="text-center">Kode Prodi</th>
+									<th class="text-center">Nama Prodi</th>
+									<th class="text-center">Aksi</th>
 								</tr>
-							<?php endforeach ?>
-						</table>
+								<?php foreach ($data['lists'] as $prodi): ?>
+									<tr>
+										<td><?php echo $no++; ?></td>
+										<td><?php echo $prodi['kode']; ?></td>
+										<td><?php echo $prodi['prodi']; ?></td>
+										<td>
+											<div class="btn-group">
+												<a href="<?php echo BASIS_URL . '/data/prodi/edit/' . $prodi['kode']; ?>" class="btn btn-warning btn-sm">Edit</a> 
+												<a href="<?php echo BASIS_URL . '/data/prodi/hapus/' . $prodi['kode']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+											</div>
+										</td>
+									</tr>
+								<?php endforeach ?>
+							</table>
+						</div>
+							
 					</center>
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
