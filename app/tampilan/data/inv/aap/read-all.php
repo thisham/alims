@@ -18,32 +18,35 @@
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="daftar" role="tabpanel">
 					<center>
-						<table class="table table-responsive table-striped table-hover mt-2">
-							<thead>
-								<tr>
-									<th>No.</th>
-									<th>Kode Alat</th>
-									<th>Nama Alat</th>
-									<th>Letak</th>
-									<th>Merek - Tipe</th>
-									<th>Anggaran</th>
-									<th>Aksi</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php foreach ($data['lists'] as $aap): ?>
+						<div class="table-responsive">
+							<table class="table table-striped table-hover mt-2">
+								<thead>
 									<tr>
-										<td><?php echo $no++; ?></td>
-										<td><?php echo $aap['aap_id']; ?></td>
-										<td class="text-left"><?php echo $aap['aap_nama']; ?></td>
-										<td class="text-left"><?php echo $aap['lab_nama']; ?></td>
-										<td class="text-left"><?php echo $aap['aap_merek'] . ' - ' . $aap['aap_tipe']; ?></td>
-										<td class="text-left"><?php echo $aap['aap_anggaran']; ?></td>
-										<td><a href="<?php echo BASIS_URL . '/data/aap/detail/' . $aap['aap_id']; ?>" class="badge badge-primary">Detail</a> <a href="<?php echo BASIS_URL . '/data/aap/edit/' . $aap['aap_id']; ?>" class="badge badge-warning">Edit</a> <a href="<?php echo BASIS_URL . '/data/aap/hapus/' . $aap['aap_id']; ?>" class="badge badge-danger">Hapus</a></td>
+										<th>No.</th>
+										<th>Kode Alat</th>
+										<th>Nama Alat</th>
+										<th>Letak</th>
+										<th>Merek - Tipe</th>
+										<th>Anggaran</th>
+										<th>Aksi</th>
 									</tr>
-								<?php endforeach ?>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<?php foreach ($data['lists'] as $aap): ?>
+										<tr>
+											<td><?php echo $no++; ?></td>
+											<td><?php echo $aap['aap_id']; ?></td>
+											<td class="text-left"><?php echo $aap['aap_nama']; ?></td>
+											<td class="text-left"><?php echo $aap['lab_nama']; ?></td>
+											<td class="text-left"><?php echo $aap['aap_merek'] . ' - ' . $aap['aap_tipe']; ?></td>
+											<td class="text-left"><?php echo $aap['aap_anggaran']; ?></td>
+											<td><a href="<?php echo BASIS_URL . '/data/aap/detail/' . $aap['aap_id']; ?>" class="badge badge-primary">Detail</a> <a href="<?php echo BASIS_URL . '/data/aap/edit/' . $aap['aap_id']; ?>" class="badge badge-warning">Edit</a> <a href="<?php echo BASIS_URL . '/data/aap/hapus/' . $aap['aap_id']; ?>" class="badge badge-danger">Hapus</a></td>
+										</tr>
+									<?php endforeach ?>
+								</tbody>
+							</table>
+						</div>
+							
 					</center>
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
