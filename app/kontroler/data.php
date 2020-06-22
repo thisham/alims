@@ -100,11 +100,11 @@ class data extends Kontroler
 
 				case 'hapus':
 					if ( $this->model('m_warga')->mhs_hapus($id) > 0 ) {
-						Flasher::setFlash('Data dosen', 'berhasil dihapus', '', 'success');
+						Flasher::setFlash('Data mahasiswa', 'berhasil dihapus', '', 'success');
 						header('location:' . BASIS_URL . '/data/mhs');
 						exit;
 					} else {
-						Flasher::setFlash('Data dosen', 'gagal dihapus', '', 'danger');
+						Flasher::setFlash('Data mahasiswa', 'gagal dihapus', '', 'danger');
 						header('location:' . BASIS_URL . '/data/mhs');
 						exit;
 					}
