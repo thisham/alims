@@ -28,46 +28,49 @@
 								</div>
 							</div>
 						</form>
-							
-						<table class="table table-responsive table-striped table-hover mt-2">
-							<thead>
-								<tr>
-									<th>No.</th>
-									<th>NIM</th>
-									<th>Nama</th>
-									<!-- <th>Prodi</th>
-									<th>Angkatan</th>
-									<th>Kelas</th> -->
-									<th>Aksi</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php if ($data['lists'] == NULL): ?>
+						
+						<div class="table-responsive">
+							<table class="table table-striped table-hover mt-2">
+								<thead>
 									<tr>
-										<td colspan="4">Tidak ada data.</td>
+										<th>No.</th>
+										<th>NIM</th>
+										<th>Nama</th>
+										<!-- <th>Prodi</th>
+										<th>Angkatan</th>
+										<th>Kelas</th> -->
+										<th>Aksi</th>
 									</tr>
-								<?php else: ?>
-									<?php foreach ($data['lists'] as $mhs): ?>
+								</thead>
+								<tbody>
+									<?php if ($data['lists'] == NULL): ?>
 										<tr>
-											<td><?php echo $no++; ?></td>
-											<td><?php echo $mhs['nim']; ?></td>
-											<td class="text-left"><?php echo $mhs['nama']; ?></td>
-											<!-- <td><?php echo $mhs['prodi']; ?></td>
-											<td><?php echo $mhs['angkatan']; ?></td>
-											<td><?php echo $mhs['kelas']; ?></td> -->
-											<td>
-												<div class="btn-group">
-													<a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>" class="btn btn-primary btn-sm">Detail</a>
-													<a href="<?php echo BASIS_URL . '/data/mhs/edit/' . $mhs['nim']; ?>" class="btn btn-warning btn-sm">Edit</a>
-													<a href="<?php echo BASIS_URL . '/data/mhs/hapus/' . $mhs['nim']; ?>" class="btn btn-danger btn-sm">Hapus</a>
-												</div>
-											</td>
+											<td colspan="4">Tidak ada data.</td>
 										</tr>
-									<?php endforeach ?>
-								<?php endif ?>
-									
-							</tbody>
-						</table>
+									<?php else: ?>
+										<?php foreach ($data['lists'] as $mhs): ?>
+											<tr>
+												<td><?php echo $no++; ?></td>
+												<td><?php echo $mhs['nim']; ?></td>
+												<td class="text-left"><?php echo $mhs['nama']; ?></td>
+												<!-- <td><?php echo $mhs['prodi']; ?></td>
+												<td><?php echo $mhs['angkatan']; ?></td>
+												<td><?php echo $mhs['kelas']; ?></td> -->
+												<td>
+													<div class="btn-group">
+														<a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>" class="btn btn-primary btn-sm">Detail</a>
+														<a href="<?php echo BASIS_URL . '/data/mhs/edit/' . $mhs['nim']; ?>" class="btn btn-warning btn-sm">Edit</a>
+														<a href="<?php echo BASIS_URL . '/data/mhs/hapus/' . $mhs['nim']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+													</div>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									<?php endif ?>
+										
+								</tbody>
+							</table>
+						</div>
+							
 					</center>
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
