@@ -72,7 +72,7 @@ class m_gunakan extends Kontroler
 
 			function gnlab_detail($data)
 			{
-				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON gnlab_lab = lab_id JOIN $this->dtmhs ON gnlab_mhs = nim JOIN $this->dtdsn ON gnlab_dsn = dsn_id JOIN $this->dtmtk ON gnlab_mtk = mtk_id JOIN $this->dtlbr ON gnlab_lbrn = user WHERE gnlab_id = :gnlab_id";
+				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id` WHERE gnlab_id = :gnlab_id";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnlab_id', $data);
 				$this->db->eksekusi();
