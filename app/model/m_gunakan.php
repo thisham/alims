@@ -40,16 +40,17 @@ class m_gunakan extends Kontroler
 			
 			function gnlab_tambah($data, $sesi)
 			{
-				$kueri = "INSERT INTO $this->gnlab VALUES (:gnlab_id, :gnlab_lab, :gnlab_mhs, :gnlab_dsn, :gnlab_mtk, :gnlab_awal, :gnlab_akhir, :gnlab_sign, :gnlab_lbrn)";
+				$kueri = "INSERT INTO $this->gnlab VALUES (:gnlab_id, :gnlab_lab, :gnlab_mhs, :gnlab_dsn, :gnlab_mtk, :gnlab_plan, :gnlab_awal, :gnlab_akhir, :gnlab_sign, :gnlab_lbrn)";
 				$this->db->kueri($kueri);
-				$this->db->ikat('gnlab_id', $this->gnlab_idbaru());
+				$this->db->ikat('gnlab_id', $data['gnlab_id']);
 				$this->db->ikat('gnlab_lab', $data['gnlab_lab']);
 				$this->db->ikat('gnlab_mhs', $data['gnlab_mhs']);
 				$this->db->ikat('gnlab_dsn', $data['gnlab_dsn']);
 				$this->db->ikat('gnlab_mtk', $data['gnlab_mtk']);
-				$this->db->ikat('gnlab_awal', $data['gnlab_awal']);
-				$this->db->ikat('gnlab_akhir', $data['gnlab_akhir']);
-				$this->db->ikat('gnlab_sign', $data['gnlab_sign']);
+				$this->db->ikat('gnlab_plan', $data['gnlab_tanggal'] . ' ' . $data['gnlab_waktu']);
+				$this->db->ikat('gnlab_awal', 0);
+				$this->db->ikat('gnlab_akhir', 0);
+				$this->db->ikat('gnlab_sign', date('Y-m-d H:i:s'));
 				$this->db->ikat('gnlab_lbrn', $sesi);
 				$this->db->eksekusi();
 				$hasil = $this->db->hit_baris();
@@ -61,7 +62,7 @@ class m_gunakan extends Kontroler
 
 			function gnlab_list()
 			{
-				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON gnlab_lab = lab_id JOIN $this->dtmhs ON gnlab_mhs = nim JOIN $this->dtdsn ON gnlab_dsn = dsn_id JOIN $this->dtmtk ON gnlab_mtk = mtk_id JOIN $this->dtlbr ON gnlab_lbrn = user_id";
+				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id`";
 				$this->db->kueri($kueri);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
