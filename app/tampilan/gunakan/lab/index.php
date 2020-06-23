@@ -12,7 +12,7 @@
 </script>
 
 <div class="container mt-4">
-	<h3>Data Pemakaian Laboratorium</h3>
+	<h3><?php echo $data['judul']; ?></h3>
 	<hr>
 	<?php Flasher::flash(); ?>
 	<?php $no = 1; ?>

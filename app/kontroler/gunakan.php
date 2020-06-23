@@ -10,7 +10,7 @@ class gunakan extends Kontroler
 	{
 		if ( $this->datasesi('user') == NULL ) {
 			$data = array(
-				'judul'	=> 'Akses Terbatas - ALIMS'
+				'judul'	=> 'Akses Terbatas'
 			);
 			$this->tampilkan('templat/header', $data);
 			$this->tampilkan('templat/navbar', $data);
@@ -23,7 +23,7 @@ class gunakan extends Kontroler
 	function indeks()
 	{
 		$data = array(
-			'judul'	=> 'Penggunaan - ALIMS',
+			'judul'	=> 'Penggunaan',
 			'pages'	=> 'Penggunaan'
 		);
 		$this->tampilkan('templat/header', $data);
@@ -65,7 +65,7 @@ class gunakan extends Kontroler
 
 			case 'detail':
 				$data = array(
-					'judul'	=> 'Penggunaan - ALIMS',
+					'judul'	=> 'Penggunaan',
 					'pages'	=> 'Penggunaan',
 					'infos'	=> $this->model('m_gunakan')->gnlab_detail($id)
 				);
@@ -77,7 +77,7 @@ class gunakan extends Kontroler
 
 			default:
 				$data = array(
-					'judul'	=> 'Penggunaan - ALIMS',
+					'judul'	=> 'Penggunaan',
 					'pages'	=> 'Penggunaan',
 					'newID'	=> $this->model('m_gunakan')->gnlab_idbaru(),
 					'mtkul'	=> $this->model('m_akademik')->mtk_list('aktif', 'list'),

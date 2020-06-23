@@ -1,5 +1,5 @@
 <div class="container mt-4">
-	<h3>Detail Mahasiswa</h3>
+	<h3><?php echo $data['judul']; ?></h3>
 	<hr>
 	<div class="container mt-4">
 		<div class="card">

@@ -8,7 +8,7 @@ class beranda extends Kontroler
 	
 	function indeks()
 	{
-		$data = array(	'judul' => 'Beranda',
+		$data = array(	'judul' => 'Beranda - ALIMS',
 						'pages' => 'Beranda',
 						'nama'  => $this->model('model_pengguna')->getPengguna());
 		$this->tampilkan('templat/header', $data);

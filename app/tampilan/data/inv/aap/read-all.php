@@ -1,5 +1,5 @@
 <div class="container mt-4">
-	<h3>Data Alat Paten</h3>
+	<h3><?php echo $data['judul']; ?></h3>
 	<hr>
 	<?php Flasher::flash(); ?>
 	<?php $no = 1; ?>

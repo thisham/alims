@@ -10,7 +10,7 @@ class data extends Kontroler
 	{
 		if ( $this->datasesi('user') == NULL ) {
 			$data = array(
-				'judul'	=> 'Akses Terbatas - ALIMS'
+				'judul'	=> 'Akses Terbatas'
 			);
 			$this->tampilkan('templat/header', $data);
 			$this->tampilkan('templat/navbar', $data);
@@ -23,7 +23,7 @@ class data extends Kontroler
 	function indeks()
 	{
 		$data = array(
-			'judul'	=> 'Data - ALIMS',
+			'judul'	=> 'Data',
 			'pages'	=> 'Data'
 		);
 		$this->tampilkan('templat/header', $data);
@@ -39,7 +39,7 @@ class data extends Kontroler
 			switch ( $menu ) {
 				// case 'tambah':
 				// 	$data = array(
-				// 		'judul'	=> 'Tambah Data Mahasiswa - ALIMS',
+				// 		'judul'	=> 'Tambah Data Mahasiswa',
 				// 		'pages'	=> 'Data',
 				// 		'prodi'	=> $this->model('m_akademik')->prodi_list()
 				// 	);
@@ -63,7 +63,7 @@ class data extends Kontroler
 
 				case 'edit':
 					$data = array(
-						'judul'	=> 'Edit Data Mahasiswa - ALIMS',
+						'judul'	=> 'Edit Data Mahasiswa',
 						'pages'	=> 'Data',
 						'prodi'	=> $this->model('m_akademik')->prodi_list(),
 						'mhs'	=> $this->model('m_warga')->mhs_detail($id)
@@ -88,7 +88,7 @@ class data extends Kontroler
 
 				case 'detail':
 					$data = array(
-						'judul'	=> 'Detail Mahasiswa - ALIMS',
+						'judul'	=> 'Detail Mahasiswa',
 						'pages'	=> 'Data',
 						'mhs'	=> $this->model('m_warga')->mhs_detail($id)
 					);
@@ -112,7 +112,7 @@ class data extends Kontroler
 
 				case 'cari':
 					$data = array(
-						'judul'	=> 'Tambah Data Mahasiswa - ALIMS',
+						'judul'	=> 'Tambah Data Mahasiswa',
 						'pages'	=> 'Data',
 						'hasil'	=> $this->model('m_warga')->mhs_cari($_POST)
 					);
@@ -124,7 +124,7 @@ class data extends Kontroler
 
 				default:
 					$data = array(
-						'judul'	=> 'Data Mahasiswa - ALIMS',
+						'judul'	=> 'Data Mahasiswa',
 						'pages'	=> 'Data',
 						'lists'	=> $this->model('m_warga')->mhs_list(),
 						'prodi'	=> $this->model('m_akademik')->prodi_list()
@@ -142,7 +142,7 @@ class data extends Kontroler
 			switch ( $menu ) {
 				// case 'tambah':
 				// 	$data = array(
-				// 		'judul'	=> 'Tambah Data Dosen - ALIMS',
+				// 		'judul'	=> 'Tambah Data Dosen',
 				// 		'pages'	=> 'Data',
 				// 		'baru'	=> $this->model('m_warga')->dsn_idbaru()
 				// 	);
@@ -166,7 +166,7 @@ class data extends Kontroler
 
 				case 'edit':
 					$data = array(
-						'judul'	=> 'Edit Data Dosen - ALIMS',
+						'judul'	=> 'Edit Data Dosen',
 						'pages'	=> 'Data',
 						'dosen'	=> $this->model('m_warga')->dsn_detail($id)
 					);
@@ -190,7 +190,7 @@ class data extends Kontroler
 
 				case 'detail':
 					$data = array(
-						'judul'	=> 'Detail Dosen - ALIMS',
+						'judul'	=> 'Detail Dosen',
 						'pages'	=> 'Data',
 						'dosen'	=> $this->model('m_warga')->dsn_detail($id)
 					);
@@ -214,7 +214,7 @@ class data extends Kontroler
 
 				case 'cari':
 					$data = array(
-						'judul'	=> 'Tambah Data Dosen - ALIMS',
+						'judul'	=> 'Tambah Data Dosen',
 						'pages'	=> 'Data',
 						'hasil'	=> $this->model('m_warga')->dsn_cari($_POST)
 					);
@@ -226,7 +226,7 @@ class data extends Kontroler
 
 				default:
 					$data = array(
-						'judul'	=> 'Data Dosen - ALIMS',
+						'judul'	=> 'Data Dosen',
 						'pages'	=> 'Data',
 						'lists'	=> $this->model('m_warga')->dsn_list(),
 						'baru'	=> $this->model('m_warga')->dsn_idbaru()
@@ -246,7 +246,7 @@ class data extends Kontroler
 			switch ( $menu ) {
 				// case 'tambah':
 				// 	$data = array(
-				// 		'judul'	=> 'Tambah Data Laboratorium - ALIMS',
+				// 		'judul'	=> 'Tambah Data Laboratorium',
 				// 		'pages'	=> 'Data',
 				// 		'users'	=> $this->model('m_portal')->list_user(),
 				// 		'baru'	=> $this->model('m_inventaris')->lab_idbaru()
@@ -271,7 +271,7 @@ class data extends Kontroler
 
 				case 'edit':
 					$data = array(
-						'judul'	=> 'Edit Data Laboratorium - ALIMS',
+						'judul'	=> 'Edit Data Laboratorium',
 						'pages'	=> 'Data',
 						'infos'	=> $this->model('m_inventaris')->lab_detail($id),
 						'users'	=> $this->model('m_portal')->list_user()
@@ -308,7 +308,7 @@ class data extends Kontroler
 
 				case 'detail':
 					$data = array(
-						'judul'	=> 'Detail Laboratorium - ALIMS',
+						'judul'	=> 'Detail Laboratorium',
 						'pages'	=> 'Data',
 						'gnlab'	=> $this->model('m_gunakan')->gnlab_byLab($id),
 						'labs'	=> $this->model('m_inventaris')->lab_detail($id)
@@ -321,7 +321,7 @@ class data extends Kontroler
 
 				default:
 					$data = array(
-						'judul'	=> 'Data Laboratorium - ALIMS',
+						'judul'	=> 'Data Laboratorium',
 						'pages'	=> 'Data',
 						'lists'	=> $this->model('m_inventaris')->lab_list(),
 						'users'	=> $this->model('m_portal')->list_user(),
@@ -340,7 +340,7 @@ class data extends Kontroler
 			switch ( $menu ) {
 				// case 'tambah':
 				// 	$data = array(
-				// 		'judul'	=> 'Tambah Data Alat Paten - ALIMS',
+				// 		'judul'	=> 'Tambah Data Alat Paten',
 				// 		'pages'	=> 'Data',
 				// 		'labs'	=> $this->model('m_inventaris')->lab_list(),
 				// 		'baru'	=> $this->model('m_inventaris')->aap_idbaru()
@@ -372,7 +372,7 @@ class data extends Kontroler
 
 				case 'edit':
 					$data = array(
-						'judul'	=> 'Edit Data Alat Paten - ALIMS',
+						'judul'	=> 'Edit Data Alat Paten',
 						'pages'	=> 'Data',
 						'infos'	=> $this->model('m_inventaris')->aap_detail($id),
 						'labs'	=> $this->model('m_inventaris')->lab_list()
@@ -397,7 +397,7 @@ class data extends Kontroler
 
 				case 'detail':
 					$data = array(
-						'judul'	=> 'Detail Alat Paten - ALIMS',
+						'judul'	=> 'Detail Alat Paten',
 						'pages'	=> 'Data',
 						'infos'	=> $this->model('m_inventaris')->aap_detail($id)
 					);
@@ -421,7 +421,7 @@ class data extends Kontroler
 				
 				default:
 					$data = array(
-						'judul'	=> 'Data Alat Paten - ALIMS',
+						'judul'	=> 'Data Alat Paten',
 						'pages'	=> 'Data',
 						'lists'	=> $this->model('m_inventaris')->aap_list(),
 						'labs'	=> $this->model('m_inventaris')->lab_list(),
@@ -442,7 +442,7 @@ class data extends Kontroler
 			switch ( $menu ) {
 				// case 'tambah':
 				// 	$data = array(
-				// 		'judul'	=> 'Data Program Studi - ALIMS',
+				// 		'judul'	=> 'Data Program Studi',
 				// 		'pages'	=> 'Data'
 				// 	);
 				// 	$this->tampilkan('templat/header', $data);
@@ -465,7 +465,7 @@ class data extends Kontroler
 
 				case 'edit':
 					$data = array(
-						'judul'	=> 'Edit Data Program Studi - ALIMS',
+						'judul'	=> 'Edit Data Program Studi',
 						'pages'	=> 'Data',
 						'prodi'	=> $this->model('m_akademik')->prodi_detail($id)
 					);
@@ -501,7 +501,7 @@ class data extends Kontroler
 
 				default:
 					$data = array(
-						'judul'	=> 'Data Program Studi - ALIMS',
+						'judul'	=> 'Data Program Studi',
 						'pages'	=> 'Data',
 						'lists'	=> $this->model('m_akademik')->prodi_list()
 					);
@@ -556,7 +556,7 @@ class data extends Kontroler
 						
 						default:
 							$data = array(
-								'judul' => 'Kesalahan 404 - ALIMS'
+								'judul' => 'Kesalahan 404'
 							);
 							$this->tampilkan('templat/header', $data);
 							$this->tampilkan('templat/navbar_dash', $data);
@@ -568,7 +568,7 @@ class data extends Kontroler
 
 				case 'edit':
 					$data = array(
-						'judul' => 'Edit Data Mata Kuliah - ALIMS',
+						'judul' => 'Edit Data Mata Kuliah',
 						'pages'	=> 'Data',
 						'dosen' => $this->model('m_warga')->dsn_list(),
 						'infos'	=> $this->model('m_akademik')->mtk_detail($id)
@@ -605,7 +605,7 @@ class data extends Kontroler
 
 				case 'detail':
 					$data = array(
-						'judul' => 'Detail Mata Kuliah - ALIMS',
+						'judul' => 'Detail Mata Kuliah',
 						'pages'	=> 'Data',
 						'infos'	=> $this->model('m_akademik')->mtk_detail($id)
 					);
@@ -617,7 +617,7 @@ class data extends Kontroler
 
 				case 'cari':
 					$data = array(
-						'judul'	=> 'Data Mata Kuliah - ALIMS',
+						'judul'	=> 'Data Mata Kuliah',
 						'pages'	=> 'Data',
 						'lists'	=> $this->model('m_akademik')->mtk_cari($_POST),
 						'datas' => 'semua'
@@ -630,7 +630,7 @@ class data extends Kontroler
 
 				default:
 					$data = array(
-						'judul'	=> 'Data Mata Kuliah - ALIMS',
+						'judul'	=> 'Data Mata Kuliah',
 						'pages'	=> 'Data',
 						'lists'	=> $this->model('m_akademik')->mtk_list($menu),
 						'dosen' => $this->model('m_warga')->dsn_list(),
