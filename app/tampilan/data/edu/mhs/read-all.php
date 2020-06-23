@@ -45,7 +45,7 @@
 								<tbody>
 									<?php if ($data['lists'] == NULL): ?>
 										<tr>
-											<td colspan="4">Tidak ada data.</td>
+											<td colspan="4" class="text-center">Tidak ada data.</td>
 										</tr>
 									<?php else: ?>
 										<?php foreach ($data['lists'] as $mhs): ?>
