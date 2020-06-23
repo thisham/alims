@@ -306,6 +306,19 @@ class data extends Kontroler
 					}
 					break;
 
+				case 'detail':
+					$data = array(
+						'judul'	=> 'Detail Laboratorium - ALIMS',
+						'pages'	=> 'Data',
+						'gnlab'	=> $this->model('m_gunakan')->gnlab_byLab($id),
+						'labs'	=> $this->model('m_inventaris')->lab_detail($id)
+					);
+					$this->tampilkan('templat/header', $data);
+					$this->tampilkan('templat/navbar_dash', $data);
+					$this->tampilkan('data/inv/lab/detail', $data);
+					$this->tampilkan('templat/footer', $data);
+					break;
+
 				default:
 					$data = array(
 						'judul'	=> 'Data Laboratorium - ALIMS',
