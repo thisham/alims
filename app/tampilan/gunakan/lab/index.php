@@ -1,3 +1,16 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		var data = [
+			"19081092 - Hamdan Yuwafi Mastu Wijaya",
+			"19081091 - Adriaan Lukistra",
+			"19081090 - Asdasd"
+		];
+		$("#gnlab_mhs").autocomplete({
+			lookup: data
+		});
+	});
+</script>
+
 <div class="container mt-4">
 	<h3>Data Pemakaian Laboratorium</h3>
 	<hr>
