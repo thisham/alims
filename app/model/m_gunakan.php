@@ -40,15 +40,16 @@ class m_gunakan extends Kontroler
 			
 			function gnlab_tambah($data, $sesi)
 			{
+				$data['gnlab_mhs'] = explode(' - ', $data['gnlab_mhs']);
 				$kueri = "INSERT INTO $this->gnlab VALUES (:gnlab_id, :gnlab_lab, :gnlab_mhs, :gnlab_dsn, :gnlab_mtk, :gnlab_plan, :gnlab_awal, :gnlab_akhir, :gnlab_sign, :gnlab_lbrn)";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnlab_id', $data['gnlab_id']);
 				$this->db->ikat('gnlab_lab', $data['gnlab_lab']);
-				$this->db->ikat('gnlab_mhs', $data['gnlab_mhs']);
+				$this->db->ikat('gnlab_mhs', $data['gnlab_mhs'][0]);
 				$this->db->ikat('gnlab_dsn', $data['gnlab_dsn']);
 				$this->db->ikat('gnlab_mtk', $data['gnlab_mtk']);
 				$this->db->ikat('gnlab_plan', $data['gnlab_tanggal'] . ' ' . $data['gnlab_waktu']);
-				$this->db->ikat('gnlab_awal', 0);
+				$this->db->ikat('gnlab_awal', date('Y-m-d H:i:s'));
 				$this->db->ikat('gnlab_akhir', 0);
 				$this->db->ikat('gnlab_sign', date('Y-m-d H:i:s'));
 				$this->db->ikat('gnlab_lbrn', $sesi);
