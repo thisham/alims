@@ -13,7 +13,7 @@
 	      			<a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown">Penggunaan</a>
 	      			<div class="dropdown-menu">
 	      				<a href="<?php echo BASIS_URL; ?>/gunakan/lab" class="dropdown-item">Laboratorium</a>
-	      				<a href="#" class="dropdown-item">Alat dalam Lab</a>
+	      				<a href="<?php echo BASIS_URL; ?>/gunakan/adl" class="dropdown-item">Alat dalam Lab</a>
 	      			</div>
 	        	</li>
 	        	<li class="nav-item <?php if ($data['pages'] == 'Data') echo 'active'; ?> dropdown">
