@@ -153,6 +153,17 @@ class m_inventaris extends Kontroler
 			return $hasil;
 		}
 
+		function adl_byLab($data)
+		{
+			$kueri = "SELECT * FROM $this->adl JOIN $this->lab ON `$this->adl`.`adl_letak` = `$this->lab`.`lab_id` WHERE adl_letak = :adl_letak";
+			$this->db->kueri($kueri);
+			$this->db->ikat('adl_letak', $data);
+			$this->db->eksekusi();
+			$hasil = $this->db->hasil_jamak();
+			$this->db->tutup();
+			return $hasil;
+		}
+
 		function adl_edit($data)
 		{
 			$kueri = "UPDATE $this->adl SET adl_nama = :adl_nama, adl_anggaran = :adl_anggaran, adl_letak = :adl_letak, adl_merek = :adl_merek, adl_tipe = :adl_tipe, adl_spesifikasi = :adl_spesifikasi, adl_tanggal = :adl_tanggal, adl_noinv = :adl_noinv WHERE adl_id = :adl_id";

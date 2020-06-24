@@ -207,7 +207,7 @@ class m_gunakan extends Kontroler
 			{
 				$kueri = "INSERT INTO $this->gnadl VALUES (:gnadl_id, :gnadl_adl, :gnadl_mhs, :gnadl_dsn, :gnadl_mtk, :gnadl_awal, :gnadl_akhir, :gnadl_sign, :gnadl_lbrn)";
 				$this->db->kueri($kueri);
-				$this->db->ikat('gnadl_id', $this->gnadl_idbaru());
+				$this->db->ikat('gnadl_id', $data['gnadl_id']);
 				$this->db->ikat('gnadl_adl', $data['gnadl_adl']);
 				$this->db->ikat('gnadl_mhs', $data['gnadl_mhs']);
 				$this->db->ikat('gnadl_dsn', $data['gnadl_dsn']);
@@ -245,28 +245,50 @@ class m_gunakan extends Kontroler
 				return $hasil;
 			}
 
+			function gnadl_byADL($data)
+			{
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `user`.`user_id` WHERE adl_id = :adl_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('adl_id', $data);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnadl_byLab($data)
+			{
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `user`.`user_id` WHERE adl_letak = :adl_letak";
+				$this->db->kueri($kueri);
+				$this->db->ikat('adl_letak', $data);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
 		// Update Data
 
 			function gnadl_mulai($data)
 			{
-				$kueri = "UPDATE FROM $this->gnadl SET gnadl_awal = :gnadl_awal WHERE gnadl_id = :gnadl_id";
+				$kueri = "UPDATE $this->gnadl SET gnadl_awal = :gnadl_awal WHERE gnadl_id = :gnadl_id";
 				$this->db->kueri($kueri);
-				$this->db->ikat('gnadl_id', $id);
+				$this->db->ikat('gnadl_id', $data);
 				$this->db->ikat('gnadl_awal', date('Y-m-d H:i:s'));
 				$this->db->eksekusi();
-				$hasil = $this->db->hasil_tunggal();
+				$hasil = $this->db->hit_baris();
 				$this->db->tutup();
 				return $hasil;
 			}
 
 			function gnadl_selesai($data)
 			{
-				$kueri = "UPDATE FROM $this->gnadl SET gnadl_akhir = :gnadl_akhir WHERE gnadl_id = :gnadl_id";
+				$kueri = "UPDATE $this->gnadl SET gnadl_akhir = :gnadl_akhir WHERE gnadl_id = :gnadl_id";
 				$this->db->kueri($kueri);
-				$this->db->ikat('gnadl_id', $id);
+				$this->db->ikat('gnadl_id', $data);
 				$this->db->ikat('gnadl_akhir', date('Y-m-d H:i:s'));
 				$this->db->eksekusi();
-				$hasil = $this->db->hasil_tunggal();
+				$hasil = $this->db->hit_baris();
 				$this->db->tutup();
 				return $hasil;
 			}
