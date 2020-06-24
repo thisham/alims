@@ -6,6 +6,8 @@
 class m_gunakan extends Kontroler
 {
 	private $gnlab = 'guna_lab';
+	private $gnadl = 'guna_adl';
+	private $dtadl = 'daftar_adl';
 	private $dtlab = 'daftar_lab';
 	private $dtmhs = 'daftar_mhs';
 	private $dtdsn = 'daftar_dsn';
@@ -182,8 +184,92 @@ class m_gunakan extends Kontroler
 			}
 
 	// Alat Paten
+
 		// Create Data
+
+			function gnadl_idbaru()
+			{
+				$kode = "GDL" . date('y') . sprintf("%03s", date('z'));
+				$kueri = "SELECT max(gnadl_id) as kode_besar FROM $this->gnadl WHERE gnadl_id LIKE :kode";
+				$this->db->kueri($kueri);
+				$this->db->ikat('kode', "%$kode%");
+				$this->db->eksekusi();
+				$data = $this->db->hasil_tunggal();
+				$urut = (int) substr($data['kode_besar'], 8);
+				$urut = $urut + 1;
+
+				$hasil = $kode . sprintf("%03s", $urut);
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnadl_tambah($data, $user)
+			{
+				$kueri = "INSERT INTO $this->gnadl VALUES (:gnadl_id, :gnadl_adl, :gnadl_mhs, :gnadl_dsn, :gnadl_mtk, :gnadl_awal, :gnadl_akhir, :gnadl_sign, :gnadl_lbrn)";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnadl_id', $this->gnadl_idbaru());
+				$this->db->ikat('gnadl_adl', $data['gnadl_adl']);
+				$this->db->ikat('gnadl_mhs', $data['gnadl_mhs']);
+				$this->db->ikat('gnadl_dsn', $data['gnadl_dsn']);
+				$this->db->ikat('gnadl_mtk', $data['gnadl_mtk']);
+				$this->db->ikat('gnadl_awal', date('Y-m-d H:i:s'));
+				$this->db->ikat('gnadl_akhir', 0);
+				$this->db->ikat('gnadl_sign', date('Y-m-d H:i:s'));
+				$this->db->ikat('gnadl_lbrn', $user);
+				$this->db->eksekusi();
+				$hasil = $this->db->hit_baris();
+				$this->db->tutup();
+				return $hasil;
+			}
+
 		// Read Data
+
+			function gnadl_list()
+			{
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `user`.`user_id`";
+				$this->db->kueri($kueri);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnadl_detail($id)
+			{
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `user`.`user_id` WHERE gnadl_id = :gnadl_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnadl_id', $id);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_tunggal();
+				$this->db->tutup();
+				return $hasil;
+			}
+
 		// Update Data
+
+			function gnadl_mulai($data)
+			{
+				$kueri = "UPDATE FROM $this->gnadl SET gnadl_awal = :gnadl_awal WHERE gnadl_id = :gnadl_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnadl_id', $id);
+				$this->db->ikat('gnadl_awal', date('Y-m-d H:i:s'));
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_tunggal();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnadl_selesai($data)
+			{
+				$kueri = "UPDATE FROM $this->gnadl SET gnadl_akhir = :gnadl_akhir WHERE gnadl_id = :gnadl_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnadl_id', $id);
+				$this->db->ikat('gnadl_akhir', date('Y-m-d H:i:s'));
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_tunggal();
+				$this->db->tutup();
+				return $hasil;
+			}
+
 		// Delete Data
 }
