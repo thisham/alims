@@ -311,6 +311,7 @@ class data extends Kontroler
 						'judul'	=> 'Detail Laboratorium',
 						'pages'	=> 'Data',
 						'gnlab'	=> $this->model('m_gunakan')->gnlab_byLab($id),
+						'dtadl'	=> $this->model('m_inventaris')->adl_byLab($id),
 						'labs'	=> $this->model('m_inventaris')->lab_detail($id)
 					);
 					$this->tampilkan('templat/header', $data);
@@ -399,7 +400,8 @@ class data extends Kontroler
 					$data = array(
 						'judul'	=> 'Detail Alat dalam Laboratorium',
 						'pages'	=> 'Data',
-						'infos'	=> $this->model('m_inventaris')->adl_detail($id)
+						'infos'	=> $this->model('m_inventaris')->adl_detail($id),
+						'gnadl'	=> $this->model('m_gunakan')->gnadl_byADL($id)
 					);
 					$this->tampilkan('templat/header', $data);
 					$this->tampilkan('templat/navbar_dash', $data);
