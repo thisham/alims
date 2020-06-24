@@ -104,7 +104,7 @@ class gunakan extends Kontroler
 	{
 		switch ($menu) {
 			case 'tambahin':
-				if ( $this->model('m_gunakan')->gnadl_tambah($id) > 0 ) {
+				if ( $this->model('m_gunakan')->gnadl_tambah($_POST, $this->datasesi('user')) > 0 ) {
 					Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'telah dicatat', '', 'success');
 					header('location:' . BASIS_URL . '/gunakan/adl');
 					exit;
@@ -118,12 +118,12 @@ class gunakan extends Kontroler
 			case 'update':
 				switch ($aksi) {
 					case 'mulai':
-						$this->model('m_gunakan')->gnlab_mulai($id);
+						$this->model('m_gunakan')->gnadl_mulai($id);
 						header('location:' . BASIS_URL . '/gunakan/adl/detail/' . $id);
 						break;
 					
 					case 'selesai':
-						$this->model('m_gunakan')->gnlab_selesai($id);
+						$this->model('m_gunakan')->gnadl_selesai($id);
 						header('location:' . BASIS_URL . '/gunakan/adl/detail/' . $id);
 						break;
 
@@ -131,6 +131,18 @@ class gunakan extends Kontroler
 						header('location:' . BASIS_URL . '/gunakan/adl/detail/' . $id);
 						break;
 				}
+				break;
+
+			case 'detail':
+				$data = array(
+					'judul'	=> 'Detail Peminjaman Alat',
+					'pages'	=> 'Penggunaan',
+					'infos'	=> $this->model('m_gunakan')->gnadl_detail($id)
+				);
+				$this->tampilkan('templat/header', $data);
+				$this->tampilkan('templat/navbar_dash', $data);
+				$this->tampilkan('gunakan/adl/detail', $data);
+				$this->tampilkan('templat/footer', $data);
 				break;
 			
 			default:
@@ -141,11 +153,11 @@ class gunakan extends Kontroler
 					'mtkul'	=> $this->model('m_akademik')->mtk_list('aktif', 'list'),
 					'dosen'	=> $this->model('m_warga')->dsn_list(),
 					'gnadl'	=> $this->model('m_gunakan')->gnadl_list(),
-					'labs'	=> $this->model('m_inventaris')->lab_list()
+					'dtadl'	=> $this->model('m_inventaris')->adl_list()
 				);
 				$this->tampilkan('templat/header', $data);
 				$this->tampilkan('templat/navbar_dash', $data);
-				$this->tampilkan('gunakan/lab/index', $data);
+				$this->tampilkan('gunakan/adl/index', $data);
 				$this->tampilkan('templat/footer', $data);
 				break;
 		}
