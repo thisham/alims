@@ -32,21 +32,27 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($data['lists'] as $adl): ?>
+									<?php if ($data['lists'] == NULL): ?>
 										<tr>
-											<td><?php echo $no++; ?></td>
-											<td><a href="<?php echo BASIS_URL . '/data/adl/detail/' . $adl['adl_id']; ?>"><?php echo $adl['adl_id']; ?></a></td>
-											<td class="text-left"><?php echo $adl['adl_nama']; ?></td>
-											<td class="text-left"><?php echo $adl['lab_nama']; ?></td>
-											<td class="text-left"><?php echo $adl['adl_merek'] . ' - ' . $adl['adl_tipe']; ?></td>
-											<td class="text-left"><?php echo $adl['adl_anggaran']; ?></td>
-											<td>
-												<div class="btn-group">
-													<a href="<?php echo BASIS_URL . '/data/adl/edit/' . $adl['adl_id']; ?>" class="btn btn-warning btn-sm">Edit</a> <a href="<?php echo BASIS_URL . '/data/adl/hapus/' . $adl['adl_id']; ?>" class="btn btn-danger btn-sm">Hapus</a>
-												</div>
-											</td>
+											<td colspan="7" class="text-center">Data tidak ditemukan.</td>
 										</tr>
-									<?php endforeach ?>
+									<?php else: ?>
+										<?php foreach ($data['lists'] as $adl): ?>
+											<tr>
+												<td><?php echo $no++; ?></td>
+												<td><a href="<?php echo BASIS_URL . '/data/adl/detail/' . $adl['adl_id']; ?>"><?php echo $adl['adl_id']; ?></a></td>
+												<td class="text-left"><?php echo $adl['adl_nama']; ?></td>
+												<td class="text-left"><?php echo $adl['lab_nama']; ?></td>
+												<td class="text-left"><?php echo $adl['adl_merek'] . ' - ' . $adl['adl_tipe']; ?></td>
+												<td class="text-left"><?php echo $adl['adl_anggaran']; ?></td>
+												<td>
+													<div class="btn-group">
+														<a href="<?php echo BASIS_URL . '/data/adl/edit/' . $adl['adl_id']; ?>" class="btn btn-warning btn-sm">Edit</a> <a href="<?php echo BASIS_URL . '/data/adl/hapus/' . $adl['adl_id']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+													</div>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									<?php endif ?>
 								</tbody>
 							</table>
 						</div>

@@ -31,22 +31,28 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($data['lists'] as $lab): ?>
+									<?php if ($data['lists'] == NULL): ?>
 										<tr>
-											<td><?php echo $no++; ?></td>
-											<td><a href="<?php echo BASIS_URL . '/data/lab/detail/' . $lab['lab_id']; ?>"><?php echo $lab['lab_id']; ?></a></td>
-											<td class="text-left"><?php echo $lab['lab_nama']; ?></td>
-											<td class="text-left"><?php echo $lab['lab_lokasi']; ?></td>
-											<td class="text-left"><?php echo $lab['nama']; ?></td>
-											<td>
-												<div class="btn-group">
-													<a href="<?php echo BASIS_URL . '/data/lab/edit/' . $lab['lab_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-													<a href="<?php echo BASIS_URL . '/data/lab/hapus/' . $lab['lab_id']; ?>" class="btn btn-danger btn-sm">Hapus</a>
-												</div>
-													
-											</td>
+											<td colspan="6" class="text-center">Data tidak ditemukan.</td>
 										</tr>
-									<?php endforeach ?>
+									<?php else: ?>
+										<?php foreach ($data['lists'] as $lab): ?>
+											<tr>
+												<td><?php echo $no++; ?></td>
+												<td><a href="<?php echo BASIS_URL . '/data/lab/detail/' . $lab['lab_id']; ?>"><?php echo $lab['lab_id']; ?></a></td>
+												<td class="text-left"><?php echo $lab['lab_nama']; ?></td>
+												<td class="text-left"><?php echo $lab['lab_lokasi']; ?></td>
+												<td class="text-left"><?php echo $lab['nama']; ?></td>
+												<td>
+													<div class="btn-group">
+														<a href="<?php echo BASIS_URL . '/data/lab/edit/' . $lab['lab_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+														<a href="<?php echo BASIS_URL . '/data/lab/hapus/' . $lab['lab_id']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+													</div>
+														
+												</td>
+											</tr>
+										<?php endforeach ?>
+									<?php endif ?>
 								</tbody>
 							</table>
 						</div>
