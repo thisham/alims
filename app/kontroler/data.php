@@ -335,101 +335,101 @@ class data extends Kontroler
 			}
 		}
 
-		function aap($menu = '', $id = '')
+		function adl($menu = '', $id = '')
 		{
 			switch ( $menu ) {
 				// case 'tambah':
 				// 	$data = array(
-				// 		'judul'	=> 'Tambah Data Alat Paten',
+				// 		'judul'	=> 'Tambah Data Alat dalam Laboratorium',
 				// 		'pages'	=> 'Data',
 				// 		'labs'	=> $this->model('m_inventaris')->lab_list(),
-				// 		'baru'	=> $this->model('m_inventaris')->aap_idbaru()
+				// 		'baru'	=> $this->model('m_inventaris')->adl_idbaru()
 				// 	);
 				// 	$this->tampilkan('templat/header', $data);
 				// 	$this->tampilkan('templat/navbar_dash', $data);
-				// 	$this->tampilkan('data/inv/aap/tambah', $data);
+				// 	$this->tampilkan('data/inv/adl/tambah', $data);
 				// 	$this->tampilkan('templat/footer', $data);
 				// 	break;
 
 				case 'tambahin':
 					$data = 0;
-					for ($i = 0; $i < $_POST['aap_jumlah'] ; $i++) { 
-						$nomor = $this->model('m_inventaris')->aap_idbaru();
-						$hasil = $this->model('m_inventaris')->aap_tambah($_POST, $nomor);
+					for ($i = 0; $i < $_POST['adl_jumlah'] ; $i++) { 
+						$nomor = $this->model('m_inventaris')->adl_idbaru();
+						$hasil = $this->model('m_inventaris')->adl_tambah($_POST, $nomor);
 						$data = $data + $hasil;
 					}
 					
 					if ( $data > 0 ) {
-						Flasher::setFlash('Data alat paten', 'berhasil ditambahkan', 'Sebanyak ' . $data . ' baris data terpengaruh.', 'success');
-						header('location:' . BASIS_URL . '/data/aap');
+						Flasher::setFlash('Data Alat dalam Laboratorium', 'berhasil ditambahkan', 'Sebanyak ' . $data . ' baris data terpengaruh.', 'success');
+						header('location:' . BASIS_URL . '/data/adl');
 						exit;
 					} else {
-						Flasher::setFlash('Data alat paten', 'gagal ditambahkan', '', 'danger');
-						header('location:' . BASIS_URL . '/data/aap');
+						Flasher::setFlash('Data Alat dalam Laboratorium', 'gagal ditambahkan', '', 'danger');
+						header('location:' . BASIS_URL . '/data/adl');
 						exit;
 					}
 					break;
 
 				case 'edit':
 					$data = array(
-						'judul'	=> 'Edit Data Alat Paten',
+						'judul'	=> 'Edit Data Alat dalam Laboratorium',
 						'pages'	=> 'Data',
-						'infos'	=> $this->model('m_inventaris')->aap_detail($id),
+						'infos'	=> $this->model('m_inventaris')->adl_detail($id),
 						'labs'	=> $this->model('m_inventaris')->lab_list()
 					);
 					$this->tampilkan('templat/header', $data);
 					$this->tampilkan('templat/navbar_dash', $data);
-					$this->tampilkan('data/inv/aap/edit', $data);
+					$this->tampilkan('data/inv/adl/edit', $data);
 					$this->tampilkan('templat/footer', $data);
 					break;
 
 				case 'editin':
-					if ( $this->model('m_inventaris')->aap_edit($_POST) > 0 ) {
-						Flasher::setFlash('Data alat paten', 'berhasil diubah', '', 'success');
-						header('location:' . BASIS_URL . '/data/aap');
+					if ( $this->model('m_inventaris')->adl_edit($_POST) > 0 ) {
+						Flasher::setFlash('Data Alat dalam Laboratorium', 'berhasil diubah', '', 'success');
+						header('location:' . BASIS_URL . '/data/adl');
 						exit;
 					} else {
-						Flasher::setFlash('Data alat paten', 'gagal diubah', '', 'danger');
-						header('location:' . BASIS_URL . '/data/aap');
+						Flasher::setFlash('Data Alat dalam Laboratorium', 'gagal diubah', '', 'danger');
+						header('location:' . BASIS_URL . '/data/adl');
 						exit;
 					}
 					break;
 
 				case 'detail':
 					$data = array(
-						'judul'	=> 'Detail Alat Paten',
+						'judul'	=> 'Detail Alat dalam Laboratorium',
 						'pages'	=> 'Data',
-						'infos'	=> $this->model('m_inventaris')->aap_detail($id)
+						'infos'	=> $this->model('m_inventaris')->adl_detail($id)
 					);
 					$this->tampilkan('templat/header', $data);
 					$this->tampilkan('templat/navbar_dash', $data);
-					$this->tampilkan('data/inv/aap/detail', $data);
+					$this->tampilkan('data/inv/adl/detail', $data);
 					$this->tampilkan('templat/footer', $data);
 					break;
 
 				case 'hapus':
-					if ( $this->model('m_inventaris')->aap_hapus($id) > 0 ) {
-						Flasher::setFlash('Data alat paten', 'berhasil dihapus', '', 'success');
-						header('location:' . BASIS_URL . '/data/aap');
+					if ( $this->model('m_inventaris')->adl_hapus($id) > 0 ) {
+						Flasher::setFlash('Data Alat dalam Laboratorium', 'berhasil dihapus', '', 'success');
+						header('location:' . BASIS_URL . '/data/adl');
 						exit;
 					} else {
-						Flasher::setFlash('Data alat paten', 'gagal dihapus', '', 'danger');
-						header('location:' . BASIS_URL . '/data/aap');
+						Flasher::setFlash('Data Alat dalam Laboratorium', 'gagal dihapus', '', 'danger');
+						header('location:' . BASIS_URL . '/data/adl');
 						exit;
 					}
 					break;
 				
 				default:
 					$data = array(
-						'judul'	=> 'Data Alat Paten',
+						'judul'	=> 'Data Alat dalam Laboratorium',
 						'pages'	=> 'Data',
-						'lists'	=> $this->model('m_inventaris')->aap_list(),
+						'lists'	=> $this->model('m_inventaris')->adl_list(),
 						'labs'	=> $this->model('m_inventaris')->lab_list(),
-						'baru'	=> $this->model('m_inventaris')->aap_idbaru()
+						'baru'	=> $this->model('m_inventaris')->adl_idbaru()
 					);
 					$this->tampilkan('templat/header', $data);
 					$this->tampilkan('templat/navbar_dash', $data);
-					$this->tampilkan('data/inv/aap/read-all', $data);
+					$this->tampilkan('data/inv/adl/read-all', $data);
 					$this->tampilkan('templat/footer', $data);
 					break;
 			}
@@ -458,8 +458,8 @@ class data extends Kontroler
 						exit;
 					} else {
 						Flasher::setFlash('Data program studi', 'gagal ditambahkan', '', 'danger');
-						eader('location:' . BASIS_URL . '/data/prodi');
-					exit;
+						header('location:' . BASIS_URL . '/data/prodi');
+						exit;
 					}
 					break;
 

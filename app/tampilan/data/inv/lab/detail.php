@@ -12,6 +12,9 @@
 				<li class="nav-item">
 					<a class="nav-link" id="riwayat-tab" data-toggle="tab" href="#riwayat" role="tab">Riwayat</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="riwayat-tab" data-toggle="tab" href="#adl" role="tab">Alat dalam Lab</a>
+				</li>
 			</ul>
 		</div>
 		<div class="card-body">
@@ -44,16 +47,16 @@
 				</div>
 				<div class="tab-pane fade" id="riwayat" role="tabpanel">
 					<div class="table-responsive">
-						<table class="table table-striped">
+						<table class="table table-striped text-center">
 							<thead>
 								<tr class="text-center">
 									<th>No.</th>
 									<th>Kode</th>
 									<th>Tanggal</th>
 									<th>Laboratorium</th>
-									<th>Rencana Praktikum</th>
+									<th>Waktu Mulai</th>
+									<th>Waktu Selesai</th>
 									<th>Status</th>
-									<th>Aksi</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -63,21 +66,14 @@
 										<td><a href="<?php echo BASIS_URL . '/gunakan/lab/detail/' . $gnlab['gnlab_id']; ?>"><?php echo $gnlab['gnlab_id']; ?></a></td>
 										<td><?php echo $gnlab['gnlab_sign'] ?></td>
 										<td><?php echo $gnlab['lab_nama']; ?></td>
-										<td><?php echo $gnlab['gnlab_plan']; ?></td>
+										<td><?php echo $gnlab['gnlab_awal']; ?></td>
+										<td><?php echo $gnlab['gnlab_akhir']; ?></td>
 										<td>
-											<?php if ($gnlab['gnlab_awal'] == 0 AND $gnlab['gnlab_akhir'] == 0) { ?>
-												<div class="badge badge-warning">Direncanakan</div>
-											<?php } else if ($gnlab['gnlab_awal'] != 0 AND $gnlab['gnlab_akhir'] == 0) { ?>
+											<?php if ($gnlab['gnlab_awal'] != 0 AND $gnlab['gnlab_akhir'] == 0): ?>
 												<div class="badge badge-success">Berjalan</div>
-											<?php } else { ?>
+											<?php else: ?>
 												<div class="badge badge-secondary">Selesai</div>
-											<?php } ?>
-										</td>
-										<td>
-											<div class="btn-group">
-												<a href="<?php echo BASIS_URL . '/gunakan/lab/edit/' . $gnlab['gnlab_id']; ?>" class="btn btn-warning btn-sm">E</a>
-												<a href="<?php echo BASIS_URL . '/gunakan/lab/hapus/' . $gnlab['gnlab_id']; ?>" class="btn btn-danger btn-sm">X</a>
-											</div>
+											<?php endif ?>
 										</td>
 									</tr>
 								<?php endforeach ?>
@@ -85,6 +81,7 @@
 						</table>
 					</div>
 				</div>
+				<div class="tab-pane fade" id="adl" role="tabpanel">...</div>
 			</div>
 		</div>
 	</div>

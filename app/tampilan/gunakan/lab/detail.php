@@ -30,10 +30,6 @@
 						<td><?php echo $data['infos']['mtk_dosen'] . ' - ' . $data['infos']['dsn_nama']; ?></td>
 					</tr>
 					<tr>
-						<th>Rencana Pemakaian</th>
-						<td><?php echo $data['infos']['gnlab_plan']; ?></td>
-					</tr>
-					<tr>
 						<th>Status</th>
 						<td>
 							<?php if ($data['infos']['gnlab_awal'] == 0 AND $data['infos']['gnlab_akhir'] == 0) { ?>
@@ -49,9 +45,9 @@
 						<th>Praktikum</th>
 						<td>
 							<?php if ($data['infos']['gnlab_awal'] == 0 AND $data['infos']['gnlab_akhir'] == 0) { ?>
-								<a href="<?php echo BASIS_URL . '/gunakan/lab/update/' . $data['infos']['gnlab_id'] . '/mulai'; ?>" class="btn btn-success">Mulai</a>
-							<?php } elseif ($data['infos']['gnlab_awal'] != 0 AND $data['infos']['gnlab_akhir'] != 0) { ?>
-								<div class="badge badge-success"><i>Dibuka pada <?php echo $data['infos']['gnlab_awal']; ?></i></div> ~ <a href="<?php echo BASIS_URL . '/gunakan/lab/update/' . $data['infos']['mtk_id'] . '/selesai'; ?>" class="btn btn-success">Tutup</a>
+								<a href="<?php echo BASIS_URL . '/gunakan/lab/update/' . $data['infos']['gnlab_id'] . '/mulai'; ?>" class="btn btn-success btn-sm">Mulai</a>
+							<?php } elseif ($data['infos']['gnlab_awal'] != 0 AND $data['infos']['gnlab_akhir'] == 0) { ?>
+								<div class="badge badge-success"><i>Dibuka pada <?php echo $data['infos']['gnlab_awal']; ?></i></div> ~ <a href="<?php echo BASIS_URL . '/gunakan/lab/update/' . $data['infos']['gnlab_id'] . '/selesai'; ?>" class="btn btn-danger btn-sm">Tutup</a>
 								<br>
 							<?php } else { ?>
 								<div class="badge badge-success"><i><?php echo $data['infos']['gnlab_awal']; ?></i> ~ <i><?php echo $data['infos']['gnlab_akhir']; ?></i></div>

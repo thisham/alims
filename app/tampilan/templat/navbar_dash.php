@@ -13,14 +13,14 @@
 	      			<a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown">Penggunaan</a>
 	      			<div class="dropdown-menu">
 	      				<a href="<?php echo BASIS_URL; ?>/gunakan/lab" class="dropdown-item">Laboratorium</a>
-	      				<a href="#" class="dropdown-item">Alat Paten</a>
+	      				<a href="#" class="dropdown-item">Alat dalam Lab</a>
 	      			</div>
 	        	</li>
 	        	<li class="nav-item <?php if ($data['pages'] == 'Data') echo 'active'; ?> dropdown">
 	      			<a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown">Data</a>
 	      			<div class="dropdown-menu">
 	      				<a href="<?php echo BASIS_URL; ?>/data/lab" class="dropdown-item">Laboratorium</a>
-	      				<a href="<?php echo BASIS_URL; ?>/data/aap" class="dropdown-item">Alat Paten</a>
+	      				<a href="<?php echo BASIS_URL; ?>/data/adl" class="dropdown-item">Alat dalam Lab</a>
 	      				<div class="dropdown-divider"></div>
 	      				<a href="<?php echo BASIS_URL; ?>/data/mhs" class="dropdown-item">Mahasiswa</a>
 	      				<a href="<?php echo BASIS_URL; ?>/data/dsn" class="dropdown-item">Dosen</a>

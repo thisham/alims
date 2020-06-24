@@ -6,7 +6,7 @@
 class m_inventaris extends Kontroler
 {
 	private $lab = 'daftar_lab';
-	private $aap = 'daftar_aap';
+	private $adl = 'daftar_adl';
 	private $laboran = 'user';
 	private $db;
 	
@@ -94,14 +94,14 @@ class m_inventaris extends Kontroler
 
 	// Alat Paten
 
-		function aap_idbaru()
+		function adl_idbaru()
 		{
-			$kueri = "SELECT max(aap_id) as kode_besar FROM $this->aap";
+			$kueri = "SELECT max(adl_id) as kode_besar FROM $this->adl";
 			$this->db->kueri($kueri);
 			$this->db->eksekusi();
 			$data = $this->db->hasil_tunggal();
 			$urut = (int) substr($data['kode_besar'], 3);
-			$kode = "AAP";
+			$kode = "ADL";
 			$urut = $urut + 1;
 
 			$hasil = $kode . sprintf("%05s", $urut);
@@ -109,28 +109,32 @@ class m_inventaris extends Kontroler
 			return $hasil;
 		}
 
-		function aap_tambah($data, $nomor)
+		function adl_tambah($data, $nomor)
 		{
-			$kueri = "INSERT INTO $this->aap VALUES (:aap_id, :aap_nama, :aap_anggaran, :aap_letak, :aap_merek, :aap_tipe, :aap_spesifikasi, :aap_tanggal, :aap_noinv)";
+			if ($data['adl_tanggal'] == '') {
+				$data['adl_tanggal'] = '0000-00-00';
+			}
+			
+			$kueri = "INSERT INTO $this->adl VALUES (:adl_id, :adl_nama, :adl_anggaran, :adl_letak, :adl_merek, :adl_tipe, :adl_spesifikasi, :adl_tanggal, :adl_noinv)";
 			$this->db->kueri($kueri);
-			$this->db->ikat('aap_id', $nomor);
-			$this->db->ikat('aap_nama', $data['aap_nama']);
-			$this->db->ikat('aap_anggaran', $data['aap_anggaran']);
-			$this->db->ikat('aap_letak', $data['aap_letak']);
-			$this->db->ikat('aap_merek', $data['aap_merek']);
-			$this->db->ikat('aap_tipe', $data['aap_tipe']);
-			$this->db->ikat('aap_spesifikasi', $data['aap_spesifikasi']);
-			$this->db->ikat('aap_tanggal', $data['aap_tanggal']);
-			$this->db->ikat('aap_noinv', $data['aap_noinv']);
+			$this->db->ikat('adl_id', $nomor);
+			$this->db->ikat('adl_nama', $data['adl_nama']);
+			$this->db->ikat('adl_anggaran', $data['adl_anggaran']);
+			$this->db->ikat('adl_letak', $data['adl_letak']);
+			$this->db->ikat('adl_merek', $data['adl_merek']);
+			$this->db->ikat('adl_tipe', $data['adl_tipe']);
+			$this->db->ikat('adl_spesifikasi', $data['adl_spesifikasi']);
+			$this->db->ikat('adl_tanggal', $data['adl_tanggal']);
+			$this->db->ikat('adl_noinv', $data['adl_noinv']);
 			$this->db->eksekusi();
 			$hasil = $this->db->hit_baris();
 			$this->db->tutup();
 			return $hasil;
 		}
 
-		function aap_list()
+		function adl_list()
 		{
-			$kueri = "SELECT * FROM $this->aap JOIN $this->lab ON `$this->aap`.`aap_letak` = `$this->lab`.`lab_id`";
+			$kueri = "SELECT * FROM $this->adl JOIN $this->lab ON `$this->adl`.`adl_letak` = `$this->lab`.`lab_id`";
 			$this->db->kueri($kueri);
 			$this->db->eksekusi();
 			$hasil = $this->db->hasil_jamak();
@@ -138,41 +142,41 @@ class m_inventaris extends Kontroler
 			return $hasil;
 		}
 
-		function aap_detail($data)
+		function adl_detail($data)
 		{
-			$kueri = "SELECT * FROM $this->aap JOIN $this->lab ON `$this->aap`.`aap_letak` = `$this->lab`.`lab_id` WHERE aap_id = :aap_id";
+			$kueri = "SELECT * FROM $this->adl JOIN $this->lab ON `$this->adl`.`adl_letak` = `$this->lab`.`lab_id` WHERE adl_id = :adl_id";
 			$this->db->kueri($kueri);
-			$this->db->ikat('aap_id', $data);
+			$this->db->ikat('adl_id', $data);
 			$this->db->eksekusi();
 			$hasil = $this->db->hasil_tunggal();
 			$this->db->tutup();
 			return $hasil;
 		}
 
-		function aap_edit($data)
+		function adl_edit($data)
 		{
-			$kueri = "UPDATE $this->aap SET aap_nama = :aap_nama, aap_anggaran = :aap_anggaran, aap_letak = :aap_letak, aap_merek = :aap_merek, aap_tipe = :aap_tipe, aap_spesifikasi = :aap_spesifikasi, aap_tanggal = :aap_tanggal, aap_noinv = :aap_noinv WHERE aap_id = :aap_id";
+			$kueri = "UPDATE $this->adl SET adl_nama = :adl_nama, adl_anggaran = :adl_anggaran, adl_letak = :adl_letak, adl_merek = :adl_merek, adl_tipe = :adl_tipe, adl_spesifikasi = :adl_spesifikasi, adl_tanggal = :adl_tanggal, adl_noinv = :adl_noinv WHERE adl_id = :adl_id";
 			$this->db->kueri($kueri);
-			$this->db->ikat('aap_id', $data['aap_id']);
-			$this->db->ikat('aap_nama', $data['aap_nama']);
-			$this->db->ikat('aap_anggaran', $data['aap_anggaran']);
-			$this->db->ikat('aap_letak', $data['aap_letak']);
-			$this->db->ikat('aap_merek', $data['aap_merek']);
-			$this->db->ikat('aap_tipe', $data['aap_tipe']);
-			$this->db->ikat('aap_spesifikasi', $data['aap_spesifikasi']);
-			$this->db->ikat('aap_tanggal', $data['aap_tanggal']);
-			$this->db->ikat('aap_noinv', $data['aap_noinv']);
+			$this->db->ikat('adl_id', $data['adl_id']);
+			$this->db->ikat('adl_nama', $data['adl_nama']);
+			$this->db->ikat('adl_anggaran', $data['adl_anggaran']);
+			$this->db->ikat('adl_letak', $data['adl_letak']);
+			$this->db->ikat('adl_merek', $data['adl_merek']);
+			$this->db->ikat('adl_tipe', $data['adl_tipe']);
+			$this->db->ikat('adl_spesifikasi', $data['adl_spesifikasi']);
+			$this->db->ikat('adl_tanggal', $data['adl_tanggal']);
+			$this->db->ikat('adl_noinv', $data['adl_noinv']);
 			$this->db->eksekusi();
 			$hasil = $this->db->hit_baris();
 			$this->db->tutup();
 			return $hasil;
 		}
 
-		function aap_hapus($data)
+		function adl_hapus($data)
 		{
-			$kueri = "DELETE FROM $this->aap WHERE aap_id = :aap_id";
+			$kueri = "DELETE FROM $this->adl WHERE adl_id = :adl_id";
 			$this->db->kueri($kueri);
-			$this->db->ikat('aap_id', $data);
+			$this->db->ikat('adl_id', $data);
 			$this->db->eksekusi();
 			$hasil = $this->db->hit_baris();
 			$this->db->tutup();

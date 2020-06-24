@@ -18,22 +18,40 @@ class m_gunakan extends Kontroler
 		$this->db = new pangkalan_data();
 	}
 
+	// Other
+
+		// Read Data
+
+			function autc_dtmhs($data)
+			{
+				$kueri = "SELECT nim, nama FROM $this->dtmhs WHERE nim LIKE :data OR nama LIKE :data";
+				$this->db->kueri($kueri);
+				$this->db->ikat('data', "%$data%");
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				while ($baris = $this->db->hasil_jamak()) {
+					$data[] = $baris['nim'];
+				}
+				$this->db->tutup();
+				return $data;
+			}
+
 	// Laboratorium
 
 		// Create Data
 
 			function gnlab_idbaru()
 			{
-				$kueri = "SELECT max(gnlab_id) as kode_besar FROM $this->gnlab";
+				$kode = "GLB" . date('y') . sprintf("%03s", date('z'));
+				$kueri = "SELECT max(gnlab_id) as kode_besar FROM $this->gnlab WHERE gnlab_id LIKE :kode";
 				$this->db->kueri($kueri);
+				$this->db->ikat('kode', "%$kode%");
 				$this->db->eksekusi();
 				$data = $this->db->hasil_tunggal();
 				$urut = (int) substr($data['kode_besar'], 8);
-				$kode = "GLB";
-				$date = date('y') . sprintf("%03s", date('z'));
 				$urut = $urut + 1;
 
-				$hasil = $kode . $date . sprintf("%03s", $urut);
+				$hasil = $kode . sprintf("%03s", $urut);
 				$this->db->tutup();
 				return $hasil;
 			}
@@ -41,14 +59,13 @@ class m_gunakan extends Kontroler
 			function gnlab_tambah($data, $sesi)
 			{
 				$data['gnlab_mhs'] = explode(' - ', $data['gnlab_mhs']);
-				$kueri = "INSERT INTO $this->gnlab VALUES (:gnlab_id, :gnlab_lab, :gnlab_mhs, :gnlab_dsn, :gnlab_mtk, :gnlab_plan, :gnlab_awal, :gnlab_akhir, :gnlab_sign, :gnlab_lbrn)";
+				$kueri = "INSERT INTO $this->gnlab VALUES (:gnlab_id, :gnlab_lab, :gnlab_mhs, :gnlab_dsn, :gnlab_mtk, :gnlab_awal, :gnlab_akhir, :gnlab_sign, :gnlab_lbrn)";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnlab_id', $data['gnlab_id']);
 				$this->db->ikat('gnlab_lab', $data['gnlab_lab']);
 				$this->db->ikat('gnlab_mhs', $data['gnlab_mhs'][0]);
 				$this->db->ikat('gnlab_dsn', $data['gnlab_dsn']);
 				$this->db->ikat('gnlab_mtk', $data['gnlab_mtk']);
-				$this->db->ikat('gnlab_plan', $data['gnlab_tanggal'] . ' ' . $data['gnlab_waktu']);
 				$this->db->ikat('gnlab_awal', date('Y-m-d H:i:s'));
 				$this->db->ikat('gnlab_akhir', 0);
 				$this->db->ikat('gnlab_sign', date('Y-m-d H:i:s'));
@@ -127,48 +144,24 @@ class m_gunakan extends Kontroler
 				return $hasil;
 			}
 
-			function gnlab_mulaiJadwal($data)
+			function gnlab_mulaiPraktikum($data)
 			{
 				$kueri = "UPDATE $this->gnlab SET gnlab_awal = :gnlab_awal WHERE gnlab_id = :gnlab_id";
 				$this->db->kueri($kueri);
-				$this->db->ikat('gnlab_id', $data['gnlab_id']);
-				$this->db->ikat('gnlab_awal', date('c'));
+				$this->db->ikat('gnlab_id', $data);
+				$this->db->ikat('gnlab_awal', date('Y-m-d H:i:s'));
 				$this->db->eksekusi();
 				$hasil = $this->db->hit_baris();
 				$this->db->tutup();
 				return $hasil;
 			}
 
-			function gnlab_batalMulaiJadwal($data)
-			{
-				$kueri = "UPDATE $this->gnlab SET gnlab_awal = :gnlab_awal WHERE gnlab_id = :gnlab_id";
-				$this->db->kueri($kueri);
-				$this->db->ikat('gnlab_id', $data['gnlab_id']);
-				$this->db->ikat('gnlab_awal', 0);
-				$this->db->eksekusi();
-				$hasil = $this->db->hit_baris();
-				$this->db->tutup();
-				return $hasil;
-			}
-
-			function gnlab_tutupJadwal($data)
+			function gnlab_selesaiPraktikum($data)
 			{
 				$kueri = "UPDATE $this->gnlab SET gnlab_akhir = :gnlab_akhir WHERE gnlab_id = :gnlab_id";
 				$this->db->kueri($kueri);
-				$this->db->ikat('gnlab_id', $data['gnlab_id']);
-				$this->db->ikat('gnlab_akhir', date('c'));
-				$this->db->eksekusi();
-				$hasil = $this->db->hit_baris();
-				$this->db->tutup();
-				return $hasil;
-			}
-
-			function gnlab_batalTutupJadwal($data)
-			{
-				$kueri = "UPDATE $this->gnlab SET gnlab_akhir = :gnlab_akhir WHERE gnlab_id = :gnlab_id";
-				$this->db->kueri($kueri);
-				$this->db->ikat('gnlab_id', $data['gnlab_id']);
-				$this->db->ikat('gnlab_akhir', 0);
+				$this->db->ikat('gnlab_id', $data);
+				$this->db->ikat('gnlab_akhir', date('Y-m-d H:i:s'));
 				$this->db->eksekusi();
 				$hasil = $this->db->hit_baris();
 				$this->db->tutup();

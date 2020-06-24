@@ -34,7 +34,7 @@
 									<?php foreach ($data['lists'] as $lab): ?>
 										<tr>
 											<td><?php echo $no++; ?></td>
-											<td><a href="<?php echo BASIS_URL . '/data/lab/detail/' . $lab['lab_id']; ?>" class="btn btn-warning btn-sm"><?php echo $lab['lab_id']; ?></a></td>
+											<td><a href="<?php echo BASIS_URL . '/data/lab/detail/' . $lab['lab_id']; ?>"><?php echo $lab['lab_id']; ?></a></td>
 											<td class="text-left"><?php echo $lab['lab_nama']; ?></td>
 											<td class="text-left"><?php echo $lab['lab_lokasi']; ?></td>
 											<td class="text-left"><?php echo $lab['nama']; ?></td>

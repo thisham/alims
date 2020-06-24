@@ -1,15 +1,25 @@
 <script type="text/javascript">
-	$(document).ready(function(){
-		var data = [
-			"19081092 - Hamdan Yuwafi Mastu Wijaya",
-			"19081091 - Adriaan Lukistra",
-			"19081090 - Asdasd"
-		];
+	var basisurl = "<?php echo BASIS_URL; ?>";
+	$(document).ready( function(){
+		// var data = basisurl + '/gunakan/lab/autc-dtmhs';
 		$("#gnlab_mhs").autocomplete({
-			lookup: data
+			serviceUrl: "<?php echo BASIS_URL; ?>/gunakan/ajax",
+			type: "get",
+			dataType: "JSON",
+			onSelect: function (suggestion) {
+				$("#gnlab_mhs").val("" + suggestion.value);
+			}
 		});
 	});
 </script>
+<!-- <script type="text/javascript">
+	$(document).ready(function(){
+		var data = "<?php echo BASIS_URL; ?>/gunakan/ajax";
+		$("#gnlab_mhs").autocomplete({
+			source: data
+		});
+	});
+</script> -->
 
 <div class="container mt-4">
 	<h3><?php echo $data['judul']; ?></h3>
@@ -40,16 +50,16 @@
 						<a class="btn btn-outline-primary" id="btn-gnlab_filterin" name="gnlab_carikan">Kirim</a>
 					</div> -->
 					<div id="data-gnlab" class="table-responsive">
-						<table class="table table-striped">
+						<table class="table table-striped text-center">
 							<thead>
 								<tr class="text-center">
 									<th>No.</th>
 									<th>Kode</th>
 									<th>Tanggal</th>
 									<th>Laboratorium</th>
-									<th>Rencana Praktikum</th>
+									<th>Awal</th>
+									<th>Akhir</th>
 									<th>Status</th>
-									<th>Aksi</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -64,21 +74,19 @@
 											<td><a href="<?php echo BASIS_URL . '/gunakan/lab/detail/' . $gnlab['gnlab_id']; ?>"><?php echo $gnlab['gnlab_id']; ?></a></td>
 											<td><?php echo $gnlab['gnlab_sign'] ?></td>
 											<td><?php echo $gnlab['lab_nama']; ?></td>
-											<td><?php echo $gnlab['gnlab_plan']; ?></td>
+											<td><?php echo $gnlab['gnlab_awal']; ?></td>
 											<td>
-												<?php if ($gnlab['gnlab_awal'] == 0 AND $gnlab['gnlab_akhir'] == 0) { ?>
-													<div class="badge badge-warning">Direncanakan</div>
-												<?php } else if ($gnlab['gnlab_awal'] != 0 AND $gnlab['gnlab_akhir'] == 0) { ?>
+												<?php if ($gnlab['gnlab_akhir'] == 0): ?>
+													<div class="badge badge-warning">Belum Selesai</div>
+												<?php else: ?>
+													<?php echo $gnlab['gnlab_akhir']; ?></td>
+												<?php endif ?>
+											<td>
+												<?php if ($gnlab['gnlab_awal'] != 0 AND $gnlab['gnlab_akhir'] == 0): ?>
 													<div class="badge badge-success">Berjalan</div>
-												<?php } else { ?>
+												<?php else: ?>
 													<div class="badge badge-secondary">Selesai</div>
-												<?php } ?>
-											</td>
-											<td>
-												<div class="btn-group">
-													<a href="<?php echo BASIS_URL . '/gunakan/lab/edit/' . $gnlab['gnlab_id']; ?>" class="btn btn-warning btn-sm">E</a>
-													<a href="<?php echo BASIS_URL . '/gunakan/lab/hapus/' . $gnlab['gnlab_id']; ?>" class="btn btn-danger btn-sm">X</a>
-												</div>
+												<?php endif ?>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -135,13 +143,6 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="gnlab_mulai">Rencana Pemakaian</label>
-							<div class="input-group">
-								<input type="date" name="gnlab_tanggal" id="gnlab_tanggal" class="form-control">
-								<input type="time" name="gnlab_waktu" id="gnlab_waktu" class="form-control" step="1">
-							</div>
-						</div>
-						<div class="form-group">
 							<input type="submit" name="gnlab_kirim" id="gnlab_kirim" class="btn btn-primary form-control" value="Kirim">
 						</div>
 					</form>
@@ -150,3 +151,4 @@
 		</div>
 	</div>
 </div>
+

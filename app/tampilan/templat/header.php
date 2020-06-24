@@ -8,6 +8,7 @@
 	<script src="<?php echo BASIS_URL; ?>/aset/js/jquery-3.4.1.slim.min.js"></script>
 	<script src="<?php echo BASIS_URL; ?>/aset/js/jquery-3.4.1.min.js"></script>
 	<script src="<?php echo BASIS_URL; ?>/aset/js/jquery.autocomplete.js"></script>
+	<!-- <script src="<?php echo BASIS_URL; ?>/aset/js/jquery-ui.js"></script> -->
 	<style>
 		body {
 			font-family: 'Roboto', Arial, Sans-serif;
