@@ -1,25 +1,38 @@
 <script type="text/javascript">
-	var basisurl = "<?php echo BASIS_URL; ?>";
-	$(document).ready( function(){
-		// var data = basisurl + '/gunakan/lab/autc-dtmhs';
-		$("#gnlab_mhs").autocomplete({
-			serviceUrl: "<?php echo BASIS_URL; ?>/gunakan/ajax",
-			type: "get",
-			dataType: "JSON",
-			onSelect: function (suggestion) {
-				$("#gnlab_mhs").val("" + suggestion.value);
+	$(document).ready(function(){
+		$("#gnlab_mhs").keyup( function(){
+			var kueri_mhs = $(this).val();
+			if (kueri_mhs != '') {
+				$.ajax({
+					url: "<?php echo BASIS_URL; ?>/data/autcajax/mhs",
+					method: "POST",
+					data: {kueri_mhs:kueri_mhs},
+					success: function(data) {
+						$("#gnlab_mhslist").fadeIn();
+						$("#gnlab_mhslist").html(data);
+					}
+				});
 			}
 		});
 	});
-</script>
-<!-- <script type="text/javascript">
 	$(document).ready(function(){
-		var data = "<?php echo BASIS_URL; ?>/gunakan/ajax";
-		$("#gnlab_mhs").autocomplete({
-			source: data
+		$("#gnlab_mtk").keyup( function() {
+			var kueri_mtk = $(this).val();
+			if (kueri_mtk != '') {
+				$.ajax({
+					url: "<?php echo BASIS_URL; ?>/data/autcajax/mtk",
+					method: "POST",
+					data: {kueri_mtk:kueri_mtk},
+					success: function(data) {
+						$("#gnlab_mtklist").fadeIn();
+						$("#gnlab_mtklist").html(data);
+					}
+				});
+			}
 		});
 	});
-</script> -->
+	
+</script>
 
 <div class="container mt-4">
 	<h3><?php echo $data['judul']; ?></h3>
@@ -103,19 +116,12 @@
 						</div>
 						<div class="form-group">
 							<label for="gnlab_mhs">Nomor Induk Mahasiswa Praktikan</label>
-							<div class="input-group">
-								<input type="text" name="gnlab_mhs" id="gnlab_mhs" class="form-control" placeholder="Masukkan NIM...">
-								<!-- <div class="input-group-append" id="button-addon4">
-									<button class="btn btn-outline-primary" id="btn-gnlab_cariin" name="btn-gnlab_cariin">Nama =></button>
-								</div>
-								<div class="input-group-append" id="button-addon4">
-									<input type="text" name="gnlab_nim" id="gnlab_nim" class="form-control" placeholder="Ini nama mahasiswa praktikan...">
-								</div> -->
-							</div>
+							<input type="text" name="gnlab_mhs" id="gnlab_mhs" class="form-control" placeholder="Masukkan NIM..." required>
+							<div id="gnlab_mhslist"></div>
 						</div>
 						<div class="form-group">
 							<label for="gnlab_lab">Laboratorium</label>
-							<select name="gnlab_lab" id="gnlab_lab" class="form-control">
+							<select name="gnlab_lab" id="gnlab_lab" class="form-control" required>
 								<option value="">-- Pilih Laboratorium --</option>
 								<?php foreach ($data['labs'] as $lab): ?>
 									<option value="<?php echo $lab['lab_id']; ?>"><?php echo $lab['lab_nama']; ?></option>
@@ -124,17 +130,13 @@
 						</div>
 						<div class="form-group">
 							<label for="gnlab_mtk">Mata Kuliah</label>
-							<select name="gnlab_mtk" id="gnlab_mtk" class="form-control">
-								<option value="">-- Pilih Mata Kuliah --</option>
-								<?php foreach ($data['mtkul'] as $mtk): ?>
-									<option value="<?php echo $mtk['mtk_id']; ?>"><?php echo $mtk['mtk_akronim'] . ' - ' . $mtk['dsn_nama'] . ' (' . $mtk['mtk_periode'] . ')'; ?></option>
-								<?php endforeach ?>
-							</select>
+							<input type="text" name="gnlab_mtk" id="gnlab_mtk" class="form-control" placeholder="Masukkan Mata Kuliah..." required>
+							<div id="gnlab_mtklist"></div>
 						</div>
 						<div class="form-group">
 							<label for="gnlab_dsn">Dosen</label>
 							<div class="input-group">
-								<select id="gnlab_dsn" name="gnlab_dsn" class="form-control">
+								<select id="gnlab_dsn" name="gnlab_dsn" class="form-control" required>
 									<option value="">-- Pilih Dosen --</option>
 									<?php foreach ($data['dosen'] as $dsn): ?>
 										<option value="<?php echo $dsn['dsn_id']; ?>"><?php echo $dsn['dsn_nama']; ?></option>

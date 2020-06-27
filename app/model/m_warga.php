@@ -72,12 +72,12 @@ class m_warga extends Kontroler
 		{
 			$kueri = "SELECT * FROM $this->siswa WHERE nama LIKE :kueri OR nim LIKE :kueri";
 			$this->db->kueri($kueri);
-			$this->db->ikat('kueri', '%' . $data['cari'] . '%');
+			$this->db->ikat('kueri', '%' . $data . '%');
 			$this->db->eksekusi();
 			$hasil = array(
 				'hasil'	=> $this->db->hasil_jamak(),
 				'baris'	=> $this->db->hit_baris(),
-				'kueri' => $data['cari']
+				'kueri' => $data
 			);
 			$this->db->tutup();
 			return $hasil;

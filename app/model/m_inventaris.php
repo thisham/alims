@@ -159,7 +159,10 @@ class m_inventaris extends Kontroler
 			$this->db->kueri($kueri);
 			$this->db->ikat('adl_letak', $data);
 			$this->db->eksekusi();
-			$hasil = $this->db->hasil_jamak();
+			$hasil = array(
+				'angka'	=> $this->db->hit_baris(),
+				'jamak'	=> $this->db->hasil_jamak()
+			);
 			$this->db->tutup();
 			return $hasil;
 		}

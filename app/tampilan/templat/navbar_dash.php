@@ -14,6 +14,7 @@
 	      			<div class="dropdown-menu">
 	      				<a href="<?php echo BASIS_URL; ?>/gunakan/lab" class="dropdown-item">Laboratorium</a>
 	      				<a href="<?php echo BASIS_URL; ?>/gunakan/adl" class="dropdown-item">Alat dalam Lab</a>
+	      				<a href="<?php echo BASIS_URL; ?>/gunakan/app" class="dropdown-item">Alat Pinjam-Pakai</a>
 	      			</div>
 	        	</li>
 	        	<li class="nav-item <?php if ($data['pages'] == 'Data') echo 'active'; ?> dropdown">
@@ -21,6 +22,7 @@
 	      			<div class="dropdown-menu">
 	      				<a href="<?php echo BASIS_URL; ?>/data/lab" class="dropdown-item">Laboratorium</a>
 	      				<a href="<?php echo BASIS_URL; ?>/data/adl" class="dropdown-item">Alat dalam Lab</a>
+	      				<a href="<?php echo BASIS_URL; ?>/data/app" class="dropdown-item">Alat Pinjam-Pakai</a>
 	      				<div class="dropdown-divider"></div>
 	      				<a href="<?php echo BASIS_URL; ?>/data/mhs" class="dropdown-item">Mahasiswa</a>
 	      				<a href="<?php echo BASIS_URL; ?>/data/dsn" class="dropdown-item">Dosen</a>

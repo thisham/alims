@@ -1,25 +1,37 @@
 <script type="text/javascript">
-	var basisurl = "<?php echo BASIS_URL; ?>";
-	$(document).ready( function(){
-		// var data = basisurl + '/gunakan/lab/autc-dtmhs';
-		$("#gnadl_mhs").autocomplete({
-			serviceUrl: "<?php echo BASIS_URL; ?>/gunakan/ajax",
-			type: "get",
-			dataType: "JSON",
-			onSelect: function (suggestion) {
-				$("#gnadl_mhs").val("" + suggestion.value);
+	$(document).ready(function(){
+		$("#gnadl_mhs").keyup( function(){
+			var kueri_mhs = $(this).val();
+			if (kueri_mhs != '') {
+				$.ajax({
+					url: "<?php echo BASIS_URL; ?>/data/autcajax/mhs",
+					method: "POST",
+					data: {kueri_mhs:kueri_mhs},
+					success: function(data) {
+						$("#gnadl_mhslist").fadeIn();
+						$("#gnadl_mhslist").html(data);
+					}
+				});
+			}
+		});
+	});
+	$(document).ready(function(){
+		$("#gnadl_mtk").keyup( function() {
+			var kueri_mtk = $(this).val();
+			if (kueri_mtk != '') {
+				$.ajax({
+					url: "<?php echo BASIS_URL; ?>/data/autcajax/mtk",
+					method: "POST",
+					data: {kueri_mtk:kueri_mtk},
+					success: function(data) {
+						$("#gnadl_mtklist").fadeIn();
+						$("#gnadl_mtklist").html(data);
+					}
+				});
 			}
 		});
 	});
 </script>
-<!-- <script type="text/javascript">
-	$(document).ready(function(){
-		var data = "<?php echo BASIS_URL; ?>/gunakan/ajax";
-		$("#gnadl_mhs").autocomplete({
-			source: data
-		});
-	});
-</script> -->
 
 <div class="container mt-4">
 	<h3><?php echo $data['judul']; ?></h3>
@@ -40,15 +52,6 @@
 		<div class="card-body">
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="daftar" role="tabpanel">
-					<!-- <div class="input-group">
-						<select name="gnadl_lab" id="gnadl_lab" class="form-control">
-							<option value="">-- Pilih Laboratorium --</option>
-							<?php foreach ($data['labs'] as $lab): ?>
-								<option value="<?php echo $lab['lab_id']; ?>"><?php echo $lab['lab_nama']; ?></option>
-							<?php endforeach ?>
-						</select>
-						<a class="btn btn-outline-primary" id="btn-gnadl_filterin" name="gnadl_carikan">Kirim</a>
-					</div> -->
 					<div id="data-gnadl" class="table-responsive">
 						<table class="table table-striped text-center">
 							<thead>
@@ -104,18 +107,13 @@
 						<div class="form-group">
 							<label for="gnadl_mhs">Nomor Induk Mahasiswa Praktikan</label>
 							<div class="input-group">
-								<input type="text" name="gnadl_mhs" id="gnadl_mhs" class="form-control" placeholder="Masukkan NIM...">
-								<!-- <div class="input-group-append" id="button-addon4">
-									<button class="btn btn-outline-primary" id="btn-gnadl_cariin" name="btn-gnadl_cariin">Nama =></button>
-								</div>
-								<div class="input-group-append" id="button-addon4">
-									<input type="text" name="gnadl_nim" id="gnadl_nim" class="form-control" placeholder="Ini nama mahasiswa praktikan...">
-								</div> -->
+								<input type="text" name="gnadl_mhs" id="gnadl_mhs" class="form-control" placeholder="Masukkan NIM..." required>
 							</div>
+							<div id="gnadl_mhslist"></div>
 						</div>
 						<div class="form-group">
 							<label for="gnadl_adl">Nama Alat</label>
-							<select name="gnadl_adl" id="gnadl_adl" class="form-control">
+							<select name="gnadl_adl" id="gnadl_adl" class="form-control" required>
 								<option value="">-- Pilih Alat --</option>
 								<?php foreach ($data['dtadl'] as $adl): ?>
 									<option value="<?php echo $adl['adl_id']; ?>"><?php echo $adl['adl_id'] . ' - ' . $adl['adl_nama'] . ' - ' . $adl['lab_nama']; ?></option>
@@ -124,23 +122,19 @@
 						</div>
 						<div class="form-group">
 							<label for="gnadl_mtk">Mata Kuliah</label>
-							<select name="gnadl_mtk" id="gnadl_mtk" class="form-control">
-								<option value="">-- Pilih Mata Kuliah --</option>
-								<?php foreach ($data['mtkul'] as $mtk): ?>
-									<option value="<?php echo $mtk['mtk_id']; ?>"><?php echo $mtk['mtk_akronim'] . ' - ' . $mtk['dsn_nama'] . ' (' . $mtk['mtk_periode'] . ')'; ?></option>
-								<?php endforeach ?>
-							</select>
+							<input type="text" name="gnadl_mtk" id="gnadl_mtk" class="form-control" placeholder="Masukkan Mata Kuliah..." required>
+							<div id="gnadl_mtklist"></div>
 						</div>
 						<div class="form-group">
 							<label for="gnadl_dsn">Dosen</label>
 							<div class="input-group">
-								<select id="gnadl_dsn" name="gnadl_dsn" class="form-control">
+								<select id="gnadl_dsn" name="gnadl_dsn" class="form-control" required>
 									<option value="">-- Pilih Dosen --</option>
 									<?php foreach ($data['dosen'] as $dsn): ?>
 										<option value="<?php echo $dsn['dsn_id']; ?>"><?php echo $dsn['dsn_nama']; ?></option>
 									<?php endforeach ?>
 								</select>
-							</div>
+							</div> 
 						</div>
 						<div class="form-group">
 							<input type="submit" name="gnadl_kirim" id="gnadl_kirim" class="btn btn-primary form-control" value="Kirim">

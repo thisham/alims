@@ -39,7 +39,11 @@
 							</tr>
 							<tr>
 								<th>Total Penggunaan</th>
-								<td><?php echo $data['gnlab']['baris']; ?></td>
+								<td><?php echo $data['gnlab']['baris']; ?> kali praktikum</td>
+							</tr>
+							<tr>
+								<th>Alat dalam Laboratorium</th>
+								<td><?php echo $data['dtadl']['angka']; ?> unit alat</td>
 							</tr>
 						</table>
 					</div>
@@ -115,7 +119,7 @@
 										<td colspan="7" class="text-center">Data tidak ditemukan.</td>
 									</tr>
 								<?php else: ?>
-									<?php foreach ($data['dtadl'] as $adl): ?>
+									<?php foreach ($data['dtadl']['jamak'] as $adl): ?>
 										<tr>
 											<td><?php echo $no++; ?></td>
 											<td><a href="<?php echo BASIS_URL . '/data/adl/detail/' . $adl['adl_id']; ?>"><?php echo $adl['adl_id']; ?></a></td>

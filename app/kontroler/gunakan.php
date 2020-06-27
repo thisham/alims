@@ -104,12 +104,13 @@ class gunakan extends Kontroler
 	{
 		switch ($menu) {
 			case 'tambahin':
+				// $this->model('m_gunakan')->gnadl_tambah($_POST, $this->datasesi('user'));
 				if ( $this->model('m_gunakan')->gnadl_tambah($_POST, $this->datasesi('user')) > 0 ) {
 					Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'telah dicatat', '', 'success');
 					header('location:' . BASIS_URL . '/gunakan/adl');
 					exit;
 				} else {
-					Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'telah dicatat', '', 'danger');
+					Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'tidak dicatat', '', 'danger');
 					header('location:' . BASIS_URL . '/gunakan/adl');
 					exit;
 				}
@@ -150,7 +151,6 @@ class gunakan extends Kontroler
 					'judul'	=> 'Penggunaan Alat dalam Laboratorium',
 					'pages'	=> 'Penggunaan',
 					'newID'	=> $this->model('m_gunakan')->gnadl_idbaru(),
-					'mtkul'	=> $this->model('m_akademik')->mtk_list('aktif', 'list'),
 					'dosen'	=> $this->model('m_warga')->dsn_list(),
 					'gnadl'	=> $this->model('m_gunakan')->gnadl_list(),
 					'dtadl'	=> $this->model('m_inventaris')->adl_list()
@@ -163,19 +163,36 @@ class gunakan extends Kontroler
 		}
 	}
 
-	// function ajax()
-	// {
-	// 	var_dump($_REQUEST);
-	// 	$hasil = $this->model('m_gunakan')->autc_dtmhs($_GET['term']);
-	// 	while ($baris = $hasil) {
-	// 		$data[] = $baris;
-	// 	}
-	// 	foreach ($hasil as $data) {
-	// 		$keluaran['suggestion'][] = array(
-	// 			'value'	=> $data['nim'],
-	// 			'data'	=> $data['nama']
-	// 		);
-	// 	}
-	// 	echo json_encode($hasil);
-	// }
+	function app($menu = '', $id = '', $aksi = '')
+	{
+		switch ($menu) {
+			case 'tambahin':
+				# c
+				break;
+
+			case 'update':
+				# code...
+				break;
+
+			case 'detail':
+				# code...
+				break;
+
+			default:
+				$data = array(
+					'judul'	=> 'Penggunaan Alat Pinjam-Pakai',
+					'pages'	=> 'Penggunaan'
+					// 'newID'	=> $this->model('m_gunakan')->gnapp_idbaru(),
+					// 'dosen'	=> $this->model('m_warga')->dsn_list(),
+					// 'gnapp'	=> $this->model('m_gunakan')->gnapp_list(),
+					// 'dtapp'	=> $this->model('m_inventaris')->app_list()
+				);
+				$this->tampilkan('templat/header', $data);
+				$this->tampilkan('templat/navbar_dash', $data);
+				$this->tampilkan('gunakan/app/index', $data);
+				$this->tampilkan('templat/footer', $data);
+				break;
+		}
+	}
+
 }

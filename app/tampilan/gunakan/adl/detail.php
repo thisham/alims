@@ -27,7 +27,7 @@
 					</tr>
 					<tr>
 						<th>Dosen Pengampu</th>
-						<td><?php echo $data['infos']['mtk_dosen'] . ' - ' . $data['infos']['dsn_nama']; ?></td>
+						<td><?php echo $data['infos']['dsn_id'] . ' - ' . $data['infos']['dsn_nama']; ?></td>
 					</tr>
 					<tr>
 						<th>Status</th>
@@ -47,15 +47,11 @@
 							<?php else: ?>
 								<div class="badge badge-success"><i><?php echo $data['infos']['gnadl_awal']; ?></i> ~ <i><?php echo $data['infos']['gnadl_akhir']; ?></i></div>
 							<?php endif ?>
-							<!-- <?php if ($data['infos']['gnadl_awal'] == 0 AND $data['infos']['gnadl_akhir'] == 0) { ?>
-								<a href="<?php echo BASIS_URL . '/gunakan/lab/update/' . $data['infos']['gnlab_id'] . '/mulai'; ?>" class="btn btn-success btn-sm">Mulai</a>
-							<?php } elseif ($data['infos']['gnlab_awal'] != 0 AND $data['infos']['gnlab_akhir'] == 0) { ?>
-								<div class="badge badge-success"><i>Dibuka pada <?php echo $data['infos']['gnlab_awal']; ?></i></div> ~ <a href="<?php echo BASIS_URL . '/gunakan/lab/update/' . $data['infos']['gnlab_id'] . '/selesai'; ?>" class="btn btn-danger btn-sm">Tutup</a>
-								<br>
-							<?php } else { ?>
-								<div class="badge badge-success"><i><?php echo $data['infos']['gnlab_awal']; ?></i> ~ <i><?php echo $data['infos']['gnlab_akhir']; ?></i></div>
-							<?php } ?>		 -->
 						</td>
+					</tr>
+					<tr>
+						<th>TTD Laboran</th>
+						<td><?php echo '<strong>' . $data['infos']['nama'] . '</strong> pada ' . $data['infos']['gnadl_sign']; ?></td>
 					</tr>
 				</table>
 			</div>

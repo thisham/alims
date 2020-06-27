@@ -114,7 +114,7 @@ class data extends Kontroler
 					$data = array(
 						'judul'	=> 'Tambah Data Mahasiswa',
 						'pages'	=> 'Data',
-						'hasil'	=> $this->model('m_warga')->mhs_cari($_POST)
+						'hasil'	=> $this->model('m_warga')->mhs_cari($_POST['cari'])
 					);
 					$this->tampilkan('templat/header', $data);
 					$this->tampilkan('templat/navbar_dash', $data);
@@ -667,5 +667,37 @@ class data extends Kontroler
 					$this->tampilkan('templat/footer', $data);
 					break;
 			}
+		}
+
+	// Auto Complete Ajax
+
+		function autcajax($kueri = '')
+		{
+			switch ($kueri) {
+				case 'mhs':
+					if ( isset($_POST['kueri_mhs']) ) {
+						$data = $this->model('m_ajax')->cari_mhs($_POST['kueri_mhs']);
+						$this->tampilkan('ajax/autc/mhs', $data);
+					}
+					break;
+
+				case 'mtk':
+					if ( isset($_POST['kueri_mtk']) ) {
+						$data = $this->model('m_ajax')->cari_mtk($_POST['kueri_mtk']);
+						$this->tampilkan('ajax/autc/mtk', $data);
+					}
+					break;
+				
+				default:
+					$data = array(
+						'judul'	=> 'Halaman Tidak Ditemukan'
+					);
+					$this->tampilkan('templat/header', $data);
+					$this->tampilkan('templat/navbar_dash', $data);
+					$this->tampilkan('error/er404', $data);
+					$this->tampilkan('templat/footer', $data);
+					break;
+			}
+			
 		}
 }

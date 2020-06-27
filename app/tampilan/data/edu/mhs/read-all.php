@@ -51,14 +51,13 @@
 										<?php foreach ($data['lists'] as $mhs): ?>
 											<tr>
 												<td><?php echo $no++; ?></td>
-												<td><?php echo $mhs['nim']; ?></td>
+												<td><a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>"><?php echo $mhs['nim']; ?></a></td>
 												<td class="text-left"><?php echo $mhs['nama']; ?></td>
 												<!-- <td><?php echo $mhs['prodi']; ?></td>
 												<td><?php echo $mhs['angkatan']; ?></td>
 												<td><?php echo $mhs['kelas']; ?></td> -->
 												<td>
 													<div class="btn-group">
-														<a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>" class="btn btn-primary btn-sm">Detail</a>
 														<a href="<?php echo BASIS_URL . '/data/mhs/edit/' . $mhs['nim']; ?>" class="btn btn-warning btn-sm">Edit</a>
 														<a href="<?php echo BASIS_URL . '/data/mhs/hapus/' . $mhs['nim']; ?>" class="btn btn-danger btn-sm">Hapus</a>
 													</div>

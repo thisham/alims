@@ -54,6 +54,10 @@
 							<?php } ?>		
 						</td>
 					</tr>
+					<tr>
+						<th>TTD Laboran</th>
+						<td><?php echo '<strong>' . $data['infos']['nama'] . '</strong> pada ' . $data['infos']['gnlab_sign']; ?></td>
+					</tr>
 				</table>
 			</div>
 		</div>
