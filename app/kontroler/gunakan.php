@@ -78,10 +78,6 @@ class gunakan extends Kontroler
 				$this->tampilkan('templat/footer', $data);
 				break;
 
-			// case 'autc-dtmhs':
-				
-			// 	break;
-
 			default:
 				$data = array(
 					'judul'	=> 'Penggunaan Laboratorium',
@@ -163,15 +159,34 @@ class gunakan extends Kontroler
 		}
 	}
 
-	function app($menu = '', $id = '', $aksi = '')
+	function app($menu = '', $id = '', $aksi = '', $app_id = '')
 	{
 		switch ($menu) {
 			case 'tambahin':
 				# c
 				break;
 
+			case 'carimhs-pinjam':
+				if ($id != '') {
+					$data = $this->model('m_gunakan')->gnapp_listDipakaiMHS($id);
+					$this->tampilkan('gunakan/app/appbymhs', $data);
+				}
+				break;
+
 			case 'update':
-				# code...
+				switch ($aksi) {
+					case 'kembaliin':
+						# code...
+						break;
+
+					case 'rusakin':
+						# code...
+						break;
+					
+					default:
+						# code...
+						break;
+				}
 				break;
 
 			case 'detail':
@@ -181,11 +196,13 @@ class gunakan extends Kontroler
 			default:
 				$data = array(
 					'judul'	=> 'Penggunaan Alat Pinjam-Pakai',
-					'pages'	=> 'Penggunaan'
-					// 'newID'	=> $this->model('m_gunakan')->gnapp_idbaru(),
-					// 'dosen'	=> $this->model('m_warga')->dsn_list(),
-					// 'gnapp'	=> $this->model('m_gunakan')->gnapp_list(),
-					// 'dtapp'	=> $this->model('m_inventaris')->app_list()
+					'pages'	=> 'Penggunaan',
+					'newID'	=> $this->model('m_gunakan')->gnapp_idbaru(),
+					'dosen'	=> $this->model('m_warga')->dsn_list(),
+					'gpp_a'	=> $this->model('m_gunakan')->gnapp_list(),
+					'gpp_r'	=> $this->model('m_gunakan')->gnapp_listRusak(),
+					'gpp_p'	=> $this->model('m_gunakan')->gnapp_listDipakai(),
+					'dtapp'	=> $this->model('m_inventaris')->app_list()
 				);
 				$this->tampilkan('templat/header', $data);
 				$this->tampilkan('templat/navbar_dash', $data);
