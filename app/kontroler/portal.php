@@ -9,7 +9,7 @@ class portal extends Kontroler
 	function indeks()
 	{
 		$data = array(	
-			'judul' => 'Portal - ALIMS',
+			'judul' => 'Portal',
 			'pages' => 'Portal',
 			'rumus' => $this->pustaka('p_captcha')->tampilkanrumus()
 		);
@@ -22,7 +22,7 @@ class portal extends Kontroler
 	function daftar()
 	{
 		$data = array(	
-			'judul' => 'Portal - ALIMS',
+			'judul' => 'Portal',
 			'pages' => 'Portal',
 			'rumus' => $this->pustaka('p_captcha')->tampilkanrumus()
 		);
