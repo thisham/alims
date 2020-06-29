@@ -210,7 +210,7 @@ class m_inventaris extends Kontroler
 				$this->db->ikat('kode', "%$kode%");
 				$this->db->eksekusi();
 				$data = $this->db->hasil_tunggal();
-				$urut = (int) substr($data['kode_besar'], 9);
+				$urut = (int) substr($data['kode_besar'], 10);
 				
 				$urut = $urut + 1;
 
@@ -221,11 +221,12 @@ class m_inventaris extends Kontroler
 
 			function app_tambah($data, $noid)
 			{
+				$data['app_volume'] = sprintf("%03s", $data['app_volume']);
 				$kueri = "INSERT INTO $this->app VALUES (:app_id, :app_nama, :app_label, :app_kondisi)";
 				$this->db->kueri($kueri);
 				$this->db->ikat('app_id', $noid);
 				$this->db->ikat('app_nama', $data['app_nama']);
-				$this->db->ikat('app_label', $data['app_label']);
+				$this->db->ikat('app_label', $data['app_label'] . $data['app_volume']);
 				$this->db->ikat('app_kondisi', 'Baik');
 				$this->db->eksekusi();
 				$hasil = $this->db->hit_baris();
