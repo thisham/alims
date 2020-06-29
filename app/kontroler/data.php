@@ -437,6 +437,60 @@ class data extends Kontroler
 			}
 		}
 
+		function app($menu = '', $id = '')
+		{
+			switch ($menu) {
+				case 'tambahin':
+					// var_dump($_POST);
+					$_POST['app_volume'] = sprintf("%04s", $_POST['app_volume']);
+					$data = 0;
+					for ($i = 0; $i < $_POST['app_jumlah'] ; $i++) { 
+						$nomor = $this->model('m_inventaris')->app_idbaru($_POST['app_label'] . $_POST['app_volume']);
+						$hasil = $this->model('m_inventaris')->app_tambah($_POST, $nomor);
+						$data = $data + $hasil;
+					}
+					
+					if ( $data > 0 ) {
+						Flasher::setFlash('Data alat pinjam-pakai', 'berhasil ditambahkan', 'Sebanyak ' . $data . ' baris data terpengaruh.', 'success');
+						header('location:' . BASIS_URL . '/data/app');
+						exit;
+					} else {
+						Flasher::setFlash('Data alat pinjam-pakai', 'gagal ditambahkan', '', 'danger');
+						header('location:' . BASIS_URL . '/data/app');
+						exit;
+					}
+					break;
+
+				case 'edit':
+					# code...
+					break;
+
+				case 'editin':
+					# code...
+					break;
+
+				case 'hapus':
+					# code...
+					break;
+
+				case 'detail':
+					# code...
+					break;
+				
+				default:
+					$data = array(
+						'judul'	=> 'Data Alat Pinjam-Pakai',
+						'pages'	=> 'Data',
+						'lists'	=> $this->model('m_inventaris')->app_list()
+					);
+					$this->tampilkan('templat/header', $data);
+					$this->tampilkan('templat/navbar_dash', $data);
+					$this->tampilkan('data/inv/app/read-all', $data);
+					$this->tampilkan('templat/footer', $data);
+					break;
+			}
+		}
+
 	// Akademik
 
 		function prodi($menu = '', $id = '')
