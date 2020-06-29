@@ -7,8 +7,10 @@ class m_gunakan extends Kontroler
 {
 	private $gnlab = 'guna_lab';
 	private $gnadl = 'guna_adl';
+	private $gnapp = 'guna_app';
 	private $dtadl = 'daftar_adl';
 	private $dtlab = 'daftar_lab';
+	private $dtapp = 'daftar_app';
 	private $dtmhs = 'daftar_mhs';
 	private $dtdsn = 'daftar_dsn';
 	private $dtmtk = 'daftar_mtk';
@@ -298,4 +300,137 @@ class m_gunakan extends Kontroler
 			}
 
 		// Delete Data
+
+
+	// Alat Pinjam-Pakai
+
+		// Create Data
+
+			function gnapp_idbaru()
+			{
+				$kode = "GPP" . date('y') . sprintf("%03s", date('z'));
+				$kueri = "SELECT max(gnapp_id) as kode_besar FROM $this->gnapp WHERE gnapp_id LIKE :kode";
+				$this->db->kueri($kueri);
+				$this->db->ikat('kode', "%$kode%");
+				$this->db->eksekusi();
+				$data = $this->db->hasil_tunggal();
+				$urut = (int) substr($data['kode_besar'], 8);
+				$urut = $urut + 1;
+
+				$hasil = $kode . sprintf("%04s", $urut);
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnapp_tambah($data, $user_id)
+			{
+				$kueri = "INSERT INTO $this->gnapp VALUES (:gnapp_id, :gnapp_app, :gnapp_mhs, :gnapp_dsn, :gnapp_mtk, :gnapp_awal, :gnapp_akhir, :gnapp_rusak, :gnapp_sign, :gnapp_lbrn); UPDATE $this->dtapp SET app_kondisi = :app_kondisi WHERE app_id = :gnapp_app";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnapp_id', $this->gnapp_idbaru());
+				$this->db->ikat('gnapp_app', $data['gnapp_app']);
+				$this->db->ikat('gnapp_mhs', $data['gnapp_mhs']);
+				$this->db->ikat('gnapp_dsn', $data['gnapp_dsn']);
+				$this->db->ikat('gnapp_mtk', $data['gnapp_mtk']);
+				$this->db->ikat('gnapp_awal', date('Y-m-d H:i:s'));
+				$this->db->ikat('gnapp_akhir', 0);
+				$this->db->ikat('gnapp_rusak', 0);
+				$this->db->ikat('gnapp_sign', date('Y-m-d H:i:s'));
+				$this->db->ikat('gnapp_lbrn', $user_id);
+				$this->db->ikat('app_kondisi', 'Dipinjam');
+				$this->db->eksekusi();
+				$hasil = $this->db->hit_baris();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+		// Read Data
+
+			function gnapp_list()
+			{
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id";
+				$this->db->kueri($kueri);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnapp_listDipakai()
+			{
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak = 0";
+				$this->db->kueri($kueri);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnapp_listRusak()
+			{
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak != 0";
+				$this->db->kueri($kueri);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnapp_listDipakaiMHS($data)
+			{
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak = 0 AND gnapp_mhs = :gnapp_mhs";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnapp_mhs', $data);
+				$this->db->eksekusi();
+				$hasil = array(
+					'hasil'	=> $this->db->hasil_jamak(),
+					'angka'	=> $this->db->hit_baris()
+				);
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnapp_listRusakMHS($data)
+			{
+				$data = explode(' - ', $data);
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak = 0 AND gnapp_mhs = :gnapp_mhs";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnapp_mhs', $data[0]);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+		// Update Data
+
+			function gnapp_kembali($gnapp_id, $app_id)
+			{
+				$kueri = "UPDATE $this->gnapp SET gnapp_akhir = :gnapp_akhir WHERE gnapp_id = :gnapp_id; UPDATE $this->dtapp SET app_kondisi = :app_kondisi WHERE app_id = :app_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnapp_id', $gnapp_id);
+				$this->db->ikat('gnapp_akhir', date('Y-m-d H:i:s'));
+				$this->db->ikat('app_id', $app_id);
+				$this->db->ikat('app_kondisi', 'Baik');
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnapp_rusak($gnapp_id, $app_id)
+			{
+				$kueri = "UPDATE $this->gnapp SET gnapp_rusak = :gnapp_rusak WHERE gnapp_id = :gnapp_id; UPDATE $this->dtapp SET app_kondisi = :app_kondisi WHERE app_id = :app_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnapp_id', $gnapp_id);
+				$this->db->ikat('gnapp_rusak', date('Y-m-d H:i:s'));
+				$this->db->ikat('app_id', $app_id);
+				$this->db->ikat('app_kondisi', 'Rusak/Hilang');
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+		// Delete Data
+
 }

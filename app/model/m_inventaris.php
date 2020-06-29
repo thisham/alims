@@ -7,6 +7,7 @@ class m_inventaris extends Kontroler
 {
 	private $lab = 'daftar_lab';
 	private $adl = 'daftar_adl';
+	private $app = 'daftar_app';
 	private $laboran = 'user';
 	private $db;
 	
@@ -196,4 +197,89 @@ class m_inventaris extends Kontroler
 			$this->db->tutup();
 			return $hasil;
 		}
+
+	// Alat Pinjam-Pakai
+
+		// Create Data
+
+			function app_idbaru($label)
+			{
+				$kueri = "SELECT max(app_id) as kode_besar FROM $this->app";
+				$this->db->kueri($kueri);
+				$this->db->eksekusi();
+				$data = $this->db->hasil_tunggal();
+				$urut = (int) substr($data['kode_besar'], 3);
+				$kode = "APP" . $label;
+				$urut = $urut + 1;
+
+				$hasil = $kode . sprintf("%03s", $urut);
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function app_tambah($data)
+			{
+				$data['app_label'] = $data['app_label'] . ($data['app_volume']);
+				$kueri = "INSERT INTO $this->app VALUES (:app_id, :app_nama, :app_label, :kondisi)";
+				$this->db->kueri($kueri);
+				$this->db->ikat('app_id', $this->app_idbaru($data['app_label']));
+				$this->db->ikat('app_nama', $data['app_nama']);
+				$this->db->ikat('app_label', $data['app_label']);
+				$this->db->ikat('app_kondisi', $data['app_kondisi']);
+				$this->db->eksekusi();
+				$hasil = $this->db->hit_baris();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+		// Read Data
+
+			function app_list()
+			{
+				$kueri = "SELECT * FROM $this->app";
+				$this->db->kueri($kueri);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function app_detail($data)
+			{
+				$kueri = "SELECT * FROM $this->app WHERE app_id = :app_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('app_id', $data);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_tunggal();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+		// Update Data 
+
+			function app_edit($data, $id)
+			{
+				$kueri = "UPDATE $this->app SET app_nama = :app_nama, app_kondisi = :app_kondisi WHERE app_id = :app_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('app_id', $id);
+				$this->db->ikat('app_nama', $data['app_nama']);
+				$this->db->ikat('app_kondisi', $data['app_kondisi']);
+				$this->db->eksekusi();
+				$hasil = $this->db->hit_baris();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+		// Delete Data
+
+			function app_hapus($data)
+			{
+				$kueri = "DELETE FROM $this->app WHERE app_id = :app_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('app_id', $data);
+				$this->db->eksekusi();
+				$hasil = $this->db->hit_baris();
+				$this->db->tutup();
+				return $hasil;
+			}
 }
