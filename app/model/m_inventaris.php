@@ -204,12 +204,14 @@ class m_inventaris extends Kontroler
 
 			function app_idbaru($label)
 			{
-				$kueri = "SELECT max(app_id) as kode_besar FROM $this->app";
+				$kode = "APP" . $label . '-';
+				$kueri = "SELECT max(app_id) as kode_besar FROM $this->app WHERE app_id LIKE :kode";
 				$this->db->kueri($kueri);
+				$this->db->ikat('kode', "%$kode%");
 				$this->db->eksekusi();
 				$data = $this->db->hasil_tunggal();
-				$urut = (int) substr($data['kode_besar'], 3);
-				$kode = "APP" . $label;
+				$urut = (int) substr($data['kode_besar'], 9);
+				
 				$urut = $urut + 1;
 
 				$hasil = $kode . sprintf("%03s", $urut);
@@ -217,15 +219,14 @@ class m_inventaris extends Kontroler
 				return $hasil;
 			}
 
-			function app_tambah($data)
+			function app_tambah($data, $noid)
 			{
-				$data['app_label'] = $data['app_label'] . ($data['app_volume']);
-				$kueri = "INSERT INTO $this->app VALUES (:app_id, :app_nama, :app_label, :kondisi)";
+				$kueri = "INSERT INTO $this->app VALUES (:app_id, :app_nama, :app_label, :app_kondisi)";
 				$this->db->kueri($kueri);
-				$this->db->ikat('app_id', $this->app_idbaru($data['app_label']));
+				$this->db->ikat('app_id', $noid);
 				$this->db->ikat('app_nama', $data['app_nama']);
 				$this->db->ikat('app_label', $data['app_label']);
-				$this->db->ikat('app_kondisi', $data['app_kondisi']);
+				$this->db->ikat('app_kondisi', 'Baik');
 				$this->db->eksekusi();
 				$hasil = $this->db->hit_baris();
 				$this->db->tutup();
