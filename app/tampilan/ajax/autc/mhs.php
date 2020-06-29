@@ -26,6 +26,23 @@
 		$('#gnadl_mhs').val($(this).text());
 		$('#gnadl_mhslist').fadeOut();
 	});
+	$('.autc-mhs').on('click', function(){
+		$('#gnapp_mhs').val($(this).text());
+		$('#gnapp_mhslist').fadeOut();
+		var hasil = $(this).text();
+		var nim   = hasil.split(' - ', 1);
+		var url   = "<?php echo BASIS_URL; ?>/gunakan/app/carimhs-pinjam/" + nim;
+		$.ajax({
+			success: function(){
+				$('#gnapp_tbl-appbymhs').load(url);
+			}
+		});
+		
+		// console.log(nim);
+		// $.ajax({
+		// 	url: 
+		// });
+	});
 </script>
 <ul class="autc">
 	<?php if (!is_null($data)): ?>
