@@ -7,7 +7,7 @@
 	}
 	
 	li.autc{
-		/*padding:12px;*/
+		padding:4px;
 		list-style-type: none;
 		border:bold solid #F0F8FF;
 	}
@@ -44,13 +44,13 @@
 		// });
 	});
 </script>
-<ul class="autc">
+<ul class="autc list-group">
 	<?php if (!is_null($data)): ?>
 		<?php foreach ($data as $hasil): ?>
-			<li class="autc autc-mhs"><?php echo $hasil['nim'] . ' - ' . $hasil['nama']; ?></li>
+			<li class="autc autc-mhs list-group-item list-group-item-action"><?php echo $hasil['nim'] . ' - ' . $hasil['nama']; ?></li>
 		<?php endforeach ?>
 	<?php else: ?>
-		<li class="autc autc-mhs text-center">Tidak ada data.</li>
+		<li class="autc autc-mhs text-center list-group-item list-group-item-action">Tidak ada data.</li>
 	<?php endif ?>
 		
 </ul>

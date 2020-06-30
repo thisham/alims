@@ -51,15 +51,15 @@
 										<?php foreach ($data['lists'] as $mhs): ?>
 											<tr>
 												<td><?php echo $no++; ?></td>
-												<td><a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>"><?php echo $mhs['nim']; ?></a></td>
-												<td class="text-left"><?php echo $mhs['nama']; ?></td>
+												<td><a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>"><?php echo $mhs['mhs_nim']; ?></a></td>
+												<td class="text-left"><?php echo $mhs['mhs_nama']; ?></td>
 												<!-- <td><?php echo $mhs['prodi']; ?></td>
 												<td><?php echo $mhs['angkatan']; ?></td>
 												<td><?php echo $mhs['kelas']; ?></td> -->
 												<td>
 													<div class="btn-group">
-														<a href="<?php echo BASIS_URL . '/data/mhs/edit/' . $mhs['nim']; ?>" class="btn btn-warning btn-sm">Edit</a>
-														<a href="<?php echo BASIS_URL . '/data/mhs/hapus/' . $mhs['nim']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+														<a href="<?php echo BASIS_URL . '/data/mhs/edit/' . $mhs['mhs_nim']; ?>" class="btn btn-warning btn-sm">Edit</a>
+														<a href="<?php echo BASIS_URL . '/data/mhs/hapus/' . $mhs['mhs_nim']; ?>" class="btn btn-danger btn-sm">Hapus</a>
 													</div>
 												</td>
 											</tr>
@@ -75,16 +75,16 @@
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
 					<form action="<?php echo BASIS_URL; ?>/data/mhs/tambahin" method="post">
 						<div class="form-group">
-							<label for="nim">Nomor Induk Mahasiswa</label>
-							<input type="text" name="nim" id="nim" class="form-control" placeholder="Masukkan NIM..." required>
+							<label for="mhs_nim">Nomor Induk Mahasiswa</label>
+							<input type="text" name="mhs_nim" id="mhs_nim" class="form-control" placeholder="Masukkan NIM..." required>
 						</div>
 						<div class="form-group">
-							<label for="nama">Nama</label>
-							<input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan Nama Mahasiswa..." required>
+							<label for="mhs_nama">Nama</label>
+							<input type="text" name="mhs_nama" id="mhs_nama" class="form-control" placeholder="Masukkan Nama Mahasiswa..." required>
 						</div>
 						<div class="form-group">
 							<label for="prodi">Program Studi</label>
-							<select class="form-control" name="prodi" id="prodi" required>
+							<select class="form-control" name="mhs_prodi" id="mhs_prodi" required>
 								<option value="">-- Pllih Program Studi --</option>
 								<?php foreach ($data['prodi'] as $prodi): ?>
 									<option value="<?php echo $prodi['kode']; ?>"><?php echo $prodi['prodi']; ?></option>
@@ -92,12 +92,12 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="angkatan">Angkatan</label>
-							<input type="text" name="angkatan" id="angkatan" class="form-control" placeholder="Masukkan Tahun Pendaftaran Mahasiswa (4 digit)..." pattern="[0-9]{4}" required>
+							<label for="mhs_angkatan">Angkatan</label>
+							<input type="text" name="mhs_angkatan" id="mhs_angkatan" class="form-control" placeholder="Masukkan Tahun Pendaftaran Mahasiswa (4 digit)..." pattern="[0-9]{4}" required>
 						</div>
 						<div class="form-group">
-							<label for="kelas">Kelas</label>
-							<input type="text" name="kelas" id="kelas" class="form-control" placeholder="Masukkan Kelas Mahasiswa..." required>
+							<label for="mhs_kelas">Kelas</label>
+							<input type="text" name="mhs_kelas" id="mhs_kelas" class="form-control" placeholder="Masukkan Kelas Mahasiswa..." required>
 						</div>
 						<div class="form-group">
 							<input type="submit" name="kirim" id="kirim" value="Kirim" class="btn btn-primary form-control">

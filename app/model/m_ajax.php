@@ -19,7 +19,7 @@ class m_ajax extends Kontroler
 	
 		function cari_mhs($data)
 		{
-			$kueri = "SELECT * FROM $this->dtmhs WHERE nim LIKE :kueri OR nama LIKE :kueri";
+			$kueri = "SELECT * FROM $this->dtmhs WHERE mhs_nim LIKE :kueri OR mhs_nama LIKE :kueri";
 			$this->db->kueri($kueri);
 			$this->db->ikat('kueri', '%' . $data . '%');
 			$this->db->eksekusi();

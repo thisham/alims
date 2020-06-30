@@ -470,7 +470,16 @@ class data extends Kontroler
 					break;
 
 				case 'hapus':
-					# code...
+					if ($this->model('m_inventaris')->app_hapus($id) > 0) {
+						Flasher::setFlash('Data alat pinjam-pakai', 'berhasil dihapus', '', 'success');
+						header('location:' . BASIS_URL . '/data/app');
+						exit;
+					} else {
+						Flasher::setFlash('Data alat pinjam-pakai', 'gagal dihapus', '', 'danger');
+						header('location:' . BASIS_URL . '/data/app');
+						exit;
+					}
+					
 					break;
 
 				case 'detail':

@@ -21,13 +21,6 @@
 			frmmhs = frmmhs.split(' - ', 1);
 			var url = "<?php echo BASIS_URL; ?>/gunakan/app/carimhs-pinjam/" + frmmhs;
 			$("#tbl-appbymhs").load(url);
-			// console.log(frmmhs);
-			// $.ajax({
-			// 	url: "<?php echo BASIS_URL; ?>/gunakan/app/carimhs-pinjam/" + frmmhs,
-			// 	success: function(url) {
-					
-			// 	}
-			// });
 		});
 	});
 </script>

@@ -28,13 +28,13 @@ class m_gunakan extends Kontroler
 
 			function autc_dtmhs($data)
 			{
-				$kueri = "SELECT nim, nama FROM $this->dtmhs WHERE nim LIKE :data OR nama LIKE :data";
+				$kueri = "SELECT mhs_nim, nama FROM $this->dtmhs WHERE mhs_nim LIKE :data OR nama LIKE :data";
 				$this->db->kueri($kueri);
 				$this->db->ikat('data', "%$data%");
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
 				while ($baris = $this->db->hasil_jamak()) {
-					$data[] = $baris['nim'];
+					$data[] = $baris['mhs_nim'];
 				}
 				$this->db->tutup();
 				return $data;
@@ -85,7 +85,7 @@ class m_gunakan extends Kontroler
 
 			function gnlab_list()
 			{
-				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id` ORDER BY gnlab_sign DESC";
+				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id` ORDER BY gnlab_sign DESC";
 				$this->db->kueri($kueri);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
@@ -95,7 +95,7 @@ class m_gunakan extends Kontroler
 
 			function gnlab_detail($data)
 			{
-				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id` WHERE gnlab_id = :gnlab_id";
+				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id` WHERE gnlab_id = :gnlab_id";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnlab_id', $data);
 				$this->db->eksekusi();
@@ -106,7 +106,7 @@ class m_gunakan extends Kontroler
 
 			function gnlab_byMhs($data)
 			{
-				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->siswa`.`nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->mtkul`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `user`.`user_id` WHERE `$this->gnlab`.`gnlab_mhs` = :gnlab_mhs ORDER BY gnlab_sign DESC";
+				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->siswa`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->mtkul`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `user`.`user_id` WHERE `$this->gnlab`.`gnlab_mhs` = :gnlab_mhs ORDER BY gnlab_sign DESC";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnlab_mhs', $data);
 				$this->db->eksekusi();
@@ -120,7 +120,7 @@ class m_gunakan extends Kontroler
 
 			function gnlab_byLab($data)
 			{
-				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `user`.`user_id` WHERE gnlab_lab = :gnlab_lab ORDER BY gnlab_sign DESC";
+				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `user`.`user_id` WHERE gnlab_lab = :gnlab_lab ORDER BY gnlab_sign DESC";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnlab_lab', $data);
 				$this->db->eksekusi();
@@ -242,7 +242,7 @@ class m_gunakan extends Kontroler
 
 			function gnadl_detail($id)
 			{
-				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `$this->dtlbr`.`user_id` WHERE gnadl_id = :gnadl_id";
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `$this->dtlbr`.`user_id` WHERE gnadl_id = :gnadl_id";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnadl_id', $id);
 				$this->db->eksekusi();
@@ -253,7 +253,7 @@ class m_gunakan extends Kontroler
 
 			function gnadl_byADL($data)
 			{
-				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `user`.`user_id` WHERE adl_id = :adl_id ORDER BY gnadl_sign DESC";
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `user`.`user_id` WHERE adl_id = :adl_id ORDER BY gnadl_sign DESC";
 				$this->db->kueri($kueri);
 				$this->db->ikat('adl_id', $data);
 				$this->db->eksekusi();
@@ -264,7 +264,7 @@ class m_gunakan extends Kontroler
 
 			function gnadl_byLab($data)
 			{
-				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `user`.`user_id` WHERE adl_letak = :adl_letak ORDER BY gnadl_sign DESC";
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON `$this->gnadl`.`gnadl_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnadl`.`gnadl_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnadl`.`gnadl_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnadl`.`gnadl_lbrn` = `user`.`user_id` WHERE adl_letak = :adl_letak ORDER BY gnadl_sign DESC";
 				$this->db->kueri($kueri);
 				$this->db->ikat('adl_letak', $data);
 				$this->db->eksekusi();
@@ -347,7 +347,7 @@ class m_gunakan extends Kontroler
 
 			function gnapp_list()
 			{
-				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id";
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = mhs_nim JOIN $this->dtapp ON gnapp_app = app_id";
 				$this->db->kueri($kueri);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
@@ -357,7 +357,7 @@ class m_gunakan extends Kontroler
 
 			function gnapp_listDipakai()
 			{
-				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak = 0";
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = mhs_nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak = 0";
 				$this->db->kueri($kueri);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
@@ -367,7 +367,7 @@ class m_gunakan extends Kontroler
 
 			function gnapp_listRusak()
 			{
-				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak != 0";
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = mhs_nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak != 0";
 				$this->db->kueri($kueri);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
@@ -377,7 +377,7 @@ class m_gunakan extends Kontroler
 
 			function gnapp_listDipakaiMHS($data)
 			{
-				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak = 0 AND gnapp_mhs = :gnapp_mhs";
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = mhs_nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak = 0 AND gnapp_mhs = :gnapp_mhs";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnapp_mhs', $data);
 				$this->db->eksekusi();
@@ -392,7 +392,7 @@ class m_gunakan extends Kontroler
 			function gnapp_listRusakMHS($data)
 			{
 				$data = explode(' - ', $data);
-				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak = 0 AND gnapp_mhs = :gnapp_mhs";
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = mhs_nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_awal != 0 AND gnapp_akhir = 0 AND gnapp_rusak = 0 AND gnapp_mhs = :gnapp_mhs";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnapp_mhs', $data[0]);
 				$this->db->eksekusi();

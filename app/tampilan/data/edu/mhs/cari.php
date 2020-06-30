@@ -50,16 +50,16 @@
 					<?php foreach ($data['hasil']['hasil'] as $mhs): ?>
 						<tr>
 							<td><?php echo $no++; ?></td>
-							<td><?php echo $mhs['nim']; ?></td>
-							<td><?php echo $mhs['nama']; ?></td>
+							<td><?php echo $mhs['mhs_nim']; ?></td>
+							<td><?php echo $mhs['mhs_nama']; ?></td>
 							<!-- <td><?php echo $mhs['prodi']; ?></td>
 							<td><?php echo $mhs['angkatan']; ?></td>
 							<td><?php echo $mhs['kelas']; ?></td> -->
 							<td>
 								<div class="btn-group">
-									<a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>" class="btn btn-primary btn-sm">Detail</a> 
-									<a href="<?php echo BASIS_URL . '/data/mhs/edit/' . $mhs['nim']; ?>" class="btn btn-warning btn-sm">Edit</a> 
-									<a href="<?php echo BASIS_URL . '/data/mhs/hapus/' . $mhs['nim']; ?>" class="btn btn-danger btn-sm">Hapus</a>
+									<a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['mhs_nim']; ?>" class="btn btn-primary btn-sm">Detail</a> 
+									<a href="<?php echo BASIS_URL . '/data/mhs/edit/' . $mhs['mhs_nim']; ?>" class="btn btn-warning btn-sm">Edit</a> 
+									<a href="<?php echo BASIS_URL . '/data/mhs/hapus/' . $mhs['mhs_nim']; ?>" class="btn btn-danger btn-sm">Hapus</a>
 								</div>
 									
 							</td>

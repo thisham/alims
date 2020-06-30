@@ -19,11 +19,11 @@
 						<table class="table table-striped">
 							<tr>
 								<th>Nama</th>
-								<td><?php echo $data['mhs']['nama']; ?></td>
+								<td><?php echo $data['mhs']['mhs_nama']; ?></td>
 							</tr>
 							<tr>
 								<th>NIM</th>
-								<td><?php echo $data['mhs']['nim']; ?></td>
+								<td><?php echo $data['mhs']['mhs_nim']; ?></td>
 							</tr>
 							<tr>
 								<th>Program Studi</th>
@@ -31,11 +31,11 @@
 							</tr>
 							<tr>
 								<th>Angkatan</th>
-								<td><?php echo $data['mhs']['angkatan']; ?></td>
+								<td><?php echo $data['mhs']['mhs_angkatan']; ?></td>
 							</tr>
 							<tr>
 								<th>Kelas</th>
-								<td><?php echo $data['mhs']['kelas']; ?></td>
+								<td><?php echo $data['mhs']['mhs_kelas']; ?></td>
 							</tr>
 							<tr>
 								<th>Pemakaian Lab</th>

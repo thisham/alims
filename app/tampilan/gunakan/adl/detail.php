@@ -15,11 +15,11 @@
 					</tr>
 					<tr>
 						<th>Praktikan</th>
-						<td><?php echo $data['infos']['nim']; ?> - <?php echo $data['infos']['nama']; ?></td>
+						<td><?php echo $data['infos']['mhs_nim']; ?> - <?php echo $data['infos']['mhs_nama']; ?></td>
 					</tr>
 					<tr>
 						<th>Angkatan / Kelas</th>
-						<td><?php echo $data['infos']['angkatan']; ?> / <?php echo $data['infos']['kelas']; ?></td>
+						<td><?php echo $data['infos']['mhs_angkatan']; ?> / <?php echo $data['infos']['mhs_kelas']; ?></td>
 					</tr>
 					<tr>
 						<th>Mata Kuliah</th>

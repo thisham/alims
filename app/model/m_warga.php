@@ -19,13 +19,13 @@ class m_warga extends Kontroler
 
 		function mhs_tambah($data)
 		{
-			$kueri = "INSERT INTO $this->siswa VALUES (:nim, :nama, :prodi, :angkatan, :kelas)";
+			$kueri = "INSERT INTO $this->siswa VALUES (:mhs_nim, :mhs_nama, :mhs_prodi, :mhs_angkatan, :mhs_kelas)";
 			$this->db->kueri($kueri);
-			$this->db->ikat('nim', $data['nim']);
-			$this->db->ikat('nama', $data['nama']);
-			$this->db->ikat('prodi', $data['prodi']);
-			$this->db->ikat('angkatan', $data['angkatan']);
-			$this->db->ikat('kelas', $data['kelas']);
+			$this->db->ikat('mhs_nim', $data['mhs_nim']);
+			$this->db->ikat('mhs_nama', $data['mhs_nama']);
+			$this->db->ikat('mhs_prodi', $data['mhs_prodi']);
+			$this->db->ikat('mhs_angkatan', $data['mhs_angkatan']);
+			$this->db->ikat('mhs_kelas', $data['mhs_kelas']);
 			$this->db->eksekusi();
 			$hasil = $this->db->hit_baris();
 			$this->db->tutup();
@@ -34,13 +34,13 @@ class m_warga extends Kontroler
 
 		function mhs_edit($data)
 		{
-			$kueri = "UPDATE $this->siswa SET nama = :nama, prodi = :prodi, angkatan = :angkatan, kelas = :kelas WHERE nim = :nim";
+			$kueri = "UPDATE $this->siswa SET mhs_nama = :mhs_nama, mhs_prodi = :mhs_prodi, mhs_angkatan = :mhs_angkatan, mhs_kelas = :mhs_kelas WHERE mhs_nim = :mhs_nim";
 			$this->db->kueri($kueri);
-			$this->db->ikat('nim', $data['nim']);
-			$this->db->ikat('nama', $data['nama']);
-			$this->db->ikat('prodi', $data['prodi']);
-			$this->db->ikat('angkatan', $data['angkatan']);
-			$this->db->ikat('kelas', $data['kelas']);
+			$this->db->ikat('mhs_nim', $data['mhs_nim']);
+			$this->db->ikat('mhs_nama', $data['mhs_nama']);
+			$this->db->ikat('mhs_prodi', $data['mhs_prodi']);
+			$this->db->ikat('mhs_angkatan', $data['mhs_angkatan']);
+			$this->db->ikat('mhs_kelas', $data['mhs_kelas']);
 			$this->db->eksekusi();
 			$hasil = $this->db->hit_baris();
 			$this->db->tutup();
@@ -49,7 +49,7 @@ class m_warga extends Kontroler
 
 		function mhs_list()
 		{
-			$kueri = "SELECT * FROM $this->siswa JOIN $this->prodi ON `$this->siswa`.`prodi` = `$this->prodi`.`kode`";
+			$kueri = "SELECT * FROM $this->siswa JOIN $this->prodi ON `$this->siswa`.`mhs_prodi` = `$this->prodi`.`kode`";
 			$this->db->kueri($kueri);
 			$this->db->eksekusi();
 			$hasil = $this->db->hasil_jamak();
@@ -59,9 +59,9 @@ class m_warga extends Kontroler
 
 		function mhs_detail($data)
 		{
-			$kueri = "SELECT * FROM $this->siswa JOIN $this->prodi ON `$this->siswa`.`prodi` = `$this->prodi`.`kode` WHERE nim = :nim";
+			$kueri = "SELECT * FROM $this->siswa JOIN $this->prodi ON `$this->siswa`.`mhs_prodi` = `$this->prodi`.`kode` WHERE mhs_nim = :mhs_nim";
 			$this->db->kueri($kueri);
-			$this->db->ikat('nim', $data);
+			$this->db->ikat('mhs_nim', $data);
 			$this->db->eksekusi();
 			$hasil = $this->db->hasil_tunggal();
 			$this->db->tutup();
@@ -70,7 +70,7 @@ class m_warga extends Kontroler
 
 		function mhs_cari($data)
 		{
-			$kueri = "SELECT * FROM $this->siswa WHERE nama LIKE :kueri OR nim LIKE :kueri";
+			$kueri = "SELECT * FROM $this->siswa WHERE nama LIKE :kueri OR mhs_nim LIKE :kueri";
 			$this->db->kueri($kueri);
 			$this->db->ikat('kueri', '%' . $data . '%');
 			$this->db->eksekusi();
@@ -85,9 +85,9 @@ class m_warga extends Kontroler
 
 		function mhs_hapus($data)
 		{
-			$kueri = "DELETE FROM $this->siswa WHERE nim = :nim";
+			$kueri = "DELETE FROM $this->siswa WHERE mhs_nim = :mhs_nim";
 			$this->db->kueri($kueri);
-			$this->db->ikat('nim', $data);
+			$this->db->ikat('mhs_nim', $data);
 			$this->db->eksekusi();
 			$hasil = $this->db->hit_baris();
 			$this->db->tutup();
