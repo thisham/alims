@@ -90,7 +90,8 @@ class data extends Kontroler
 					$data = array(
 						'judul'	=> 'Detail Mahasiswa',
 						'pages'	=> 'Data',
-						'mhs'	=> $this->model('m_warga')->mhs_detail($id)
+						'mhs'	=> $this->model('m_warga')->mhs_detail($id),
+						'glb'	=> $this->model('m_gunakan')->gnlab_bymhs($id)
 					);
 					$this->tampilkan('templat/header', $data);
 					$this->tampilkan('templat/navbar_dash', $data);

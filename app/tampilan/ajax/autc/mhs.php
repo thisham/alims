@@ -37,17 +37,16 @@
 				$('#gnapp_tbl-appbymhs').load(url);
 			}
 		});
-		
-		// console.log(nim);
-		// $.ajax({
-		// 	url: 
-		// });
+	});
+	$('.autc-mhs').on('click', function(){
+		$('#gnapp_mhs-add').val($(this).text());
+		$('#gnapp_mhslist-add').fadeOut();
 	});
 </script>
 <ul class="autc list-group">
 	<?php if (!is_null($data)): ?>
 		<?php foreach ($data as $hasil): ?>
-			<li class="autc autc-mhs list-group-item list-group-item-action"><?php echo $hasil['nim'] . ' - ' . $hasil['nama']; ?></li>
+			<li class="autc autc-mhs list-group-item list-group-item-action"><?php echo $hasil['mhs_nim'] . ' - ' . $hasil['mhs_nama']; ?></li>
 		<?php endforeach ?>
 	<?php else: ?>
 		<li class="autc autc-mhs text-center list-group-item list-group-item-action">Tidak ada data.</li>

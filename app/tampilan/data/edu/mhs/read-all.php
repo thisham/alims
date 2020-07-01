@@ -51,7 +51,7 @@
 										<?php foreach ($data['lists'] as $mhs): ?>
 											<tr>
 												<td><?php echo $no++; ?></td>
-												<td><a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['nim']; ?>"><?php echo $mhs['mhs_nim']; ?></a></td>
+												<td><a href="<?php echo BASIS_URL . '/data/mhs/detail/' . $mhs['mhs_nim']; ?>"><?php echo $mhs['mhs_nim']; ?></a></td>
 												<td class="text-left"><?php echo $mhs['mhs_nama']; ?></td>
 												<!-- <td><?php echo $mhs['prodi']; ?></td>
 												<td><?php echo $mhs['angkatan']; ?></td>

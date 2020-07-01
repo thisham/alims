@@ -246,6 +246,16 @@ class m_inventaris extends Kontroler
 				return $hasil;
 			}
 
+			function app_listJenis()
+			{
+				$kueri = "SELECT DISTINCT app_nama, app_label FROM $this->app";
+				$this->db->kueri($kueri);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
 			function app_detail($data)
 			{
 				$kueri = "SELECT * FROM $this->app WHERE app_id = :app_id";

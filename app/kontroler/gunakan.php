@@ -36,6 +36,7 @@ class gunakan extends Kontroler
 	{
 		switch ($menu) {
 			case 'tambahin':
+				// var_dump($_POST);
 				if ( $this->model('m_gunakan')->gnlab_tambah($_POST, $this->datasesi('user')) > 0 ) {
 					Flasher::setFlash('Data penggunaan laboratorium', 'telah dicatat', '', 'success');
 					header('location:' . BASIS_URL . '/gunakan/lab');
@@ -159,11 +160,34 @@ class gunakan extends Kontroler
 		}
 	}
 
-	function app($menu = '', $id = '', $aksi = '', $app_id = '')
+	function app($menu = '', $id = '', $aksi = '', $app_id = '', $gpp_id = '')
 	{
 		switch ($menu) {
 			case 'tambahin':
-				# c
+				$data = 0;
+				for ($i=0; $i < $_POST['gnapp_appsum']; $i++) { 
+					$kirim  = array(
+						'mhs'	=> explode(' - ', $_POST['gnapp_mhs']), 
+						'dsn'	=> $_POST['gnapp_dsn'], 
+						'mtk'	=> explode(' - ', $_POST['gnapp_mtk']),
+						'inv'	=> 'APP' . $_POST['gnapp_appname'] . '-' . sprintf("%03s", $_POST['gnapp_noalat'][$i]),
+						'IDs'	=> $this->model('m_gunakan')->gnapp_idbaru(),
+						'usr'	=> $this->datasesi('user')
+					);
+					$hasil = $this->model('m_gunakan')->gnapp_tambah($kirim);
+					$data = $data + $hasil;
+				}
+				
+				if ($data > 0) {
+					Flasher::setFlash('Data peminjaman alat pinjam-pakai', 'telah dicatat', 'Sebanyak ' . $data . ' baris terpengaruh.', 'success');
+					header('location:' . BASIS_URL . '/gunakan/app');
+					exit;
+				} else {
+					Flasher::setFlash('Data peminjaman alat pinjam-pakai', 'tidak dicatat', '', 'success');
+					header('location:' . BASIS_URL . '/gunakan/app');
+					exit;
+				}
+				
 				break;
 
 			case 'carimhs-pinjam':
@@ -174,18 +198,54 @@ class gunakan extends Kontroler
 				break;
 
 			case 'update':
-				switch ($aksi) {
-					case 'kembaliin':
-						# code...
-						break;
+				$hitung = 0;
+				foreach ($_POST['gnapp_kembali'] as $data) {
+					$status = explode('/', $data);
+					switch ($status[2]) {
+						case 'kembali':
+							$hasil = $this->model('m_gunakan')->gnapp_kembali($status[1], $status[0]);
+							break;
 
-					case 'rusakin':
-						# code...
-						break;
+						case 'rusak':
+							$this->model('m_gunakan')->gnapp_rusak($status[1], $status[0]);
+							break;
+						
+						default:
+							# code...
+							break;
+					}
+					$hitung = $hitung + $hasil;
+					var_dump($status);
+				}
+				header('location:' . BASIS_URL . '/gunakan/app');
+				Flasher::setFlash('Laporan', 'diterima', 'Sebanyak ' . $hasil . ' perubahan dilakukan.', 'primary');
+				exit;
+				// switch ($aksi) {
+				// 	case 'kembaliin':
+				// 		
+				// 		$data = $this->model('m_gunakan')->gnapp_listDipakaiMHS($id);
+				// 		$this->tampilkan('gunakan/app/appbymhs', $data);
+				// 		break;
+
+				// 	case 'rusakin':
+				// 		
+				// 		$data = $this->model('m_gunakan')->gnapp_listDipakaiMHS($id);
+				// 		$this->tampilkan('gunakan/app/appbymhs', $data);
+				// 		break;
 					
-					default:
-						# code...
-						break;
+				// 	default:
+				// 		
+				// 		break;
+				// }
+				break;
+
+			case 'appsumarray':
+				if ($id != '' AND $aksi != '') {
+					$data = array(
+						'angka' => $id,
+						'label'	=> $aksi
+					);
+					$this->tampilkan('gunakan/app/appsumform', $data);
 				}
 				break;
 
@@ -202,7 +262,7 @@ class gunakan extends Kontroler
 					'gpp_a'	=> $this->model('m_gunakan')->gnapp_list(),
 					'gpp_r'	=> $this->model('m_gunakan')->gnapp_listRusak(),
 					'gpp_p'	=> $this->model('m_gunakan')->gnapp_listDipakai(),
-					'dtapp'	=> $this->model('m_inventaris')->app_list()
+					'dtapp'	=> $this->model('m_inventaris')->app_listJenis()
 				);
 				$this->tampilkan('templat/header', $data);
 				$this->tampilkan('templat/navbar_dash', $data);

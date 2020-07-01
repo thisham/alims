@@ -1,7 +1,7 @@
 <footer>
 	<!-- Copyright -->
 	<div class="text-center py-3">Copyleft &copy; 2020 
-		<a href="https://pti.if.fti.u-hogwarts01.rf.gd">Laboratorium PTI Universitas Krian</a>. <em>Versi 1.0.0 (Pra-Andalas)</em>.
+		<a href="https://github.com/thisham">Hamdan Yuwafi</a>. <em>Versi 1.0.0 (Agathis Dammara)</em>.
 	</div>
 
 </footer>

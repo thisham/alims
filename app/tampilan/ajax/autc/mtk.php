@@ -26,6 +26,10 @@
 		$('#gnadl_mtk').val($(this).text());
 		$('#gnadl_mtklist').fadeOut();
 	});
+	$('.autc-mtk').on('click', function(){
+		$('#gnapp_mtk').val($(this).text());
+		$('#gnapp_mtklist').fadeOut();
+	});
 </script>
 <ul class="autc list-group">
 	<?php if (!is_null($data)): ?>

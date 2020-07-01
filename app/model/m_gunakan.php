@@ -106,7 +106,7 @@ class m_gunakan extends Kontroler
 
 			function gnlab_byMhs($data)
 			{
-				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->siswa`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->mtkul`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `user`.`user_id` WHERE `$this->gnlab`.`gnlab_mhs` = :gnlab_mhs ORDER BY gnlab_sign DESC";
+				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `user`.`user_id` WHERE `$this->gnlab`.`gnlab_mhs` = :gnlab_mhs ORDER BY gnlab_sign DESC";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnlab_mhs', $data);
 				$this->db->eksekusi();
@@ -322,21 +322,24 @@ class m_gunakan extends Kontroler
 				return $hasil;
 			}
 
-			function gnapp_tambah($data, $user_id)
+			function gnapp_tambah($data)
 			{
+				$data['mhs'] = $data['mhs'][0];
+				$data['mtk'] = $data['mtk'][0];
 				$kueri = "INSERT INTO $this->gnapp VALUES (:gnapp_id, :gnapp_app, :gnapp_mhs, :gnapp_dsn, :gnapp_mtk, :gnapp_awal, :gnapp_akhir, :gnapp_rusak, :gnapp_sign, :gnapp_lbrn); UPDATE $this->dtapp SET app_kondisi = :app_kondisi WHERE app_id = :gnapp_app";
+				var_dump($data);
 				$this->db->kueri($kueri);
-				$this->db->ikat('gnapp_id', $this->gnapp_idbaru());
-				$this->db->ikat('gnapp_app', $data['gnapp_app']);
-				$this->db->ikat('gnapp_mhs', $data['gnapp_mhs']);
-				$this->db->ikat('gnapp_dsn', $data['gnapp_dsn']);
-				$this->db->ikat('gnapp_mtk', $data['gnapp_mtk']);
+				$this->db->ikat('gnapp_id', $data['IDs']);
+				$this->db->ikat('gnapp_app', $data['inv']);
+				$this->db->ikat('gnapp_mhs', $data['mhs']);
+				$this->db->ikat('gnapp_dsn', $data['dsn']);
+				$this->db->ikat('gnapp_mtk', $data['mtk']);
 				$this->db->ikat('gnapp_awal', date('Y-m-d H:i:s'));
 				$this->db->ikat('gnapp_akhir', 0);
 				$this->db->ikat('gnapp_rusak', 0);
 				$this->db->ikat('gnapp_sign', date('Y-m-d H:i:s'));
-				$this->db->ikat('gnapp_lbrn', $user_id);
-				$this->db->ikat('app_kondisi', 'Dipinjam');
+				$this->db->ikat('gnapp_lbrn', $data['usr']);
+				$this->db->ikat('app_kondisi', 'Dipakai');
 				$this->db->eksekusi();
 				$hasil = $this->db->hit_baris();
 				$this->db->tutup();
@@ -347,7 +350,7 @@ class m_gunakan extends Kontroler
 
 			function gnapp_list()
 			{
-				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = mhs_nim JOIN $this->dtapp ON gnapp_app = app_id";
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = mhs_nim JOIN $this->dtapp ON gnapp_app = app_id ORDER BY gnapp_sign DESC";
 				$this->db->kueri($kueri);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
