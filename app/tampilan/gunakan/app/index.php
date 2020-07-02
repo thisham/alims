@@ -118,15 +118,77 @@
 				</div>
 				<div class="tab-pane fade" id="dipakai" role="tabpanel">
 					<?php $no = 1; ?>
-					...
+					<div class="table-responsive">
+						<table class="table table-striped text-center">
+							<thead>
+								<tr>
+									<th>No.</th>
+									<th>Kode Pinjam</th>
+									<th>Nama Alat</th>
+									<th>No. Seri</th>
+									<th>Peminjam</th>
+									<th>Waktu Awal</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php if (is_null($data['gpp_p'])): ?>
+									<tr>
+										<td colspan="6" class="text-center">Tidak ada data.</td>
+									</tr>
+								<?php else: ?>
+									<?php foreach ($data['gpp_p'] as $gpp_p): ?>
+										<tr>
+											<td><?php echo $no++; ?></td>
+											<td><?php echo $gpp_p['gnapp_id']; ?></td>
+											<td><?php echo $gpp_p['app_nama']; ?></td>
+											<td><?php echo $gpp_p['app_id']; ?></td>
+											<td><?php echo $gpp_p['mhs_nama']; ?></td>
+											<td><?php echo $gpp_p['gnapp_awal']; ?></td>
+										</tr>
+									<?php endforeach ?>
+								<?php endif ?>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div class="tab-pane fade" id="rusak" role="tabpanel">
 					<?php $no = 1; ?>
-					...
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>No.</th>
+									<th>Kode Pinjam</th>
+									<th>Nama Alat</th>
+									<th>No. Seri</th>
+									<th>Peminjam</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php if (is_null($data['gpp_r'])): ?>
+									<tr>
+										<td colspan="6" class="text-center">Tidak ada data.</td>
+									</tr>
+								<?php else: ?>
+									<?php foreach ($data['gpp_r'] as $gpp_r): ?>
+										<tr>
+											<td><?php echo $no++; ?></td>
+											<td><?php echo $gpp_r['gnapp_id']; ?></td>
+											<td><?php echo $gpp_r['app_nama']; ?></td>
+											<td><?php echo $gpp_r['app_id']; ?></td>
+											<td><?php echo $gpp_r['mhs_nama']; ?></td>
+											<td><a href="<?php echo BASIS_URL . '/gunakan/app/update/' . $gpp_r['gnapp_id'] . '/ganti/' . $gpp_r['app_id']; ?>" class="btn btn-success btn-sm">Ganti</a></td>
+										</tr>
+									<?php endforeach ?>
+								<?php endif ?>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div class="tab-pane fade" id="kembali" role="tabpanel">
 					<div class="input-group">
-						<input id="gnapp_mhs" name="gnapp_mhs" type="text" class="form-control gnapp_mhs" placeholder="Masukkan NIM dan Nama...">
+						<input id="gnapp_mhs" name="gnapp_mhs" type="text" class="form-control gnapp_mhs" placeholder="Masukkan NIM dan Nama..." autocomplete="off">
 						<div class="input-group-append">
 							<button id="gnapp_mhscari" name="gnapp_mhscari" class="btn btn-primary">Cari</button>
 						</div>							
@@ -139,12 +201,12 @@
 					<form action="<?php echo BASIS_URL; ?>/gunakan/app/tambahin" method="post">
 						<div class="form-group">
 							<label for="gnapp_mhs">NIM Peminjam</label>
-							<input type="text" name="gnapp_mhs" id="gnapp_mhs-add" class="form-control gnapp_mhs" placeholder="Masukkan NIM dan Nama Mahasiswa..." required>
+							<input type="text" name="gnapp_mhs" id="gnapp_mhs-add" class="form-control gnapp_mhs" placeholder="Masukkan NIM dan Nama Mahasiswa..." autocomplete="off" required>
 							<div id="gnapp_mhslist-add" class="gnapp_mhslist"></div>
 						</div>
 						<div class="form-group">
 							<label for="gnapp_mtk">Mata Kuliah</label>
-							<input type="text" name="gnapp_mtk" id="gnapp_mtk" class="form-control gnapp_mtk" placeholder="Masukkan Nama Mata Kuliah..." required>
+							<input type="text" name="gnapp_mtk" id="gnapp_mtk" class="form-control gnapp_mtk" placeholder="Masukkan Nama Mata Kuliah..." autocomplete="off" required>
 							<div id="gnapp_mtklist" class="gnapp_mtklist"></div>
 						</div>
 						<div class="form-group">
@@ -172,7 +234,7 @@
 						<div class="form-group">
 							<label for="gnapp_appsum">Jumlah Alat</label>
 							<div class="input-group">
-								<input type="number" name="gnapp_appsum" id="gnapp_appsum" class="form-control" placeholder="Masukkan Jumlah Alat..." onblur="appsumarray($('#gnapp_appsum').val(), $('#gnapp_appname').val());" required>
+								<input type="number" name="gnapp_appsum" id="gnapp_appsum" class="form-control" placeholder="Masukkan Jumlah Alat..." autocomplete="off" onblur="appsumarray($('#gnapp_appsum').val(), $('#gnapp_appname').val());" required>
 							</div>
 						</div>
 						<div id="gnapp_noalat"></div>
