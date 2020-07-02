@@ -27,14 +27,6 @@
 		var url = "<?php echo BASIS_URL; ?>/gunakan/app/appsumarray/" + sum + '/' + act;
 		$("#gnapp_noalat").load(url);
 	}
-	function kembalikan_alat(mhs_id, gpp_id, app_id) {
-		var url = "<?php echo BASIS_URL; ?>/gunakan/app/update/" + mhs_id + "/kembaliin/" + app_id + '/' + gpp_id;
-		$("#tbl-appbymhs").load(url);
-	}
-	function perusakan_alat(mhs_id, gpp_id, app_id) {
-		var url = "<?php echo BASIS_URL; ?>/gunakan/app/update/" + mhs_id + "/rusakin/" + app_id + '/' + gpp_id;
-		$("#tbl-appbymhs").load(url);
-	}
 	$(document).ready(function(){
 		$("#gnapp_mtk").keyup( function() {
 			var kueri_mtk = $(this).val();
@@ -140,9 +132,7 @@
 						</div>							
 					</div>
 					<div id="gnapp_mhslist" class="gnapp_mhslist"></div>
-					<form action="<?php echo BASIS_URL; ?>/gunakan/app/update" method="post">
-						<div id="tbl-appbymhs"></div>
-					</form>
+					<div id="tbl-appbymhs"></div>
 					
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
