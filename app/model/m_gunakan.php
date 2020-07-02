@@ -232,7 +232,7 @@ class m_gunakan extends Kontroler
 
 			function gnadl_list()
 			{
-				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` ORDER BY gnadl_sign DESC";
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON gnadl_mhs = mhs_nim ORDER BY gnadl_sign DESC";
 				$this->db->kueri($kueri);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
