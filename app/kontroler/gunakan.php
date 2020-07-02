@@ -198,12 +198,12 @@ class gunakan extends Kontroler
 				break;
 
 			case 'update':
-				$hitung = 0;
-				foreach ($_POST['gnapp_kembali'] as $data) {
-					$status = explode('/', $data);
+				for ($i=0; $i < count($_POST['gnapp_kembali']); $i++) {
+					$status = explode('/', $_POST['gnapp_kembali'][$i]); 
+					var_dump($status) . PHP_EOL;
 					switch ($status[2]) {
 						case 'kembali':
-							$hasil = $this->model('m_gunakan')->gnapp_kembali($status[1], $status[0]);
+							$this->model('m_gunakan')->gnapp_kembali($status[1], $status[0]);
 							break;
 
 						case 'rusak':
@@ -214,29 +214,10 @@ class gunakan extends Kontroler
 							# code...
 							break;
 					}
-					$hitung = $hitung + $hasil;
-					var_dump($status);
 				}
 				header('location:' . BASIS_URL . '/gunakan/app');
-				Flasher::setFlash('Laporan', 'diterima', 'Sebanyak ' . $hasil . ' perubahan dilakukan.', 'primary');
+				Flasher::setFlash('Laporan', 'diterima', 'Sebanyak ' . $i . ' perubahan dilakukan.', 'primary');
 				exit;
-				// switch ($aksi) {
-				// 	case 'kembaliin':
-				// 		
-				// 		$data = $this->model('m_gunakan')->gnapp_listDipakaiMHS($id);
-				// 		$this->tampilkan('gunakan/app/appbymhs', $data);
-				// 		break;
-
-				// 	case 'rusakin':
-				// 		
-				// 		$data = $this->model('m_gunakan')->gnapp_listDipakaiMHS($id);
-				// 		$this->tampilkan('gunakan/app/appbymhs', $data);
-				// 		break;
-					
-				// 	default:
-				// 		
-				// 		break;
-				// }
 				break;
 
 			case 'appsumarray':
