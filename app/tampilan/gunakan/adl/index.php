@@ -77,13 +77,9 @@
 											<td><a href="<?php echo BASIS_URL . '/gunakan/adl/detail/' . $gnadl['gnadl_id']; ?>"><?php echo $gnadl['gnadl_id']; ?></a></td>
 											<td><?php echo $gnadl['gnadl_sign'] ?></td>
 											<td><?php echo $gnadl['adl_nama']; ?></td>
-											<td><?php echo $gnadl['gnadl_awal']; ?></td>
+											<td><?php echo $gnadl['adl_id']; ?></td>
 											<td>
-												<?php if ($gnadl['gnadl_akhir'] == 0): ?>
-													<div class="badge badge-warning">Belum Selesai</div>
-												<?php else: ?>
-													<?php echo $gnadl['gnadl_akhir']; ?></td>
-												<?php endif ?>
+												<?php echo $gnadl['mhs_nama']; ?>
 											<td>
 												<?php if ($gnadl['gnadl_awal'] != 0 AND $gnadl['gnadl_akhir'] == 0): ?>
 													<div class="badge badge-success">Berjalan</div>
