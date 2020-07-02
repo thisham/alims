@@ -408,6 +408,7 @@ class m_gunakan extends Kontroler
 
 			function gnapp_kembali($gnapp_id, $app_id)
 			{
+				// echo "$gnapp_id -> $app_id\n";
 				$kueri = "UPDATE $this->gnapp SET gnapp_akhir = :gnapp_akhir WHERE gnapp_id = :gnapp_id; UPDATE $this->dtapp SET app_kondisi = :app_kondisi WHERE app_id = :app_id";
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnapp_id', $gnapp_id);
@@ -415,7 +416,7 @@ class m_gunakan extends Kontroler
 				$this->db->ikat('app_id', $app_id);
 				$this->db->ikat('app_kondisi', 'Baik');
 				$this->db->eksekusi();
-				$hasil = $this->db->hasil_jamak();
+				$hasil = $this->db->hit_baris();
 				$this->db->tutup();
 				return $hasil;
 			}
@@ -429,7 +430,7 @@ class m_gunakan extends Kontroler
 				$this->db->ikat('app_id', $app_id);
 				$this->db->ikat('app_kondisi', 'Rusak/Hilang');
 				$this->db->eksekusi();
-				$hasil = $this->db->hasil_jamak();
+				$hasil = $this->db->hit_baris();
 				$this->db->tutup();
 				return $hasil;
 			}
