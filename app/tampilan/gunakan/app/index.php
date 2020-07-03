@@ -234,7 +234,7 @@
 						<div class="form-group">
 							<label for="gnapp_appsum">Jumlah Alat</label>
 							<div class="input-group">
-								<input type="number" name="gnapp_appsum" id="gnapp_appsum" class="form-control" placeholder="Masukkan Jumlah Alat..." autocomplete="off" onblur="appsumarray($('#gnapp_appsum').val(), $('#gnapp_appname').val());" required>
+								<input type="number" name="gnapp_appsum" id="gnapp_appsum" class="form-control" placeholder="Masukkan Jumlah Alat..." autocomplete="off" onkeyup="appsumarray($('#gnapp_appsum').val(), $('#gnapp_appname').val());" required>
 							</div>
 						</div>
 						<div id="gnapp_noalat"></div>
