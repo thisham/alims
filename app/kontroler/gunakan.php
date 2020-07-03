@@ -160,7 +160,7 @@ class gunakan extends Kontroler
 		}
 	}
 
-	function app($menu = '', $id = '', $aksi = '', $app_id = '', $gpp_id = '')
+	function app($menu = '', $id = '', $aksi = '', $app_id = '')
 	{
 		switch ($menu) {
 			case 'tambahin':
@@ -198,16 +198,42 @@ class gunakan extends Kontroler
 				break;
 
 			case 'update':
-				for ($i=0; $i < count($_POST['gnapp_kembali']); $i++) {
-					$status = explode('/', $_POST['gnapp_kembali'][$i]); 
-					var_dump($status) . PHP_EOL;
-					switch ($status[2]) {
-						case 'kembali':
-							$this->model('m_gunakan')->gnapp_kembali($status[1], $status[0]);
-							break;
+				if ($id == '') {
+					$hasil = 0;
+					for ($i=0; $i < count($_POST['gnapp_kembali']); $i++) {
+						$status = explode('/', $_POST['gnapp_kembali'][$i]); 
+						var_dump($status) . PHP_EOL;
+						switch ($status[2]) {
+							case 'kembali':
+								$baris = $this->model('m_gunakan')->gnapp_kembali($status[1], $status[0]);
+								break;
 
-						case 'rusak':
-							$this->model('m_gunakan')->gnapp_rusak($status[1], $status[0]);
+							case 'rusak':
+								$baris = $this->model('m_gunakan')->gnapp_rusak($status[1], $status[0]);
+								break;
+							
+							default:
+								# code...
+								break;
+						}
+						$hasil = $hasil + $baris;
+					}
+					header('location:' . BASIS_URL . '/gunakan/app');
+					Flasher::setFlash('Laporan', 'diterima', 'Sebanyak ' . $hasil . ' perubahan dilakukan.', 'primary');
+					exit;
+					
+				} else {
+					switch ($aksi) {
+						case 'ganti':
+							if ($this->model('m_gunakan')->gnapp_kembali($id, $app_id) > 0) {
+								Flasher::setFlash('Penggantian alat', 'telah dicatat', '', 'success');
+								header('location:' . BASIS_URL . '/gunakan/app');
+								exit;
+							} else {
+								Flasher::setFlash('Penggantian alat', 'tidak dicatat', '', 'success');
+								header('location:' . BASIS_URL . '/gunakan/app');
+								exit;
+							}
 							break;
 						
 						default:
@@ -215,9 +241,8 @@ class gunakan extends Kontroler
 							break;
 					}
 				}
-				header('location:' . BASIS_URL . '/gunakan/app');
-				Flasher::setFlash('Laporan', 'diterima', 'Sebanyak ' . $i . ' perubahan dilakukan.', 'primary');
-				exit;
+				
+					
 				break;
 
 			case 'appsumarray':
