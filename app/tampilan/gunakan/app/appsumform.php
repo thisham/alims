@@ -10,7 +10,7 @@
 						<input type="number" name="gnapp_noalat[]" id="gnapp_noalat" class="form-control" required>
 					</div>
 				</div>
-			<? } ?>
+			<?php } ?>
 		</div>
 	</div>
 </div>
