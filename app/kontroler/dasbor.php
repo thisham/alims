@@ -10,7 +10,7 @@ class dasbor extends Kontroler
 	{
 		if ( $this->datasesi('user') == NULL ) {
 			$data = array(
-				'judul'	=> 'Akses Terbatas - ALIMS'
+				'judul'	=> 'Akses Terbatas'
 			);
 			$this->tampilkan('templat/header', $data);
 			$this->tampilkan('templat/navbar', $data);
@@ -23,8 +23,24 @@ class dasbor extends Kontroler
 	function indeks()
 	{
 		$data = array(
-			'judul'	=> 'Dasbor - ALIMS',
-			'pages'	=> 'Dasbor'
+			'judul'	=> 'Dasbor',
+			'pages'	=> 'Dasbor',
+			'dtc'	=> array(
+				'lab'	=> count($this->model('m_dasbor')->data_lab()),
+				'adl'	=> count($this->model('m_dasbor')->data_adl()),
+				'app'	=> count($this->model('m_dasbor')->data_app()),
+				'mhs'	=> count($this->model('m_dasbor')->data_mhs())
+			),
+			'gnc'	=> array(
+				'glb'	=> count($this->model('m_dasbor')->guna_lab()),
+				'gdl'	=> count($this->model('m_dasbor')->guna_adl()),
+				'gpp'	=> count($this->model('m_dasbor')->guna_app())
+			),
+			'usr'	=> array(
+				'gpp'	=> count($this->model('m_dasbor')->contribution_app($this->datasesi('user'))),
+				'glb'	=> count($this->model('m_dasbor')->contribution_lab($this->datasesi('user'))),
+				'gdl'	=> count($this->model('m_dasbor')->contribution_adl($this->datasesi('user')))
+			)
 		);
 		$this->tampilkan('templat/header', $data);
 		$this->tampilkan('templat/navbar_dash', $data);
