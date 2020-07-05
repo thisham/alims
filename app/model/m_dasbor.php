@@ -125,9 +125,12 @@ class m_dasbor extends Kontroler
 
 	function data_usr($usr)
 	{
-		$a = count($this->contribution_app($usr));
-		$b = count($this->contribution_adl($usr));
-		$c = count($this->contribution_lab($usr));
-		return $a + $b + $c;
+		$kueri = "SELECT * FROM $this->usr WHERE user_id = :usr";
+		$this->db->kueri($kueri);
+		$this->db->ikat('usr', $usr);
+		$this->db->eksekusi();
+		$hasil = $this->db->hasil_tunggal();
+		$this->db->tutup();
+		return $hasil;
 	}
 }
