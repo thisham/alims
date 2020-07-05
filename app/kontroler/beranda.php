@@ -5,6 +5,13 @@
  */
 class beranda extends Kontroler
 {
+
+	function __construct()
+	{
+		if ($this->datasesi('user') != '') {
+			header('location:' . BASIS_URL . '/dasbor');
+		}
+	}
 	
 	function indeks()
 	{
