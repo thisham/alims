@@ -37,9 +37,12 @@ class dasbor extends Kontroler
 				'gpp'	=> count($this->model('m_dasbor')->guna_app())
 			),
 			'usr'	=> array(
-				'gpp'	=> count($this->model('m_dasbor')->contribution_app($this->datasesi('user'))),
-				'glb'	=> count($this->model('m_dasbor')->contribution_lab($this->datasesi('user'))),
-				'gdl'	=> count($this->model('m_dasbor')->contribution_adl($this->datasesi('user')))
+				'ctr'	=> array(
+					'gpp'	=> count($this->model('m_dasbor')->contribution_app($this->datasesi('user'))),
+					'glb'	=> count($this->model('m_dasbor')->contribution_lab($this->datasesi('user'))),
+					'gdl'	=> count($this->model('m_dasbor')->contribution_adl($this->datasesi('user')))
+				),
+				'dtl'	=> $this->model('m_dasbor')->data_usr($this->datasesi('user'))
 			)
 		);
 		$this->tampilkan('templat/header', $data);
