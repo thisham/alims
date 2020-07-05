@@ -39,7 +39,7 @@
 	  	<div class="btn-group mr-1" role="group">
 			<a href="<?php echo BASIS_URL; ?>/portal" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['user']; ?></a>
 			<div class="dropdown-menu">
-				<a href="#" class="dropdown-item">Pengaturan</a>
+				<a href="<?php echo BASIS_URL; ?>/akun" class="dropdown-item">Akun Saya</a>
 				<a href="<?php echo BASIS_URL; ?>/portal/keluar" class="dropdown-item">Keluar</a>
 			</div>
 		</div>
