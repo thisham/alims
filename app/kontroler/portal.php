@@ -5,6 +5,13 @@
  */
 class portal extends Kontroler
 {
+
+	function __construct()
+	{
+		if ($this->datasesi('user') != '') {
+			header('location:' . BASIS_URL . '/dasbor');
+		}
+	}
 	
 	function indeks()
 	{
@@ -81,6 +88,7 @@ class portal extends Kontroler
 						$this->mulaisesi('user', $data['user_id']);
 						$this->mulaisesi('nama', $data['nama']);
 						$this->mulaisesi('hak_akses', $data['hak_akses']);
+						$this->mulaisesi('waktu_sesi', date('d M Y, H.i'));
 						header('location:' . BASIS_URL . '/dasbor');
 						break;
 
