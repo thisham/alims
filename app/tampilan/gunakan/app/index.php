@@ -14,20 +14,12 @@
 				});
 			}
 		});
-	});
-	$(document).ready(function() {
 		$('#gnapp_mhscari').click(function(){
 			var frmmhs = $('#gnapp_mhs').val();
 			frmmhs = frmmhs.split(' - ', 1);
 			var url = "<?php echo BASIS_URL; ?>/gunakan/app/carimhs-pinjam/" + frmmhs;
 			$("#tbl-appbymhs").load(url);
 		});
-	});
-	function appsumarray(sum, act) {
-		var url = "<?php echo BASIS_URL; ?>/gunakan/app/appsumarray/" + sum + '/' + act;
-		$("#gnapp_noalat").load(url);
-	}
-	$(document).ready(function(){
 		$("#gnapp_mtk").keyup( function() {
 			var kueri_mtk = $(this).val();
 			if (kueri_mtk != '') {
@@ -43,6 +35,14 @@
 			}
 		});
 	});
+	function appsumarray(sum, act, num) {
+		var url = "<?php echo BASIS_URL; ?>/gunakan/app/appsumarray/" + sum + '/' + act + '/' + num;
+		$("#gnapp_noalat-" + num).load(url);
+	}
+	function gakfokus() {
+		$(".gnapp_mhslist").fadeOut();
+		$("#gnapp_mtklist").fadeOut();
+	}
 </script>
 
 <div class="container mt-4">
@@ -73,47 +73,55 @@
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="daftar" role="tabpanel">
 					<?php $no = 1; ?>
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead class="text-center">
-								<tr>
-									<th>No.</th>
-									<th>Kode Pinjam</th>
-									<th>Nama Alat</th>
-									<th>No. Seri</th>
-									<th>Peminjam</th>
-									<th>Status</th>
-								</tr>
-							</thead>
-							<tbody class="text-center">
-								<?php if (is_null($data['gpp_a'])): ?>
+					<div class="input-group">
+						<input type="date" name="gnapp_tgl_all" id="gnapp_tgl_all" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+						<div class="input-group-append">
+							<button id="gnapp_tglcari_all" name="gnapp_tglcari_all" onclick="appcaritglall($('#gnapp_tgl_all').val());" class="btn btn-primary">Cari</button>
+						</div>
+					</div>
+					<div class="tabel-semua mt-2">
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead class="text-center">
 									<tr>
-										<td colspan="6" class="text-center">Tidak ada data.</td>
+										<th>No.</th>
+										<th>Kode Pinjam</th>
+										<th>Nama Alat</th>
+										<th>No. Seri</th>
+										<th>Peminjam</th>
+										<th>Status</th>
 									</tr>
-								<?php else: ?>
-									<?php foreach ($data['gpp_a'] as $gpp_a): ?>
+								</thead>
+								<tbody class="text-center">
+									<?php if ($data['gpp_a'] == ''): ?>
 										<tr>
-											<td><?php echo $no++; ?></td>
-											<td><?php echo $gpp_a['gnapp_id']; ?></td>
-											<td><?php echo $gpp_a['app_nama']; ?></td>
-											<td><?php echo $gpp_a['app_id']; ?></td>
-											<td><?php echo $gpp_a['mhs_nama']; ?></td>
-											<td>
-												<?php if ($gpp_a['gnapp_akhir'] == 0 AND $gpp_a['gnapp_rusak'] == 0) { ?>
-													<div class="badge badge-warning">Dipinjam</div>
-												<?php } else if ($gpp_a['gnapp_akhir'] == 0 AND $gpp_a['gnapp_rusak'] != 0) { ?>
-													<div class="badge badge-danger">Belum Diganti</div>
-												<?php } else if ($gpp_a['gnapp_akhir'] != 0 AND $gpp_a['gnapp_rusak'] != 0) { ?>
-													<div class="badge badge-primary">Sudah Diganti</div>
-												<?php } else { ?>
-													<div class="badge badge-success">Dikembalikan</div>
-												<?php } ?>
-											</td>
+											<td colspan="6" class="text-center">Tidak ada data.</td>
 										</tr>
-									<?php endforeach ?>
-								<?php endif ?>
-							</tbody>
-						</table>
+									<?php else: ?>
+										<?php foreach ($data['gpp_a'] as $gpp_a): ?>
+											<tr>
+												<td><?php echo $no++; ?></td>
+												<td><?php echo $gpp_a['gnapp_id']; ?></td>
+												<td><?php echo $gpp_a['app_nama']; ?></td>
+												<td><?php echo $gpp_a['app_id']; ?></td>
+												<td><?php echo $gpp_a['mhs_nama']; ?></td>
+												<td>
+													<?php if ($gpp_a['gnapp_akhir'] == 0 AND $gpp_a['gnapp_rusak'] == 0) { ?>
+														<div class="badge badge-warning">Dipinjam</div>
+													<?php } else if ($gpp_a['gnapp_akhir'] == 0 AND $gpp_a['gnapp_rusak'] != 0) { ?>
+														<div class="badge badge-danger">Belum Diganti</div>
+													<?php } else if ($gpp_a['gnapp_akhir'] != 0 AND $gpp_a['gnapp_rusak'] != 0) { ?>
+														<div class="badge badge-primary">Sudah Diganti</div>
+													<?php } else { ?>
+														<div class="badge badge-success">Dikembalikan</div>
+													<?php } ?>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									<?php endif ?>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div class="tab-pane fade" id="dipakai" role="tabpanel">
@@ -131,7 +139,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php if (is_null($data['gpp_p'])): ?>
+								<?php if ($data['gpp_p'] == ''): ?>
 									<tr>
 										<td colspan="6" class="text-center">Tidak ada data.</td>
 									</tr>
@@ -166,7 +174,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php if (is_null($data['gpp_r'])): ?>
+								<?php if ($data['gpp_r'] == ''): ?>
 									<tr>
 										<td colspan="6" class="text-center">Tidak ada data.</td>
 									</tr>
@@ -188,7 +196,7 @@
 				</div>
 				<div class="tab-pane fade" id="kembali" role="tabpanel">
 					<div class="input-group">
-						<input id="gnapp_mhs" name="gnapp_mhs" type="text" class="form-control gnapp_mhs" placeholder="Masukkan NIM dan Nama..." autocomplete="off">
+						<input id="gnapp_mhs" name="gnapp_mhs" type="text" class="form-control gnapp_mhs" placeholder="Masukkan NIM dan Nama..." onblur="gakfokus();" autocomplete="off">
 						<div class="input-group-append">
 							<button id="gnapp_mhscari" name="gnapp_mhscari" class="btn btn-primary">Cari</button>
 						</div>							
@@ -201,12 +209,12 @@
 					<form action="<?php echo BASIS_URL; ?>/gunakan/app/tambahin" method="post">
 						<div class="form-group">
 							<label for="gnapp_mhs">NIM Peminjam</label>
-							<input type="text" name="gnapp_mhs" id="gnapp_mhs-add" class="form-control gnapp_mhs" placeholder="Masukkan NIM dan Nama Mahasiswa..." autocomplete="off" required>
+							<input type="text" name="gnapp_mhs" id="gnapp_mhs-add" class="form-control gnapp_mhs" placeholder="Masukkan NIM dan Nama Mahasiswa..." onblur="gakfokus();" autocomplete="off" required>
 							<div id="gnapp_mhslist-add" class="gnapp_mhslist"></div>
 						</div>
 						<div class="form-group">
 							<label for="gnapp_mtk">Mata Kuliah</label>
-							<input type="text" name="gnapp_mtk" id="gnapp_mtk" class="form-control gnapp_mtk" placeholder="Masukkan Nama Mata Kuliah..." autocomplete="off" required>
+							<input type="text" name="gnapp_mtk" id="gnapp_mtk" class="form-control gnapp_mtk" placeholder="Masukkan Nama Mata Kuliah..." onblur="gakfokus();" autocomplete="off" required>
 							<div id="gnapp_mtklist" class="gnapp_mtklist"></div>
 						</div>
 						<div class="form-group">
@@ -220,26 +228,44 @@
 								</select>
 							</div> 
 						</div>
-						<div class="form-group">
-							<label for="gnapp_appname">Nama Alat</label>
-							<div class="input-group">
-								<select name="gnapp_appname" id="gnapp_appname" class="form-control" required>
-									<option>-- Pilih Alat --</option>
-									<?php foreach ($data['dtapp'] as $dtapp): ?>
-										<option value="<?php echo $dtapp['app_label']; ?>"><?php echo $dtapp['app_nama']; ?></option>
-									<?php endforeach ?>
-								</select>
+						<div id="divAlat">
+							<div class="card" id="divAlat-0">
+								<div class="card-body">
+									<div class="form-group">
+										<label for="gnapp_appname">Nama Alat</label>
+										<div class="input-group">
+											<select name="gnapp_appname[0]" id="gnapp_appname-0" class="form-control" required>
+												<option>-- Pilih Alat --</option>
+												<?php foreach ($data['dtapp'] as $dtapp): ?>
+													<option value="<?php echo $dtapp['app_label']; ?>"><?php echo $dtapp['app_nama']; ?></option>
+												<?php endforeach ?>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="gnapp_appsum">Jumlah Alat</label>
+										<div class="input-group">
+											<input type="number" name="gnapp_appsum[0]" id="gnapp_appsum-0" class="form-control" placeholder="Masukkan Jumlah Alat..." autocomplete="off" onkeyup="appsumarray($('#gnapp_appsum-0').val(), $('#gnapp_appname-0').val(), 0);" required>
+										</div>
+									</div>
+									<div id="gnapp_noalat-0"></div>
+								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="gnapp_appsum">Jumlah Alat</label>
-							<div class="input-group">
-								<input type="number" name="gnapp_appsum" id="gnapp_appsum" class="form-control" placeholder="Masukkan Jumlah Alat..." autocomplete="off" onkeyup="appsumarray($('#gnapp_appsum').val(), $('#gnapp_appname').val());" required>
+						<div class="form-group mt-4">
+							<div class="row">
+								<div class="col">
+									<button id="btn-add-alat" class="btn btn-success form-control">Tambah Kolom</button>
+								</div>
+								<div class="col">
+									<button id="btn-del-alat" class="btn btn-warning form-control">Hapus Kolom</button>
+								</div>
 							</div>
-						</div>
-						<div id="gnapp_noalat"></div>
-						<div class="form-group">
-							<input type="submit" name="kirim" id="kirim" class="btn btn-primary form-control" value="Kirim">
+							<div class="row mt-2">
+								<div class="col">
+									<input type="submit" name="kirim" id="kirim" class="btn btn-primary form-control" value="Kirim">
+								</div>
+							</div>
 						</div>
 					</form>
 				</div>
@@ -247,3 +273,46 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var hitungan = 1;
+		$('#btn-add-alat').click(function(e){
+			e.preventDefault();
+			var kartu_pinjam = $(document.createElement('div')).attr('id', 'divAlat' + hitungan);
+			kartu_pinjam.after().html('<div class="card mt-2" id="divAlat-' + hitungan + '">\
+				<div class="card-body">\
+					<div class="form-group">\
+						<label for="gnapp_appname">Nama Alat</label>\
+						<div class="input-group">\
+							<select name="gnapp_appname[' + hitungan + ']" id="gnapp_appname-' + hitungan + '" class="form-control" required>\
+								<option>-- Pilih Alat --</option>\
+								<?php foreach ($data['dtapp'] as $dtapp): ?>\
+									<option value="<?php echo $dtapp['app_label']; ?>"><?php echo $dtapp['app_nama']; ?></option>\
+								<?php endforeach ?>\
+							</select>\
+						</div>\
+					</div>\
+					<div class="form-group">\
+						<label for="gnapp_appsum">Jumlah Alat</label>\
+						<div class="input-group">\
+							<input type="number" name="gnapp_appsum[' + hitungan + ']" id="gnapp_appsum-' + hitungan + '" class="form-control" placeholder="Masukkan Jumlah Alat..." autocomplete="off" onkeyup="appsumarray($(`#gnapp_appsum-' + hitungan + '`).val(), $(`#gnapp_appname-' + hitungan + '`).val(), ' + hitungan + ');" required>\
+						</div>\
+					</div>\
+					<div id="gnapp_noalat-' + hitungan + '"></div>\
+				</div>\
+			</div>');
+			kartu_pinjam.appendTo('#divAlat');
+			hitungan++;
+		});
+		$('#btn-del-alat').click(function(e){
+			e.preventDefault();
+			if (hitungan == 1) {
+				alert('Telah mencapai minimum peminjaman.');
+				return false;
+			}
+			hitungan--;
+			$('#divAlat' + hitungan).remove();
+		});
+	});
+</script>

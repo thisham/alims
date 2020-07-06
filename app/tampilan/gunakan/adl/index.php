@@ -14,8 +14,6 @@
 				});
 			}
 		});
-	});
-	$(document).ready(function(){
 		$("#gnadl_mtk").keyup( function() {
 			var kueri_mtk = $(this).val();
 			if (kueri_mtk != '') {
@@ -31,6 +29,10 @@
 			}
 		});
 	});
+	function gakfokus() {
+		$("#gnadl_mhslist").fadeOut();
+		$("#gnadl_mtklist").fadeOut();
+	}
 </script>
 
 <div class="container mt-4">
@@ -103,7 +105,7 @@
 						<div class="form-group">
 							<label for="gnadl_mhs">Nomor Induk Mahasiswa Praktikan</label>
 							<div class="input-group">
-								<input type="text" name="gnadl_mhs" id="gnadl_mhs" class="form-control" placeholder="Masukkan NIM..." required>
+								<input type="text" name="gnadl_mhs" id="gnadl_mhs" class="form-control" placeholder="Masukkan NIM..." onblur="gakfokus();" autocomplete="off" required>
 							</div>
 							<div id="gnadl_mhslist"></div>
 						</div>
@@ -118,7 +120,7 @@
 						</div>
 						<div class="form-group">
 							<label for="gnadl_mtk">Mata Kuliah</label>
-							<input type="text" name="gnadl_mtk" id="gnadl_mtk" class="form-control" placeholder="Masukkan Mata Kuliah..." required>
+							<input type="text" name="gnadl_mtk" id="gnadl_mtk" class="form-control" placeholder="Masukkan Mata Kuliah..." onblur="gakfokus();" autocomplete="off" required>
 							<div id="gnadl_mtklist"></div>
 						</div>
 						<div class="form-group">

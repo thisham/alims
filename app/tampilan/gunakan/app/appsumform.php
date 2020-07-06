@@ -7,7 +7,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">APP<?php echo $data['label']; ?>-</span>
 						</div>
-						<input type="number" name="gnapp_noalat[]" id="gnapp_noalat" class="form-control" required>
+						<input type="number" name="gnapp_noalat[<?php echo $data['larik']; ?>][]" id="gnapp_noalat" class="form-control" required>
 					</div>
 				</div>
 			<?php } ?>

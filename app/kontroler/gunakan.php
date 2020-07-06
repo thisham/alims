@@ -165,17 +165,24 @@ class gunakan extends Kontroler
 		switch ($menu) {
 			case 'tambahin':
 				$data = 0;
-				for ($i=0; $i < $_POST['gnapp_appsum']; $i++) { 
-					$kirim  = array(
-						'mhs'	=> explode(' - ', $_POST['gnapp_mhs']), 
-						'dsn'	=> $_POST['gnapp_dsn'], 
-						'mtk'	=> explode(' - ', $_POST['gnapp_mtk']),
-						'inv'	=> 'APP' . $_POST['gnapp_appname'] . '-' . sprintf("%03s", $_POST['gnapp_noalat'][$i]),
-						'IDs'	=> $this->model('m_gunakan')->gnapp_idbaru(),
-						'usr'	=> $this->datasesi('user')
-					);
-					$hasil = $this->model('m_gunakan')->gnapp_tambah($kirim);
-					$data = $data + $hasil;
+				for ($i=0; $i < count($_POST['gnapp_appname']); $i++) { 
+					for ($j=0; $j < $_POST['gnapp_appsum'][$i]; $j++) { 
+						$kirim  = array(
+							'mhs'	=> explode(' - ', $_POST['gnapp_mhs']), 
+							'dsn'	=> $_POST['gnapp_dsn'], 
+							'mtk'	=> explode(' - ', $_POST['gnapp_mtk']),
+							'inv'	=> 'APP' . $_POST['gnapp_appname'][$i] . '-' . sprintf("%03s", $_POST['gnapp_noalat'][$i][$j]),
+							'IDs'	=> $this->model('m_gunakan')->gnapp_idbaru(),
+							'usr'	=> $this->datasesi('user')
+						);
+						if ($_POST['gnapp_noalat'][$i][$j] != '') {
+							$hasil = $this->model('m_gunakan')->gnapp_tambah($kirim);
+						} else {
+							$hasil = 0;
+						}
+						
+						$data = $data + $hasil;
+					}
 				}
 				
 				if ($data > 0) {
@@ -192,7 +199,10 @@ class gunakan extends Kontroler
 
 			case 'carimhs-pinjam':
 				if ($id != '') {
-					$data = $this->model('m_gunakan')->gnapp_listDipakaiMHS($id);
+					$data = array(
+						'hasil'	=> $this->model('m_gunakan')->gnapp_listDipakaiMHS($id),
+						'angka'	=> count($this->model('m_gunakan')->gnapp_listDipakaiMHS($id))
+					);
 					$this->tampilkan('gunakan/app/appbymhs', $data);
 				}
 				break;
@@ -249,10 +259,29 @@ class gunakan extends Kontroler
 				if ($id != '' AND $aksi != '') {
 					$data = array(
 						'angka' => $id,
-						'label'	=> $aksi
+						'label'	=> $aksi,
+						'larik'	=> $app_id
 					);
 					$this->tampilkan('gunakan/app/appsumform', $data);
 				}
+				break;
+
+			case 'appbytanggal':
+				switch ($id) {
+					case 'all':
+						if ($id != '') {
+							$data = array(
+								'gpp_a' => $this->model('m_gunakan')->gnapp_list(date('Y-m-d'))
+							);
+							$this->tampilkan('gunakan/app/appbydate-all', $data);
+						}
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+						
 				break;
 
 			case 'detail':
@@ -265,7 +294,7 @@ class gunakan extends Kontroler
 					'pages'	=> 'Penggunaan',
 					'newID'	=> $this->model('m_gunakan')->gnapp_idbaru(),
 					'dosen'	=> $this->model('m_warga')->dsn_list(),
-					'gpp_a'	=> $this->model('m_gunakan')->gnapp_list(),
+					'gpp_a'	=> $this->model('m_gunakan')->gnapp_list(date('Y-m-d')),
 					'gpp_r'	=> $this->model('m_gunakan')->gnapp_listRusak(),
 					'gpp_p'	=> $this->model('m_gunakan')->gnapp_listDipakai(),
 					'dtapp'	=> $this->model('m_inventaris')->app_listJenis()

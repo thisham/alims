@@ -348,10 +348,11 @@ class m_gunakan extends Kontroler
 
 		// Read Data
 
-			function gnapp_list()
+			function gnapp_list($tgl)
 			{
-				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = mhs_nim JOIN $this->dtapp ON gnapp_app = app_id ORDER BY gnapp_sign DESC";
+				$kueri = "SELECT * FROM $this->gnapp JOIN $this->dtmhs ON gnapp_mhs = mhs_nim JOIN $this->dtapp ON gnapp_app = app_id WHERE gnapp_sign LIKE :tgl ORDER BY gnapp_sign DESC";
 				$this->db->kueri($kueri);
+				$this->db->ikat('tgl', $tgl . '%');
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
 				$this->db->tutup();
@@ -384,10 +385,7 @@ class m_gunakan extends Kontroler
 				$this->db->kueri($kueri);
 				$this->db->ikat('gnapp_mhs', $data);
 				$this->db->eksekusi();
-				$hasil = array(
-					'hasil'	=> $this->db->hasil_jamak(),
-					'angka'	=> $this->db->hit_baris()
-				);
+				$hasil = $this->db->hasil_jamak();
 				$this->db->tutup();
 				return $hasil;
 			}

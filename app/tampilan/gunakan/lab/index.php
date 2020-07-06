@@ -15,6 +15,10 @@
 			}
 		});
 	});
+	function gakfokus() {
+		$("#gnlab_mtklist").fadeOut();
+		$("#gnlab_mhslist").fadeOut();
+	}
 	$(document).ready(function(){
 		$("#gnlab_mtk").keyup( function() {
 			var kueri_mtk = $(this).val();
@@ -116,7 +120,7 @@
 						</div>
 						<div class="form-group">
 							<label for="gnlab_mhs">Nomor Induk Mahasiswa Praktikan</label>
-							<input type="text" name="gnlab_mhs" id="gnlab_mhs" class="form-control" placeholder="Masukkan NIM..." required>
+							<input type="text" name="gnlab_mhs" id="gnlab_mhs" class="form-control" autocomplete="off" onblur="gakfokus();" placeholder="Masukkan NIM..." required>
 							<div id="gnlab_mhslist"></div>
 						</div>
 						<div class="form-group">
@@ -130,7 +134,7 @@
 						</div>
 						<div class="form-group">
 							<label for="gnlab_mtk">Mata Kuliah</label>
-							<input type="text" name="gnlab_mtk" id="gnlab_mtk" class="form-control" placeholder="Masukkan Mata Kuliah..." required>
+							<input type="text" name="gnlab_mtk" id="gnlab_mtk" class="form-control" onblur="gakfokus();" autocomplete="off" placeholder="Masukkan Mata Kuliah..." required>
 							<div id="gnlab_mtklist"></div>
 						</div>
 						<div class="form-group">

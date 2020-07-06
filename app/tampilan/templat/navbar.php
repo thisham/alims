@@ -18,7 +18,7 @@
 	    	</ul>
 	  	</div>
 	  	<div class="text-right mr-1">
-			<a href="<?php echo BASIS_URL; ?>/portal" class="btn btn-outline-primary text-right">Admin</a>
+			<a href="<?php echo BASIS_URL; ?>/portal" class="btn btn-outline-primary text-right">Masuk</a>
 		</div>
 	</div>
 </nav>
