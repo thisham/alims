@@ -19,7 +19,8 @@ class pangkalan_data
 
 		$opsi = array(
 			PDO::ATTR_PERSISTENT => true,
-			PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION
+			PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION,
+			PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false
 		);
 
 		try {
@@ -87,6 +88,7 @@ class pangkalan_data
 
 	public function tutup()
 	{
+		$this->stmt->closeCursor();
 		$this->dbh = NULL;
 		$this->stmt = NULL;
 	}
