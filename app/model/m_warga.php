@@ -70,7 +70,7 @@ class m_warga extends Kontroler
 
 		function mhs_cari($data)
 		{
-			$kueri = "SELECT * FROM $this->siswa WHERE nama LIKE :kueri OR mhs_nim LIKE :kueri";
+			$kueri = "SELECT * FROM $this->siswa WHERE mhs_nama LIKE :kueri OR mhs_nim LIKE :kueri";
 			$this->db->kueri($kueri);
 			$this->db->ikat('kueri', '%' . $data . '%');
 			$this->db->eksekusi();
