@@ -1,3 +1,4 @@
+<?php $no = 1; ?>
 <div class="table-responsive">
 	<table class="table table-striped">
 		<thead class="text-center">
@@ -11,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody class="text-center">
-			<?php if ($data['gpp_a'] == ''): ?>
+			<?php if ($data['gpp_a'] == NULL): ?>
 				<tr>
 					<td colspan="6" class="text-center">Tidak ada data.</td>
 				</tr>

@@ -34,10 +34,28 @@
 				});
 			}
 		});
+		$("#gnapp_tglcari_all").click(function(){
+			var tgl_all = $("#gnapp_tgl_all").val();
+			// console.log(tgl_all);
+			if (tgl_all != '') {
+				$.ajax({
+					url: "<?php echo BASIS_URL; ?>/gunakan/app/appbytanggal/all",
+					method: "POST",
+					data: {gnapp_tgl_all: tgl_all},
+					success: function(data) {
+						$(".tabel-semua").html(data);
+					}
+				});
+			}
+		});
 	});
 	function appsumarray(sum, act, num) {
 		var url = "<?php echo BASIS_URL; ?>/gunakan/app/appsumarray/" + sum + '/' + act + '/' + num;
 		$("#gnapp_noalat-" + num).load(url);
+	}
+	function appcaritglall(tgl){
+		var url = "<?php echo BASIS_URL; ?>/gunakan/app/appbytanggal/all" + tgl;
+		$(".tabel-semua").load();
 	}
 	function gakfokus() {
 		$(".gnapp_mhslist").fadeOut();
@@ -74,9 +92,12 @@
 				<div class="tab-pane fade show active" id="daftar" role="tabpanel">
 					<?php $no = 1; ?>
 					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Tanggal Peminjaman</span>
+						</div>
 						<input type="date" name="gnapp_tgl_all" id="gnapp_tgl_all" class="form-control" value="<?php echo date('Y-m-d'); ?>">
 						<div class="input-group-append">
-							<button id="gnapp_tglcari_all" name="gnapp_tglcari_all" onclick="appcaritglall($('#gnapp_tgl_all').val());" class="btn btn-primary">Cari</button>
+							<button id="gnapp_tglcari_all" name="gnapp_tglcari_all" class="btn btn-primary">Cari</button>
 						</div>
 					</div>
 					<div class="tabel-semua mt-2">
@@ -93,7 +114,7 @@
 									</tr>
 								</thead>
 								<tbody class="text-center">
-									<?php if ($data['gpp_a'] == ''): ?>
+									<?php if ($data['gpp_a'] == NULL): ?>
 										<tr>
 											<td colspan="6" class="text-center">Tidak ada data.</td>
 										</tr>
@@ -139,7 +160,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php if ($data['gpp_p'] == ''): ?>
+								<?php if ($data['gpp_p'] == NULL): ?>
 									<tr>
 										<td colspan="6" class="text-center">Tidak ada data.</td>
 									</tr>
@@ -174,7 +195,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php if ($data['gpp_r'] == ''): ?>
+								<?php if ($data['gpp_r'] == NULL): ?>
 									<tr>
 										<td colspan="6" class="text-center">Tidak ada data.</td>
 									</tr>

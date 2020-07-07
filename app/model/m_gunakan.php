@@ -230,9 +230,30 @@ class m_gunakan extends Kontroler
 
 		// Read Data
 
-			function gnadl_list()
+			function gnadl_list($data)
 			{
-				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON gnadl_mhs = mhs_nim ORDER BY gnadl_sign DESC";
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON gnadl_mhs = mhs_nim WHERE gnadl_sign LIKE :gnadl_sign ORDER BY gnadl_sign DESC";
+				$this->db->kueri($kueri);
+				$this->db->ikat('gnadl_sign', "$data%");
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnadl_listToGraph()
+			{
+				$kueri = "SELECT WEEK(gnadl_sign) AS pekan, YEAR(gnadl_sign) AS tahun, WEEKDAY(gnadl_sign) AS hari, MONTH(gnadl_sign) AS bulan, DAYOFMONTH(gnadl_sign) AS tanggal FROM $this->gnadl";
+				$this->db->kueri($kueri);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnadl_aktif()
+			{
+				$kueri = "SELECT * FROM $this->gnadl JOIN $this->dtadl ON `$this->gnadl`.`gnadl_adl` = `$this->dtadl`.`adl_id` JOIN $this->dtmhs ON gnadl_mhs = mhs_nim WHERE gnadl_awal != 0 AND gnadl_akhir = 0 ORDER BY gnadl_sign DESC";
 				$this->db->kueri($kueri);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();

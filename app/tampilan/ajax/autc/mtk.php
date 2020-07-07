@@ -34,7 +34,9 @@
 <ul class="autc list-group">
 	<?php if (!is_null($data)): ?>
 		<?php foreach ($data as $hasil): ?>
-			<li class="autc <?php if ($hasil['mtk_buka'] != 0 AND $hasil['mtk_tutup'] == 0) echo 'autc-mtk'; else echo 'text-danger'; ?> list-group-item list-group-item-action"><?php echo $hasil['mtk_id'] . ' - ' . $hasil['mtk_nama'] . ' - ' . $hasil['dsn_nama'] . ' (' . $hasil['mtk_periode'] . ')'; ?></li>
+			<?php if ($hasil['mtk_buka'] != 0 AND $hasil['mtk_tutup'] == 0): ?>
+				<li class="autc <?php if ($hasil['mtk_buka'] != 0 AND $hasil['mtk_tutup'] == 0) echo 'autc-mtk'; else echo 'text-danger'; ?> list-group-item list-group-item-action"><?php echo $hasil['mtk_id'] . ' - ' . $hasil['mtk_nama'] . ' - ' . $hasil['dsn_nama'] . ' (' . $hasil['mtk_periode'] . ')'; ?></li>
+			<?php endif ?>
 		<?php endforeach ?>
 	<?php else: ?>
 		<li class="autc autc-mtk text-center">Tidak ada data.</li>

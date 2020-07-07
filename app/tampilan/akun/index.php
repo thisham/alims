@@ -62,7 +62,7 @@
 						<div class="card-body">
 							<h5 class="card-title">Perubahan Data Akun</h5>
 							<hr>
-							<form action="<?php echo BASIS_URL . '/akun/update/data'; ?>">
+							<form action="<?php echo BASIS_URL . '/akun/update/datadiri'; ?>">
 								<div class="table-resposive">
 									<table class="table table-striped">
 										<tr>
@@ -113,16 +113,16 @@
 							<hr>
 							<div class="alert alert-danger">Perubahan ini membutuhkan konfirmasi Admin untuk memulihkannya.</div>
 							<div class="table-responsive">
-								<form action="<?php echo BASIS_URL . '/akun/update/data'; ?>" method="post">
+								<form action="<?php echo BASIS_URL . '/akun/update/dataakun'; ?>" method="post">
 									<table class="table table-striped">
 										<tr>
 											<th>My Account</th>
 											<td>
-												<select value="<?php echo $data['usr']['user_id'] . '/' . $data['usr']['status']; ?>" class="form-control">
+												<select value="<?php echo $data['usr']['status']; ?>" class="form-control">
 													<option value="">-- Pilih Kondisi --</option>
-													<option value="<?php echo $data['usr']['user_id'] . '/Aktif'; ?>">Aktif</option>
-													<option value="<?php echo $data['usr']['user_id'] . '/Blokir'; ?>">Blokir</option>
-													<option value="<?php echo $data['usr']['user_id'] . '/Inaktif'; ?>">Inaktivasi</option>
+													<option value="Aktif">Aktif</option>
+													<option value="Blokir">Blokir</option>
+													<option value="Inaktif">Inaktivasi</option>
 												</select>
 											</td>
 										</tr>

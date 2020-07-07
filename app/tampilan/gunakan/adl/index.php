@@ -28,8 +28,30 @@
 				});
 			}
 		});
+		$(".gnadl_kirimtanggal").click(function(){
+			var kueri_tgl = $("#gnadl_tgl_all").val();
+			if (kueri_tgl != '') {
+				$.ajax({
+					url: "<?php echo BASIS_URL; ?>/gunakan/adl/adlbytanggal/all",
+					method: "POST",
+					data: {gnadl_tgl: kueri_tgl},
+					success: function(data) {
+						$(".data-gnadl").html(data);
+					}
+				});
+			}
+		});
 	});
-	function gakfokus() {
+	$.getJSON("<?php echo BASIS_URL; ?>/gunakan/graph/adl", function(data){
+		var label = ['Ahad', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+		var gnadl = [];
+		$(data).each(function(i){
+			label.push(data[i]);
+			gnadl.push(data[i]);
+		});
+	});
+	function gakfokus() 
+	{
 		$("#gnadl_mhslist").fadeOut();
 		$("#gnadl_mtklist").fadeOut();
 	}
@@ -39,12 +61,17 @@
 	<h3><?php echo $data['judul']; ?></h3>
 	<hr>
 	<?php Flasher::flash(); ?>
-	<?php $no = 1; ?>
 	<div class="card">
 		<div class="card-header">
 			<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="daftar-tab" data-toggle="tab" href="#daftar" role="tab">Daftar</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="aktif-tab" data-toggle="tab" href="#aktif" role="tab">Aktif</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="grafik-tab" data-toggle="tab" href="#grafik" role="tab">Grafik</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="tambah-tab" data-toggle="tab" href="#tambah" role="tab">Tambah</a>
@@ -54,7 +81,61 @@
 		<div class="card-body">
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="daftar" role="tabpanel">
-					<div id="data-gnadl" class="table-responsive">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Tanggal Mulai Pemakaian</span>
+						</div>
+						<input type="date" name="gnadl_tgl_all" id="gnadl_tgl_all" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+						<div class="input-group-append">
+							<button id="gnadl_tglcari_all" name="gnadl_tglcari_all" class="btn btn-primary gnadl_kirimtanggal">Cari</button>
+						</div>
+					</div>
+					<?php $no = 1; ?>
+					<div class="data-gnadl mt-2">
+						<div class="table-responsive">
+							<table class="table table-striped text-center">
+								<thead>
+									<tr class="text-center">
+										<th>No.</th>
+										<th>Kode</th>
+										<th>Tanggal</th>
+										<th>Nama Alat</th>
+										<th>Awal</th>
+										<th>Akhir</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php if ($data['gdl_a'] == NULL): ?>
+										<tr>
+											<td colspan="7" class="text-center">Tidak ada data.</td>
+										</tr>
+									<?php else: ?>
+										<?php foreach ($data['gdl_a'] as $gnadl): ?>
+											<tr>
+												<td><?php echo $no++; ?></td>
+												<td><a href="<?php echo BASIS_URL . '/gunakan/adl/detail/' . $gnadl['gnadl_id']; ?>"><?php echo $gnadl['gnadl_id']; ?></a></td>
+												<td><?php echo $gnadl['gnadl_sign'] ?></td>
+												<td><?php echo $gnadl['adl_nama']; ?></td>
+												<td><?php echo $gnadl['adl_id']; ?></td>
+												<td><?php echo $gnadl['mhs_nama']; ?></td>
+												<td>
+													<?php if ($gnadl['gnadl_awal'] != 0 AND $gnadl['gnadl_akhir'] == 0): ?>
+														<div class="badge badge-success">Berjalan</div>
+													<?php else: ?>
+														<div class="badge badge-secondary">Selesai</div>
+													<?php endif ?>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									<?php endif ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="aktif" role="tabpanel">
+					<div class="table-responsive">
 						<table class="table table-striped text-center">
 							<thead>
 								<tr class="text-center">
@@ -68,20 +149,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php if ($data['gnadl'] == NULL): ?>
+								<?php if ($data['gdl_p'] == NULL): ?>
 									<tr>
 										<td colspan="7" class="text-center">Tidak ada data.</td>
 									</tr>
 								<?php else: ?>
-									<?php foreach ($data['gnadl'] as $gnadl): ?>
+									<?php foreach ($data['gdl_p'] as $gnadl): ?>
 										<tr>
 											<td><?php echo $no++; ?></td>
 											<td><a href="<?php echo BASIS_URL . '/gunakan/adl/detail/' . $gnadl['gnadl_id']; ?>"><?php echo $gnadl['gnadl_id']; ?></a></td>
 											<td><?php echo $gnadl['gnadl_sign'] ?></td>
 											<td><?php echo $gnadl['adl_nama']; ?></td>
 											<td><?php echo $gnadl['adl_id']; ?></td>
-											<td>
-												<?php echo $gnadl['mhs_nama']; ?>
+											<td><?php echo $gnadl['mhs_nama']; ?></td>
 											<td>
 												<?php if ($gnadl['gnadl_awal'] != 0 AND $gnadl['gnadl_akhir'] == 0): ?>
 													<div class="badge badge-success">Berjalan</div>
@@ -95,6 +175,9 @@
 							</tbody>
 						</table>
 					</div>
+				</div>
+				<div class="tab-pane fade" id="grafik" role="tabpanel">
+					...
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
 					<form action="<?php echo BASIS_URL; ?>/gunakan/adl/tambahin" method="post">

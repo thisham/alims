@@ -131,6 +131,21 @@ class gunakan extends Kontroler
 				}
 				break;
 
+			case 'adlbytanggal':
+				switch ($id) {
+					case 'all':
+						$data = array(
+							'gdl_a' => $this->model('m_gunakan')->gnadl_list($_POST['gnadl_tgl'])
+						);
+						$this->tampilkan('gunakan/adl/adlbydate-all', $data);
+						break;
+					
+					default:
+						# code...
+						break;
+				}	
+				break;
+
 			case 'detail':
 				$data = array(
 					'judul'	=> 'Detail Peminjaman Alat',
@@ -149,7 +164,8 @@ class gunakan extends Kontroler
 					'pages'	=> 'Penggunaan',
 					'newID'	=> $this->model('m_gunakan')->gnadl_idbaru(),
 					'dosen'	=> $this->model('m_warga')->dsn_list(),
-					'gnadl'	=> $this->model('m_gunakan')->gnadl_list(),
+					'gdl_a'	=> $this->model('m_gunakan')->gnadl_list(date('Y-m-d')),
+					'gdl_p'	=> $this->model('m_gunakan')->gnadl_aktif(),
 					'dtadl'	=> $this->model('m_inventaris')->adl_list()
 				);
 				$this->tampilkan('templat/header', $data);
@@ -190,7 +206,7 @@ class gunakan extends Kontroler
 					header('location:' . BASIS_URL . '/gunakan/app');
 					exit;
 				} else {
-					Flasher::setFlash('Data peminjaman alat pinjam-pakai', 'tidak dicatat', '', 'success');
+					Flasher::setFlash('Data peminjaman alat pinjam-pakai', 'tidak dicatat', '', 'danger');
 					header('location:' . BASIS_URL . '/gunakan/app');
 					exit;
 				}
@@ -269,19 +285,16 @@ class gunakan extends Kontroler
 			case 'appbytanggal':
 				switch ($id) {
 					case 'all':
-						if ($id != '') {
-							$data = array(
-								'gpp_a' => $this->model('m_gunakan')->gnapp_list(date('Y-m-d'))
-							);
-							$this->tampilkan('gunakan/app/appbydate-all', $data);
-						}
+						$data = array(
+							'gpp_a' => $this->model('m_gunakan')->gnapp_list($_POST['gnapp_tgl_all'])
+						);
+						$this->tampilkan('gunakan/app/appbydate-all', $data);
 						break;
 					
 					default:
 						# code...
 						break;
-				}
-						
+				}	
 				break;
 
 			case 'detail':
@@ -307,4 +320,38 @@ class gunakan extends Kontroler
 		}
 	}
 
+	function graphbydate($menu = '', $pekan = 25, $tanggal = 27, $bulan = 6, $tahun = 2020)
+	{
+		switch ($menu) {
+			case 'adl':
+				$hasil = array(
+					'pekan' => 0,
+					'tahun' => 0,
+					'tanggal' => 0,
+					'bulan' => 0,
+				);
+				$varData = $this->model('m_gunakan')->gnadl_listToGraph();
+				foreach ($varData as $data) {
+					if ($data['pekan'] == $pekan) {
+						$hasil['pekan']++;
+					}
+					if ($data['tahun'] == $tahun) {
+						$hasil['tahun']++;
+					}
+					if ($data['tanggal'] == $tanggal) {
+						$hasil['tanggal']++;
+					}
+					if ($data['bulan'] == $bulan) {
+						$hasil['bulan']++;
+					}
+					var_dump($data); echo '<br>';
+				}
+				print_r($hasil);
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+	}
 }
