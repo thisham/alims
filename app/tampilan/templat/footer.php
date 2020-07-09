@@ -1,7 +1,7 @@
 <footer>
 	<!-- Copyright -->
 	<div class="text-center py-3">Copyleft &copy; 2020 
-		<a href="https://github.com/thisham">Hamdan Yuwafi</a>. <em>Versi 1.0.0 (Agathis Dammara)</em>.
+		<a href="https://github.com/thisham">Hamdan Yuwafi</a>. <em>Versi 1.3.2 (Agathis Dammara)</em>.
 	</div>
 
 </footer>
