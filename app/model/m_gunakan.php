@@ -83,14 +83,37 @@ class m_gunakan extends Kontroler
 
 		// Read Data
 
-			function gnlab_list()
+			function gnlab_listall($data)
 			{
-				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id` ORDER BY gnlab_sign DESC";
+				$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id` WHERE gnlab_sign LIKE :tgl ORDER BY gnlab_sign DESC";
 				$this->db->kueri($kueri);
+				$this->db->ikat('tgl', "%" . $data . "%");
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
 				$this->db->tutup();
 				return $hasil;
+			}
+
+			function gnlab_list($data)
+			{
+				if ($data['gnlab_lab_opt'] == 'ALL') {
+					$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id` WHERE gnlab_sign LIKE :tgl ORDER BY gnlab_sign DESC";
+					$this->db->kueri($kueri);
+					$this->db->ikat('tgl', "%" . $data['gnlab_tanggal'] . "%");
+					$this->db->eksekusi();
+					$hasil = $this->db->hasil_jamak();
+					$this->db->tutup();
+					return $hasil;
+				} else {
+					$kueri = "SELECT * FROM $this->gnlab JOIN $this->dtlab ON `$this->gnlab`.`gnlab_lab` = `$this->dtlab`.`lab_id` JOIN $this->dtmhs ON `$this->gnlab`.`gnlab_mhs` = `$this->dtmhs`.`mhs_nim` JOIN $this->dtdsn ON `$this->gnlab`.`gnlab_dsn` = `$this->dtdsn`.`dsn_id` JOIN $this->dtmtk ON `$this->gnlab`.`gnlab_mtk` = `$this->dtmtk`.`mtk_id` JOIN $this->dtlbr ON `$this->gnlab`.`gnlab_lbrn` = `$this->dtlbr`.`user_id` WHERE gnlab_sign LIKE :tgl AND gnlab_lab = :lab ORDER BY gnlab_sign DESC";
+					$this->db->kueri($kueri);
+					$this->db->ikat('tgl', "%" . $data['gnlab_tanggal'] . "%");
+					$this->db->ikat('lab', $data['gnlab_lab_opt']);
+					$this->db->eksekusi();
+					$hasil = $this->db->hasil_jamak();
+					$this->db->tutup();
+					return $hasil;
+				}
 			}
 
 			function gnlab_detail($data)
@@ -128,6 +151,19 @@ class m_gunakan extends Kontroler
 					'jamak'	=> $this->db->hasil_jamak(),
 					'baris'	=> $this->db->hit_baris()
 				);
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnlab_listToGraph($date, $month, $year)
+			{
+				$kueri = "SELECT COUNT(gnlab_id) AS jumlah FROM $this->gnlab WHERE month(gnlab_sign) = :month AND day(gnlab_sign) = :tanggal AND year(gnlab_sign) = :year";
+				$this->db->kueri($kueri);
+				$this->db->ikat('tanggal', $date);
+				$this->db->ikat('month', $month);
+				$this->db->ikat('year', $year);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_tunggal();
 				$this->db->tutup();
 				return $hasil;
 			}
@@ -241,12 +277,15 @@ class m_gunakan extends Kontroler
 				return $hasil;
 			}
 
-			function gnadl_listToGraph()
+			function gnadl_listToGraph($date, $month, $year)
 			{
-				$kueri = "SELECT WEEK(gnadl_sign) AS pekan, YEAR(gnadl_sign) AS tahun, WEEKDAY(gnadl_sign) AS hari, MONTH(gnadl_sign) AS bulan, DAYOFMONTH(gnadl_sign) AS tanggal FROM $this->gnadl";
+				$kueri = "SELECT COUNT(gnadl_id) AS jumlah FROM $this->gnadl WHERE month(gnadl_sign) = :month AND day(gnadl_sign) = :tanggal AND year(gnadl_sign) = :year";
 				$this->db->kueri($kueri);
+				$this->db->ikat('tanggal', $date);
+				$this->db->ikat('month', $month);
+				$this->db->ikat('year', $year);
 				$this->db->eksekusi();
-				$hasil = $this->db->hasil_jamak();
+				$hasil = $this->db->hasil_tunggal();
 				$this->db->tutup();
 				return $hasil;
 			}
@@ -290,6 +329,17 @@ class m_gunakan extends Kontroler
 				$this->db->ikat('adl_letak', $data);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnadl_cekadl($data)
+			{
+				$kueri = "SELECT count(adl_id) as hasil FROM $this->dtadl WHERE adl_id = :adl_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('adl_id', $data);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_tunggal();
 				$this->db->tutup();
 				return $hasil;
 			}
@@ -419,6 +469,31 @@ class m_gunakan extends Kontroler
 				$this->db->ikat('gnapp_mhs', $data[0]);
 				$this->db->eksekusi();
 				$hasil = $this->db->hasil_jamak();
+				$this->db->tutup();
+				return $hasil;
+			}
+
+			function gnapp_cekapp($data)
+			{
+				$kueri = "SELECT count(app_id) as hasil FROM $this->dtapp WHERE app_id = :app_id";
+				$this->db->kueri($kueri);
+				$this->db->ikat('app_id', $data);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_tunggal();
+				$this->db->tutup();
+				$hasil = (int) $hasil;
+				return $hasil;
+			}
+
+			function gnapp_listToGraph($date, $month, $year)
+			{
+				$kueri = "SELECT COUNT(gnapp_id) AS jumlah FROM $this->gnapp WHERE month(gnapp_sign) = :month AND day(gnapp_sign) = :tanggal AND year(gnapp_sign) = :year";
+				$this->db->kueri($kueri);
+				$this->db->ikat('tanggal', $date);
+				$this->db->ikat('month', $month);
+				$this->db->ikat('year', $year);
+				$this->db->eksekusi();
+				$hasil = $this->db->hasil_tunggal();
 				$this->db->tutup();
 				return $hasil;
 			}

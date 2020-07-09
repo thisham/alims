@@ -14,12 +14,6 @@
 				});
 			}
 		});
-	});
-	function gakfokus() {
-		$("#gnlab_mtklist").fadeOut();
-		$("#gnlab_mhslist").fadeOut();
-	}
-	$(document).ready(function(){
 		$("#gnlab_mtk").keyup( function() {
 			var kueri_mtk = $(this).val();
 			if (kueri_mtk != '') {
@@ -34,7 +28,57 @@
 				});
 			}
 		});
+		$("#gnlab-filter").submit(function(e){
+			e.preventDefault();
+			$.ajax({
+				url: "<?php echo BASIS_URL; ?>/gunakan/lab/lab-by-tgl-and-lab",
+				method: "POST",
+				data: $(this).serialize(),
+				success: function(data) {
+					$("#data-gnlab").html(data);
+				}
+			});
+		});
+		var ctx = document.getElementById("gnlab-graph").getContext('2d');
+		var gnadl_graph = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: <?php echo $data['labels']; ?>,
+				datasets: [{
+					label: 'Peminjaman',
+					fill: false,
+					lineTension: 0.1,
+					backgroundColor: "#29B0D0",
+					borderColor: "#29B0D0",
+					pointHoverBackgroundColor: "#29B0D0",
+					pointHoverBorderColor: "#29B0D0",
+					data: <?php echo $data['grafik']; ?>
+				}]
+			},
+			options: {
+				legend: {
+					display: true
+				},
+				barValueSpacing: 20,
+				scales: {
+					yAxes: [{
+						ticks: {
+							min: 0,
+						}
+					}],
+					xAxes: [{
+						gridLines: {
+							color: "rgba(0, 0, 0, 0.1)",
+						}
+					}]
+				}
+			}
+		});
 	});
+	function gakfokus() {
+		$("#gnlab_mtklist").fadeOut();
+		$("#gnlab_mhslist").fadeOut();
+	}
 	
 </script>
 
@@ -50,6 +94,9 @@
 					<a class="nav-link active" id="daftar-tab" data-toggle="tab" href="#daftar" role="tab">Daftar</a>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link" id="grafik-tab" data-toggle="tab" href="#grafik" role="tab">Grafik</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link" id="tambah-tab" data-toggle="tab" href="#tambah" role="tab">Tambah</a>
 				</li>
 			</ul>
@@ -57,16 +104,21 @@
 		<div class="card-body">
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="daftar" role="tabpanel">
-					<!-- <div class="input-group">
-						<select name="gnlab_lab" id="gnlab_lab" class="form-control">
-							<option value="">-- Pilih Laboratorium --</option>
-							<?php foreach ($data['labs'] as $lab): ?>
-								<option value="<?php echo $lab['lab_id']; ?>"><?php echo $lab['lab_nama']; ?></option>
-							<?php endforeach ?>
-						</select>
-						<a class="btn btn-outline-primary" id="btn-gnlab_filterin" name="gnlab_carikan">Kirim</a>
-					</div> -->
-					<div id="data-gnlab" class="table-responsive">
+					<form id="gnlab-filter">
+						<div class="input-group">
+							<select name="gnlab_lab_opt" id="gnlab_lab_opt" class="form-control">
+								<option value="ALL">Semua Laboratorium</option>
+								<?php foreach ($data['labs'] as $lab): ?>
+									<option value="<?php echo $lab['lab_id']; ?>"><?php echo $lab['lab_nama']; ?></option>
+								<?php endforeach ?>
+							</select>
+							<input type="date" name="gnlab_tanggal" id="gnlab_tanggal" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+							<div class="input-group-append">
+								<input type="submit" name="kirim" id="kirim" class="btn btn-primary" value="Cari">
+							</div>
+						</div>
+					</form>
+					<div id="data-gnlab" class="table-responsive mt-2">
 						<table class="table table-striped text-center">
 							<thead>
 								<tr class="text-center">
@@ -82,7 +134,7 @@
 							<tbody>
 								<?php if ($data['gnlab'] == NULL): ?>
 									<tr>
-										<td colspan="6" class="text-center">Tidak ada data.</td>
+										<td colspan="7" class="text-center">Tidak ada data.</td>
 									</tr>
 								<?php else: ?>
 									<?php foreach ($data['gnlab'] as $gnlab): ?>
@@ -110,6 +162,18 @@
 								<?php endif ?>
 							</tbody>
 						</table>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="grafik" role="tabpanel">
+					<div class="card">
+						<div class="card-body">
+							<!-- <div class="row">
+								<div class="col"><button id="adl-bulan_lalu" class="btn btn-primary btn-sm"><< Bulan Lalu</button></div>
+								<div class="col"><p id="bulan-grafik" class="text-center">Bulan: </p></div>
+								<div class="col text-right"><button id="adl-bulan_berikut" class="btn btn-primary btn-sm">Bulan Berikut >></button></div>
+							</div> -->
+							<canvas id="gnlab-graph"></canvas>
+						</div>
 					</div>
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">

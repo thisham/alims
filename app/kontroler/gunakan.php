@@ -67,6 +67,13 @@ class gunakan extends Kontroler
 				}
 				break;
 
+			case 'lab-by-tgl-and-lab':
+				$data = array(
+					'gnlab'	=> $this->model('m_gunakan')->gnlab_list($_POST)
+				);
+				$this->tampilkan('gunakan/lab/appbydateandlab', $data);
+				break;
+
 			case 'detail':
 				$data = array(
 					'judul'	=> 'Detail Penggunaan Laboratorium',
@@ -80,14 +87,23 @@ class gunakan extends Kontroler
 				break;
 
 			default:
+				for ($i=0; $i < cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')); $i++) { 
+					$varData[$i]	= $this->model('m_gunakan')->gnlab_listToGraph($i + 1, date('m'), date('Y'));
+					$label[$i]		= sprintf('%02s', $i + 1) . date(' - m - Y'); 
+				}
+				foreach ($varData as $graph) {
+					$graphs[] = (int) $graph['jumlah'];
+				}
 				$data = array(
 					'judul'	=> 'Penggunaan Laboratorium',
 					'pages'	=> 'Penggunaan',
 					'newID'	=> $this->model('m_gunakan')->gnlab_idbaru(),
 					'mtkul'	=> $this->model('m_akademik')->mtk_list('aktif', 'list'),
 					'dosen'	=> $this->model('m_warga')->dsn_list(),
-					'gnlab'	=> $this->model('m_gunakan')->gnlab_list(),
-					'labs'	=> $this->model('m_inventaris')->lab_list()
+					'gnlab'	=> $this->model('m_gunakan')->gnlab_listall(date('Y-m-d')),
+					'labs'	=> $this->model('m_inventaris')->lab_list(),
+					'grafik'	=> json_encode($graphs),
+					'labels'	=> json_encode($label)
 				);
 				$this->tampilkan('templat/header', $data);
 				$this->tampilkan('templat/navbar_dash', $data);
@@ -101,13 +117,18 @@ class gunakan extends Kontroler
 	{
 		switch ($menu) {
 			case 'tambahin':
-				// $this->model('m_gunakan')->gnadl_tambah($_POST, $this->datasesi('user'));
-				if ( $this->model('m_gunakan')->gnadl_tambah($_POST, $this->datasesi('user')) > 0 ) {
-					Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'telah dicatat', '', 'success');
-					header('location:' . BASIS_URL . '/gunakan/adl');
-					exit;
+				if ($this->model('m_gunakan')->gnapp_cekadl($_POST['gnadl_adl']) > 0) {
+					if ( $this->model('m_gunakan')->gnadl_tambah($_POST, $this->datasesi('user')) > 0 ) {
+						Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'telah dicatat', '', 'success');
+						header('location:' . BASIS_URL . '/gunakan/adl');
+						exit;
+					} else {
+						Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'tidak dicatat', '', 'danger');
+						header('location:' . BASIS_URL . '/gunakan/adl');
+						exit;
+					}
 				} else {
-					Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'tidak dicatat', '', 'danger');
+					Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'tidak dicatat', 'Alat tidak tersedia', 'danger');
 					header('location:' . BASIS_URL . '/gunakan/adl');
 					exit;
 				}
@@ -159,6 +180,13 @@ class gunakan extends Kontroler
 				break;
 			
 			default:
+				for ($i=0; $i < cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')); $i++) { 
+					$varData[$i]	= $this->model('m_gunakan')->gnadl_listToGraph($i + 1, date('m'), date('Y'));
+					$label[$i]		= sprintf('%02s', $i + 1) . date(' - m - Y'); 
+				}
+				foreach ($varData as $graph) {
+					$graphs[] = (int) $graph['jumlah'];
+				}
 				$data = array(
 					'judul'	=> 'Penggunaan Alat dalam Laboratorium',
 					'pages'	=> 'Penggunaan',
@@ -166,7 +194,9 @@ class gunakan extends Kontroler
 					'dosen'	=> $this->model('m_warga')->dsn_list(),
 					'gdl_a'	=> $this->model('m_gunakan')->gnadl_list(date('Y-m-d')),
 					'gdl_p'	=> $this->model('m_gunakan')->gnadl_aktif(),
-					'dtadl'	=> $this->model('m_inventaris')->adl_list()
+					'dtadl'	=> $this->model('m_inventaris')->adl_list(),
+					'grafik'	=> json_encode($graphs),
+					'labels'	=> json_encode($label)
 				);
 				$this->tampilkan('templat/header', $data);
 				$this->tampilkan('templat/navbar_dash', $data);
@@ -191,8 +221,13 @@ class gunakan extends Kontroler
 							'IDs'	=> $this->model('m_gunakan')->gnapp_idbaru(),
 							'usr'	=> $this->datasesi('user')
 						);
-						if ($_POST['gnapp_noalat'][$i][$j] != '') {
-							$hasil = $this->model('m_gunakan')->gnapp_tambah($kirim);
+						
+						if ($this->model('m_gunakan')->gnapp_cekapp($kirim['inv']) > 0) {
+							if ($_POST['gnapp_noalat'][$i][$j] != '') {
+								$hasil = $this->model('m_gunakan')->gnapp_tambah($kirim);
+							} else {
+								$hasil = 0;
+							}
 						} else {
 							$hasil = 0;
 						}
@@ -256,7 +291,7 @@ class gunakan extends Kontroler
 								header('location:' . BASIS_URL . '/gunakan/app');
 								exit;
 							} else {
-								Flasher::setFlash('Penggantian alat', 'tidak dicatat', '', 'success');
+								Flasher::setFlash('Penggantian alat', 'tidak dicatat', '', 'danger');
 								header('location:' . BASIS_URL . '/gunakan/app');
 								exit;
 							}
@@ -302,6 +337,13 @@ class gunakan extends Kontroler
 				break;
 
 			default:
+				for ($i=0; $i < cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')); $i++) { 
+					$varData[$i]	= $this->model('m_gunakan')->gnapp_listToGraph($i + 1, date('m'), date('Y'));
+					$label[$i]		= sprintf('%02s', $i + 1) . date(' - m - Y'); 
+				}
+				foreach ($varData as $graph) {
+					$graphs[] = (int) $graph['jumlah'];
+				}
 				$data = array(
 					'judul'	=> 'Penggunaan Alat Pinjam-Pakai',
 					'pages'	=> 'Penggunaan',
@@ -310,7 +352,9 @@ class gunakan extends Kontroler
 					'gpp_a'	=> $this->model('m_gunakan')->gnapp_list(date('Y-m-d')),
 					'gpp_r'	=> $this->model('m_gunakan')->gnapp_listRusak(),
 					'gpp_p'	=> $this->model('m_gunakan')->gnapp_listDipakai(),
-					'dtapp'	=> $this->model('m_inventaris')->app_listJenis()
+					'dtapp'	=> $this->model('m_inventaris')->app_listJenis(),
+					'grafik'	=> json_encode($graphs),
+					'labels'	=> json_encode($label)
 				);
 				$this->tampilkan('templat/header', $data);
 				$this->tampilkan('templat/navbar_dash', $data);
@@ -320,33 +364,61 @@ class gunakan extends Kontroler
 		}
 	}
 
-	function graphbydate($menu = '', $pekan = 25, $tanggal = 27, $bulan = 6, $tahun = 2020)
+	function graphbydate($menu = '', $tanggal = '', $bulan = '', $tahun = '')
 	{
 		switch ($menu) {
 			case 'adl':
-				$hasil = array(
-					'pekan' => 0,
-					'tahun' => 0,
-					'tanggal' => 0,
-					'bulan' => 0,
-				);
-				$varData = $this->model('m_gunakan')->gnadl_listToGraph();
-				foreach ($varData as $data) {
-					if ($data['pekan'] == $pekan) {
-						$hasil['pekan']++;
-					}
-					if ($data['tahun'] == $tahun) {
-						$hasil['tahun']++;
-					}
-					if ($data['tanggal'] == $tanggal) {
-						$hasil['tanggal']++;
-					}
-					if ($data['bulan'] == $bulan) {
-						$hasil['bulan']++;
-					}
-					var_dump($data); echo '<br>';
+				if ($tanggal == '') $tanggal = date('d');
+				if ($bulan == '') $bulan = date('m');
+				if ($tahun == '') $tahun = date('Y');
+				$aku = 0;
+				for ($i=0; $i < cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun); $i++) { 
+					$varData[$i]	= $this->model('m_gunakan')->gnadl_listToGraph($tanggal, $bulan, $tahun);
+					$label[$i]		= $i + 1;
 				}
-				print_r($hasil);
+				foreach ($varData as $graph) {
+					$graphs[] = (int) $graph['jumlah'];
+				}
+				$data = array(
+					'grafik'	=> json_encode($graphs),
+					'labels'	=> json_encode($label)
+				);
+				break;
+
+			case 'app':
+				if ($tanggal == '') $tanggal = date('d');
+				if ($bulan == '') $bulan = date('m');
+				if ($tahun == '') $tahun = date('Y');
+				$aku = 0;
+				for ($i=0; $i < cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun); $i++) { 
+					$varData[$i]	= $this->model('m_gunakan')->gnapp_listToGraph($tanggal, $bulan, $tahun);
+					$label[$i]		= $i + 1;
+				}
+				foreach ($varData as $graph) {
+					$graphs[] = (int) $graph['jumlah'];
+				}
+				$data = array(
+					'grafik'	=> json_encode($graphs),
+					'labels'	=> json_encode($label)
+				);
+				break;
+
+			case 'lab':
+				if ($tanggal == '') $tanggal = date('d');
+				if ($bulan == '') $bulan = date('m');
+				if ($tahun == '') $tahun = date('Y');
+				$aku = 0;
+				for ($i=0; $i < cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun); $i++) { 
+					$varData[$i]	= $this->model('m_gunakan')->gnlab_listToGraph($tanggal, $bulan, $tahun);
+					$label[$i]		= $i + 1;
+				}
+				foreach ($varData as $graph) {
+					$graphs[] = (int) $graph['jumlah'];
+				}
+				$data = array(
+					'grafik'	=> json_encode($graphs),
+					'labels'	=> json_encode($label)
+				);
 				break;
 			
 			default:

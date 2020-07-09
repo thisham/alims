@@ -36,7 +36,6 @@
 		});
 		$("#gnapp_tglcari_all").click(function(){
 			var tgl_all = $("#gnapp_tgl_all").val();
-			// console.log(tgl_all);
 			if (tgl_all != '') {
 				$.ajax({
 					url: "<?php echo BASIS_URL; ?>/gunakan/app/appbytanggal/all",
@@ -46,6 +45,41 @@
 						$(".tabel-semua").html(data);
 					}
 				});
+			}
+		});
+		var ctx = document.getElementById("gnapp-graph").getContext('2d');
+		var gnadl_graph = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: <?php echo $data['labels']; ?>,
+				datasets: [{
+					label: 'Peminjaman',
+					fill: false,
+					lineTension: 0.1,
+					backgroundColor: "#29B0D0",
+					borderColor: "#29B0D0",
+					pointHoverBackgroundColor: "#29B0D0",
+					pointHoverBorderColor: "#29B0D0",
+					data: <?php echo $data['grafik']; ?>
+				}]
+			},
+			options: {
+				legend: {
+					display: true
+				},
+				barValueSpacing: 20,
+				scales: {
+					yAxes: [{
+						ticks: {
+							min: 0,
+						}
+					}],
+					xAxes: [{
+						gridLines: {
+							color: "rgba(0, 0, 0, 0.1)",
+						}
+					}]
+				}
 			}
 		});
 	});
@@ -80,7 +114,10 @@
 					<a class="nav-link" id="rusak-tab" data-toggle="tab" href="#rusak" role="tab">Rusak/Hilang</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="tambah-tab" data-toggle="tab" href="#kembali" role="tab">Pengembalian</a>
+					<a class="nav-link" id="kembali-tab" data-toggle="tab" href="#kembali" role="tab">Pengembalian</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="grafik-tab" data-toggle="tab" href="#grafik" role="tab">Grafik</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="tambah-tab" data-toggle="tab" href="#tambah" role="tab">Tambah</a>
@@ -224,7 +261,13 @@
 					</div>
 					<div id="gnapp_mhslist" class="gnapp_mhslist"></div>
 					<div id="tbl-appbymhs"></div>
-					
+				</div>
+				<div class="tab-pane fade" id="grafik" role="tabpanel">
+					<div class="card">
+						<div class="card-body">
+							<canvas id="gnapp-graph"></canvas>
+						</div>
+					</div>
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
 					<form action="<?php echo BASIS_URL; ?>/gunakan/app/tambahin" method="post">

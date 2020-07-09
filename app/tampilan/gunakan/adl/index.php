@@ -41,15 +41,43 @@
 				});
 			}
 		});
-	});
-	$.getJSON("<?php echo BASIS_URL; ?>/gunakan/graph/adl", function(data){
-		var label = ['Ahad', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-		var gnadl = [];
-		$(data).each(function(i){
-			label.push(data[i]);
-			gnadl.push(data[i]);
+		var ctx = document.getElementById("gnadl-graph").getContext('2d');
+		var gnadl_graph = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: <?php echo $data['labels']; ?>,
+				datasets: [{
+					label: 'Penggunaan',
+					fill: false,
+					lineTension: 0.1,
+					backgroundColor: "#29B0D0",
+					borderColor: "#29B0D0",
+					pointHoverBackgroundColor: "#29B0D0",
+					pointHoverBorderColor: "#29B0D0",
+					data: <?php echo $data['grafik']; ?>
+				}]
+			},
+			options: {
+				legend: {
+					display: true
+				},
+				barValueSpacing: 20,
+				scales: {
+					yAxes: [{
+						ticks: {
+							min: 0,
+						}
+					}],
+					xAxes: [{
+						gridLines: {
+							color: "rgba(0, 0, 0, 0.1)",
+						}
+					}]
+				}
+			}
 		});
 	});
+
 	function gakfokus() 
 	{
 		$("#gnadl_mhslist").fadeOut();
@@ -143,8 +171,8 @@
 									<th>Kode</th>
 									<th>Tanggal</th>
 									<th>Nama Alat</th>
-									<th>Awal</th>
-									<th>Akhir</th>
+									<th>ID Alat</th>
+									<th>Peminjam</th>
 									<th>Status</th>
 								</tr>
 							</thead>
@@ -177,7 +205,11 @@
 					</div>
 				</div>
 				<div class="tab-pane fade" id="grafik" role="tabpanel">
-					...
+					<div class="card">
+						<div class="card-body">
+							<canvas id="gnadl-graph"></canvas>
+						</div>
+					</div>
 				</div>
 				<div class="tab-pane fade" id="tambah" role="tabpanel">
 					<form action="<?php echo BASIS_URL; ?>/gunakan/adl/tambahin" method="post">
