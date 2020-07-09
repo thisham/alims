@@ -10,6 +10,9 @@
 					<a class="nav-link active" id="daftar-tab" data-toggle="tab" href="#daftar" role="tab">Daftar</a>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link" id="jumlah-tab" data-toggle="tab" href="#jumlah" role="tab">Jumlah</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link" id="tambah-tab" data-toggle="tab" href="#tambah" role="tab">Tambah</a>
 				</li>
 			</ul>
@@ -39,6 +42,43 @@
 											<td><?php echo $app['app_nama']; ?></td>
 											<td><?php echo $app['app_label']; ?></td>
 											<td><?php echo $app['app_kondisi']; ?></td>
+										</tr>
+									<?php endforeach ?>
+								<?php endif ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="jumlah" role="tabpanel">
+					<?php $no = 1; ?>
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead class="text-center">
+								<tr>
+									<th>No.</th>
+									<th>Nama Alat</th>
+									<th>Label</th>
+									<th>Dipakai</th>
+									<th>Rusak</th>
+									<th>Tersedia</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody class="text-center">
+								<?php if ($data['tools'] == NULL): ?>
+									<tr>
+										<td colspan="7">Tidak ada data.</td>
+									</tr>
+								<?php else: ?>
+									<?php foreach ($data['tools'] as $jpp): ?>
+										<tr>
+											<td><?php echo $no++; ?></td>
+											<td class="text-left"><?php echo $jpp['app_nama']; ?></td>
+											<td><?php echo $jpp['app_label']; ?></td>
+											<td><?php echo $jpp['app_dipakai']['total']; ?></td>
+											<td><?php echo $jpp['app_rusak']['total']; ?></td>
+											<td><?php echo $jpp['app_tersedia']['total']; ?></td>
+											<td><?php echo $jpp['app_total']['total']; ?></td>
 										</tr>
 									<?php endforeach ?>
 								<?php endif ?>

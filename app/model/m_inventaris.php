@@ -256,6 +256,55 @@ class m_inventaris extends Kontroler
 				return $hasil;
 			}
 
+			// Hitung Alat
+
+				function app_hitungalat_total($data)
+				{
+					$kueri = "SELECT count(app_label) as total FROM $this->app WHERE app_label = :app_label";
+					$this->db->kueri($kueri);
+					$this->db->ikat('app_label', $data);
+					$this->db->eksekusi();
+					$hasil = $this->db->hasil_tunggal();
+					$this->db->tutup();
+					return $hasil;
+				}
+
+				function app_hitungalat_dipakai($data)
+				{
+					$kueri = "SELECT count(app_label) as total FROM $this->app WHERE app_label = :app_label AND app_kondisi = :app_kondisi";
+					$this->db->kueri($kueri);
+					$this->db->ikat('app_label', $data);
+					$this->db->ikat('app_kondisi', 'Dipakai');
+					$this->db->eksekusi();
+					$hasil = $this->db->hasil_tunggal();
+					$this->db->tutup();
+					return $hasil;
+				}
+
+				function app_hitungalat_rusak($data)
+				{
+					$kueri = "SELECT count(app_label) as total FROM $this->app WHERE app_label = :app_label AND app_kondisi = :app_kondisi";
+					$this->db->kueri($kueri);
+					$this->db->ikat('app_label', $data);
+					$this->db->ikat('app_kondisi', 'Rusak');
+					$this->db->eksekusi();
+					$hasil = $this->db->hasil_tunggal();
+					$this->db->tutup();
+					return $hasil;
+				}
+
+				function app_hitungalat_tersedia($data)
+				{
+					$kueri = "SELECT count(app_label) as total FROM $this->app WHERE app_label = :app_label AND app_kondisi = :app_kondisi";
+					$this->db->kueri($kueri);
+					$this->db->ikat('app_label', $data);
+					$this->db->ikat('app_kondisi', 'Baik');
+					$this->db->eksekusi();
+					$hasil = $this->db->hasil_tunggal();
+					$this->db->tutup();
+					return $hasil;
+				}
+
 			function app_detail($data)
 			{
 				$kueri = "SELECT * FROM $this->app WHERE app_id = :app_id";

@@ -488,10 +488,21 @@ class data extends Kontroler
 					break;
 				
 				default:
+					foreach ($this->model('m_inventaris')->app_listJenis() as $alat) {
+						$j_alat[] = array(
+							'app_nama' => $alat['app_nama'],
+							'app_label' => $alat['app_label'],
+							'app_dipakai' => $this->model('m_inventaris')->app_hitungalat_dipakai($alat['app_label']),
+							'app_rusak' => $this->model('m_inventaris')->app_hitungalat_rusak($alat['app_label']),
+							'app_tersedia' => $this->model('m_inventaris')->app_hitungalat_tersedia($alat['app_label']),
+							'app_total' =>  $this->model('m_inventaris')->app_hitungalat_total($alat['app_label'])
+						);
+					}
 					$data = array(
 						'judul'	=> 'Data Alat Pinjam-Pakai',
 						'pages'	=> 'Data',
-						'lists'	=> $this->model('m_inventaris')->app_list()
+						'lists'	=> $this->model('m_inventaris')->app_list(),
+						'tools'	=> $j_alat
 					);
 					$this->tampilkan('templat/header', $data);
 					$this->tampilkan('templat/navbar_dash', $data);
