@@ -117,7 +117,7 @@ class gunakan extends Kontroler
 	{
 		switch ($menu) {
 			case 'tambahin':
-				if ($this->model('m_gunakan')->gnapp_cekadl($_POST['gnadl_adl']) > 0) {
+				if ($this->model('m_gunakan')->gnadl_cekadl($_POST['gnadl_adl']) > 0) {
 					if ( $this->model('m_gunakan')->gnadl_tambah($_POST, $this->datasesi('user')) > 0 ) {
 						Flasher::setFlash('Data penggunaan alat dalam laboratorium', 'telah dicatat', '', 'success');
 						header('location:' . BASIS_URL . '/gunakan/adl');

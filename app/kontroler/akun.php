@@ -48,7 +48,7 @@ class akun extends Kontroler
 	{
 		switch ($menu) {
 			case 'datadiri':
-				if ($this->model('m_user')->datadiri($_POST, $this->datasesi('user')) > 0) {
+				if ($this->model('m_user')->u_datadiri($_POST, $this->datasesi('user')) > 0) {
 					Flasher::setFlash('Data diri dalam akun', 'berhasil diperbarui', '', 'success');
 					header('location:' . BASIS_URL . '/akun');
 					exit;
@@ -60,7 +60,7 @@ class akun extends Kontroler
 				break;
 			
 			case 'dataakun':
-				if ($this->model('m_user')->dataakun($_POST, $this->datasesi('user')) > 0) {
+				if ($this->model('m_user')->u_dataakun($_POST, $this->datasesi('user')) > 0) {
 					Flasher::setFlash('Data akun', 'berhasil diperbarui', '', 'success');
 					header('location:' . BASIS_URL . '/akun');
 					exit;
