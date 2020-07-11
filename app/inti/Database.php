@@ -19,8 +19,7 @@ class pangkalan_data
 
 		$opsi = array(
 			PDO::ATTR_PERSISTENT => true,
-			PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION,
-			PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false
+			PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION
 		);
 
 		try {
